@@ -6,7 +6,6 @@ all:
     # These options configure Assisted Installer and the resulting cluster
     # https://generator.swagger.io/?url=https://raw.githubusercontent.com/openshift/assisted-service/58a6abd5c99d4e41d939be89cd0962433849a861/swagger.yaml
     # See section: cluster-create-params
-
     # Cluster name and dns domain combine to give the cluster namespace that will contain OpenShift endpoints
     # e.g. api.clustername.example.lab, worker1.clustername.example.lab
     cluster_name: "rna4"
