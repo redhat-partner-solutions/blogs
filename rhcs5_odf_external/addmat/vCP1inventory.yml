@@ -27,6 +27,7 @@ all:
     # The subnet on which all nodes are (or will be) accessible.
     machine_network_cidr: 10.19.8.0/24
 
+
     # The IP address pool to use for service IP addresses
     service_network_cidr: 172.22.0.0/16
 
