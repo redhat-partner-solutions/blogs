@@ -124,16 +124,16 @@ The cephadm utility consists of two main components:
 
 Registering the Red Hat Ceph Storage nodes to the CDN and attaching subscriptions. Please ensure that you have the following repositories enabled and correctly as part of your Red Hat subscription entitlements on all your hosts.
 ```console
-subscription-manager register (Red Hat username:password)
-subscription-manager list --available --matches 'Red Hat Ceph Storage'
-subscription-manager attach --pool=POOL_ID
-subscription-manager repos --disable=*
-subscription-manager repos --enable=rhel-8-for-x86_64-baseos-rpms
-subscription-manager repos --enable=rhel-8-for-x86_64-appstream-rpms
-yum -y update
-subscription-manager repos --enable=rhceph-5-tools-for-rhel-8-x86_64-rpms
-subscription-manager repos --enable=ansible-2.9-for-rhel-8-x86_64-rpms
-yum install cephadm-ansible
+$ subscription-manager register (Red Hat username:password)
+$ subscription-manager list --available --matches 'Red Hat Ceph Storage'
+$ subscription-manager attach --pool=POOL_ID
+$ subscription-manager repos --disable=*
+$ subscription-manager repos --enable=rhel-8-for-x86_64-baseos-rpms
+$ subscription-manager repos --enable=rhel-8-for-x86_64-appstream-rpms
+$ yum -y update
+$ subscription-manager repos --enable=rhceph-5-tools-for-rhel-8-x86_64-rpms
+$ subscription-manager repos --enable=ansible-2.9-for-rhel-8-x86_64-rpms
+$ yum install cephadm-ansible
 ```
 
 To register via satellite: https://access.redhat.com/articles/1750863
