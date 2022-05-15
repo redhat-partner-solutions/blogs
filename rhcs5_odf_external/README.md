@@ -541,15 +541,15 @@ First we need to get image registry address. In Exposing Image Registry section,
 $ echo $HOST
 default-route-openshift-image-registry.apps.rna4.cloud.lab.eng.bos.redhat.com
 ```
-In order to test our registry, we will tag an image and then push it to our internal registry. You can choose any image in your “podman images”. Here you can find an example:
+In order to test our registry, we will tag an image and then push it to our internal registry. You can choose any image in your **“podman images”**. Here you can find an example:
 ```console
-$ podman tag quay.io/mmethot/assisted-service default-route-openshift-image-registry.apps.rna4.cloud.lab.eng.bos.redhat.com/openshift/test-image
+$ podman tag quay.io/xxxxx/assisted-service default-route-openshift-image-registry.apps.rna4.cloud.lab.eng.bos.redhat.com/openshift/test-image
 ```
 
 Then, we need to get our image registry password, we can get it with following command:
 ```console
 $ echo $(oc whoami -t)
-sha256~Wh60WhO3JEMW1vmO0TaujxQVI_VT43eoBikbECXXGL0
+sha256~Wh60WhO3JEMW1vmO0TaujxQVI_VT43eoBikb
 ```
 
 Now, we can push our image to our registry:
