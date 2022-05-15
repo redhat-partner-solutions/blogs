@@ -33,7 +33,7 @@ Each virtual machine for Control Plane nodes of Openshift cluster should have at
 - Memory: 24GB
 - Disk: 120gb
 
-Make sure that firewall **“masquerade”** is **“yes”** because after the installation of Ceph this turns into **“no”**. If this stays in **“no”**, Crucible installation fails. 
+**Note:** Make sure that firewall **“masquerade”** is **“yes”** because after the installation of Ceph this turns into **“no”**. If this stays in **“no”**, Crucible installation fails. 
 
 You can check this configuration in Bastion host with following command:
 
