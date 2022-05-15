@@ -62,8 +62,10 @@ $ firewall-cmd --zone=public --add-masquerade
 ```
 ## Installation Steps ##
 
-Inventory files of our 2 OCP  clusters can be retrieved here:
+Crucible Inventory files of our 2 OCP  clusters can be retrieved here:
 
+![Cluster1 Inventory YML](addmat/vCP1inventory.yml)
+![Cluster2 Inventory YML](addmat/vCP2inventory.yml)
 
 When inventory files for our cluster is ready, we can start the crucible deployment with following:
 ```console
