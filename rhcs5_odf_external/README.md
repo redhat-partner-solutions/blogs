@@ -29,11 +29,11 @@ In order to use these playbooks to deploy OpenShift, the availability of a jump/
 For this lab based deployment guide we will try to create 2 clusters, the playbook can be ran on separate inventory files to deploy OpenShift’s control plane as 1 Virtual Machines per baremetal nodes and 3 nodes in total.
 
 Each virtual machine for Control Plane nodes of Openshift cluster should have at least following specifications:
-vCPU: 6
-Memory: 24GB
-Disk: 120gb
+- vCPU: 6
+- Memory: 24GB
+- Disk: 120gb
 
-Make sure that firewall “masquerade” is “yes” because after the installation of Ceph this turns into “no”. If this stays in “no”, Crucible installation fails. 
+Make sure that firewall **“masquerade”** is **“yes”** because after the installation of Ceph this turns into **“no”**. If this stays in **“no”**, Crucible installation fails. 
 
 You can check this configuration in Bastion host with following command:
 
@@ -55,7 +55,7 @@ public (active)
   rich rules:
 ```
 
-If it is not “yes”, you can enable it with following command:
+If it is not **“yes”**, you can enable it with following command:
 
 ```console
 $ firewall-cmd --zone=public --add-masquerade
