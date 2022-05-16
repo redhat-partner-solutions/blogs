@@ -167,12 +167,12 @@ bastion.rna3.cloud.lab.eng.bos.redhat.com
 
 ### Enabling password-less SSH for ansible ###
 Generate the SSH key pair in bastion host, accept the default file name and leave the passphrase empty:
-```
+```console
 $ ssh-keygen
 ```
 
 Copy the public key to all nodes in the storage cluster.
-```
+```console
 ssh-copy-id root@metal1
 ssh-copy-id root@metal2
 ssh-copy-id root@metal3
