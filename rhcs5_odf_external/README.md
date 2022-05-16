@@ -558,7 +558,7 @@ sha256~Wh60WhO3JEMW1vmO0TaujxQVI_VT43eoBikb
 
 Now, we can push our image to our registry:
 ```console
-$ podman push default-route-openshift-image-registry.apps.rna4.cloud.lab.eng.bos.redhat.com/openshift/test-image --creds kubeadmin:sha256~Wh60WhO3JEMW1vmO0TaujxQVI_VT43eoBikbECXXGL0
+$ podman push default-route-openshift-image-registry.apps.rna4.cloud.lab.eng.bos.redhat.com/openshift/test-image --creds kubeadmin:sha256~Wh60WhO3JEMW1vmO0TaujxQVI_VT43eoBikb
 ```
 
 In order to verify that, image is being pushed to our Ceph-FS, we can connect to Ceph GUI and check File Sytems tab on the left hand side.
