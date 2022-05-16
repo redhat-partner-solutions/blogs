@@ -94,7 +94,7 @@ Later on, we need to configure the proxy settings in your browser. In Firefox, y
 ![Sync Background](images/IMAGE5.png)
 
 Lastly, we need to configure local configuration to resolve the hostnames. Add the following entries in your /etc/hosts file:
-```console
+```
 10.19.8.1	api.rna3.cloud.lab.eng.bos.redhat.com
 10.19.8.3	oauth-openshift.apps.rna3.cloud.lab.eng.bos.redhat.com
 10.19.8.3	console-openshift-console.apps.rna3.cloud.lab.eng.bos.redhat.com
