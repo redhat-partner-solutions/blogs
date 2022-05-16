@@ -155,7 +155,7 @@ Click on Red Hat Ceph Storage and make sure that Ceph 5 Tools repositories are s
 
 ### Configuring Ansible inventory location ###
 Once cephadm-ansible is installed please navigate to the **/usr/share/cephadm-ansible/** directory and create/edit hosts file:
-```console
+```
 bastion.rna3.cloud.lab.eng.bos.redhat.com
 metal1.rna3.cloud.lab.eng.bos.redhat.com
 metal2.rna3.cloud.lab.eng.bos.redhat.com
@@ -167,12 +167,12 @@ bastion.rna3.cloud.lab.eng.bos.redhat.com
 
 ### Enabling password-less SSH for ansible ###
 Generate the SSH key pair in bastion host, accept the default file name and leave the passphrase empty:
-```console
+```
 $ ssh-keygen
 ```
 
 Copy the public key to all nodes in the storage cluster.
-```console
+```
 ssh-copy-id root@metal1
 ssh-copy-id root@metal2
 ssh-copy-id root@metal3
