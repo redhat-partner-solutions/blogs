@@ -1,4 +1,4 @@
-# Deploying RHCS using minimum hardware resources and efficiently making it work for multiple clusters via ODF
+# Deploying RHCS using minimum hardware and making it work for multiple OCP clusters via ODF
 
 Having a software defined storage fabric such as Red Hat Ceph Storage (RHCS) is advantageous to provide file, block and object storage services for workloads deployed on top of Openshift. In many cases Openshift clusters are required to have a storage solution in place that is highly available for multiple clusters to leverage and which can be easily deployed using a minimum hardware footprint. The approach described below can help use the hardware resources efficiently.
 
