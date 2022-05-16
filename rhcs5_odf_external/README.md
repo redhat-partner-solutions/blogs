@@ -154,7 +154,7 @@ Click on Red Hat Ceph Storage and make sure that Ceph 5 Tools repositories are s
 ![Sync Background](images/IMAGE8.png)
 
 ### Configuring Ansible inventory location ###
-Once cephadm-ansible is installed please navigate to the /usr/share/cephadm-ansible/ directory and create and edit hosts file:
+Once cephadm-ansible is installed please navigate to the **/usr/share/cephadm-ansible/** directory and create/edit hosts file:
 ```console
 bastion.rna3.cloud.lab.eng.bos.redhat.com
 metal1.rna3.cloud.lab.eng.bos.redhat.com
@@ -205,14 +205,14 @@ Host bastion
 
 ### Running the preflight playbook ###
 
-This Ansible playbook configures the Ceph repository and prepares the storage cluster for bootstrapping. It also installs some prerequisites, such as podman, lvm2, chronyd, and cephadm. The default location for cephadm-ansible and cephadm-preflight.yml is /usr/share/cephadm-ansible 
+This Ansible playbook configures the Ceph repository and prepares the storage cluster for bootstrapping. It also installs some prerequisites, such as podman, lvm2, chronyd, and cephadm. The default location for cephadm-ansible and cephadm-preflight.yml is **/usr/share/cephadm-ansible** 
 ```console
 $ ansible-playbook -i /usr/share/cephadm-ansible/hosts cephadm-preflight.yml --extra-vars "ceph_origin=rhcs"
 ```
 
 ### Bootstrapping a new storage cluster ###
 
-On the bastion host /root directory create service configuration **inital-config.yaml** file for your storage cluster. The example file directs cephadm bootstrap to configure the initial host and two additional hosts:
+On the Bastion host **/root** directory create service configuration **inital-config.yaml** file for your storage cluster. The example file directs cephadm bootstrap to configure the initial host and two additional hosts:
 ```yml
 service_type: host
 addr: 10.19.9.21
@@ -267,14 +267,14 @@ On the bastion host **/root** directory, create a JSON file which will include l
 }
 ```
 
-Under the **/root** directory in Bastion host, bootstrap the storage cluster with the --apply-spec option:
+Under the **/root** directory in Bastion host, bootstrap the storage cluster with the **--apply-spec** option:
 ```console
 $ cephadm bootstrap --apply-spec initial-config159.yaml --mon-ip 10.19.9.21 --allow-fqdn-hostname --registry-json mylogin.json --initial-dashboard-password=redhat --dashboard-password-noupdate
 ```
 
 **NOTE:** mon-ip: should be of the same node from where the command is being executed.
 
-After if everything goes well, Ceph cluster will get deployed and it is possible reach Ceph GUI from https://<bastion_host_IP>:8443
+If everything goes well, Ceph cluster will get deployed and it is possible reach Ceph GUI from **https://<bastion_host_IP>:8443**. You can use **admin/redhat** as login information to GUI. In order to check Ceph's service containers are fully deployed, connect to each host and check containers are working (**podman ps --all**). Also, please verify that Ceph Health Status is OK. It may take some time get all Ceph's Services get fully working.
 
 ### Openshift Data Foundation Installation & Setup ###
 1. Log in to the OpenShift Web Console.
@@ -282,26 +282,28 @@ After if everything goes well, Ceph cluster will get deployed and it is possible
 
 ![Sync Background](images/IMAGE9.png)
 3. Set the following options on the Install Operator page:
-    - Update Channel as stable-4.9.
-    - Installation Mode as A specific namespace on the cluster.
-    - Installed Namespace as Operator recommended namespace openshift-storage. If Namespace openshift-storage does not exist, it is created during the operator installation.
-    - Select Approval Strategy as Automatic or Manual.
-    - If you select Automatic updates, then the Operator Lifecycle Manager (OLM) automatically upgrades the running instance of your Operator without any intervention.
-    - If you select Manual updates, then the OLM creates an update request. As a cluster administrator, you must then manually approve that update request to update the Operator to a newer version.
-    - Ensure that the Enable option is selected for the Console plugin.
-    - Click Install.
+    
+  - Update Channel as stable-4.9.
+  - Installation Mode as A specific namespace on the cluster.
+  - Installed Namespace as Operator recommended namespace openshift-storage. If Namespace openshift-storage does not exist, it is created during the operator installation.
+  - Select Approval Strategy as Automatic or Manual.
+  - If you select Automatic updates, then the Operator Lifecycle Manager (OLM) automatically upgrades the running instance of your Operator without any intervention.
+  - If you select Manual updates, then the OLM creates an update request. As a cluster administrator, you must then manually approve that update request to update the Operator to a newer version.
+  - Ensure that the Enable option is selected for the Console plugin.
+  - Click Install.
 
-### Prerequisites before Creating External Connection ###
-You need to create a new OpenShift Data Foundation cluster after you install the OpenShift Data Foundation operator.
+### Prerequisites before Creating External Connection on ODF ###
+You need to create a new OpenShift Data Foundation Cluster after you install the OpenShift Data Foundation operator.
 
 #### RBD Pool Creation ####
 The external Ceph cluster should have an RBD pool pre-configured. Red Hat recommends using a separate pool for each OpenShift Data Foundation cluster.
 
-On the bastion host create new RBD pools:
+On the bastion host create new RBD pools for each OCS Cluster:
 ```console
 $ ceph osd pool create ceph-rbd1 3 3 replicated
 $ ceph osd pool application enable ceph-rbd1 rbd --yes-i-really-mean-it
 $ rbd pool init -p ceph-rbd1
+
 $ ceph osd pool create ceph-rbd2 3 3 replicated
 $ ceph osd pool application enable ceph-rbd2 rbd --yes-i-really-mean-it
 $ rbd pool init -p ceph-rbd2
@@ -334,14 +336,14 @@ $ ceph orch apply mds cephfs --placement="3 metal1.rna3.cloud.lab.eng.bos.redhat
 
 ### External Connection Setup to RHCS ###
 After all prerequisites are completed, we can continue with StorageSystem(external connection) creation from Openshift GUI:
-1. Click Operators → Installed Operators to view all the installed operators. 		
-2. Ensure that the Project selected is openshift-storage. 		
+1. Click **erators → Installed**perators to view all the installed operators. 		
+2. Ensure that the Project selected is **enshift-storage**		
 3. Click OpenShift Data Foundation and then click Create StorageSystem. 
 4. In the Backing storage page, select the following options: 			
-5. Select Connect an external storage platform from the available options. 		
-6. Select Red Hat Ceph Storage for Storage platform. 				
-7. Click Next.
-8. In the Connection details page, provide the necessary information: 		
+    - Select Connect an external storage platform from the available options. 		
+    - Select Red Hat Ceph Storage for Storage platform. 				
+    - Click Next.
+5. In the Connection details page, provide the necessary information: 		
 Click on the Download Script link to download the python script for extracting Ceph cluster details.(If this downloaded script is empty, make sure your Openshift version is 4.9.26/27/28, there is a bug in 4.9.0 version which we have faced) Save this file to the bastion host. Run this script with related information from your ceph cluster on the bastion host. It will generate a JSON file which will be needed to save for uploading to ODF. You can check the example from our setup:		
 
 ```console
@@ -352,10 +354,10 @@ Save the JSON output from this script to a file with .json extension in your loc
 ```json
 [{"name": "rook-ceph-mon-endpoints", "kind": "ConfigMap", "data": {"data": "bastion.rna3.cloud.lab.eng.bos.redhat.com=10.19.9.21:6789", "maxMonId": "0", "mapping": "{}"}}, {"name": "rook-ceph-mon", "kind": "Secret", "data": {"admin-secret": "admin-secret", "fsid": "c3119c1c-c087-11ec-8518-b8599fb1167d", "mon-secret": "mon-secret"}}, {"name": "rook-ceph-operator-creds", "kind": "Secret", "data": {"userID": "client.ocs", "userKey": "AQCOz19iVgMSJxAAJ195Kh4D75yjTOh6YGI8+Q=="}}, {"name": "rook-csi-rbd-node", "kind": "Secret", "data": {"userID": "csi-rbd-node", "userKey": "AQCOz19iNmjEJxAAbPfP1NmSQI3p4aBIhMvNkQ=="}}, {"name": "ceph-rbd", "kind": "StorageClass", "data": {"pool": "ceph-rbd2"}}, {"name": "monitoring-endpoint", "kind": "CephCluster", "data": {"MonitoringEndpoint": "10.19.9.21,10.19.9.20,10.19.9.19,10.19.9.18", "MonitoringPort": "9283"}}, {"name": "rook-ceph-dashboard-link", "kind": "Secret", "data": {"userID": "ceph-dashboard-link", "userKey": "https://10.19.9.21:8443/"}}, {"name": "rook-csi-rbd-provisioner", "kind": "Secret", "data": {"userID": "csi-rbd-provisioner", "userKey": "AQCOz19ilI5TKBAAsSQrYC8q9zLP2IK0l8YXUg=="}}, {"name": "rook-csi-cephfs-provisioner", "kind": "Secret", "data": {"adminID": "csi-cephfs-provisioner", "adminKey": "AQCOz19iAll1KRAAf9diSUJQf5kabJLCHDCZhw=="}}, {"name": "rook-csi-cephfs-node", "kind": "Secret", "data": {"adminID": "csi-cephfs-node", "adminKey": "AQCOz19ihx3dKBAAfEhpSqX+a3oAVt7QD4H/kw=="}}, {"name": "cephfs", "kind": "StorageClass", "data": {"fsName": "cephfs", "pool": "cephfs_data"}}, {"name": "ceph-rgw", "kind": "StorageClass", "data": {"endpoint": "10.19.9.20:80", "poolPrefix": "default"}}, {"name": "rgw-admin-ops-user", "kind": "Secret", "data": {"accessKey": "EYHXSYHVDXSYZUW7AA3C", "secretKey": "if0atcE9vQjXyhT4wuGqIHcZZulfzxi69pesy0CB"}}]
 ```
-9. Click Browse to select and upload the JSON file (The content of the JSON file is populated and displayed in the text box)
-10. Click Next (Next button is enabled only after you upload the .json file) 	
-11. In the Review and create page, review if all the details are correct. To modify any configuration settings, click Back to go back to the previous configuration page. 		
-12. Click Create StorageSystem.
+6. Click Browse to select and upload the JSON file (The content of the JSON file is populated and displayed in the text box)
+7. Click Next (Next button is enabled only after you upload the .json file) 	
+8. In the Review and create page, review if all the details are correct. To modify any configuration settings, click Back to go back to the previous configuration page. 		
+9. Click Create StorageSystem.
 
 ### Verification of External Connection Setup ###
 #### Verifying the state of the pods ####
@@ -365,7 +367,7 @@ Save the JSON output from this script to a file with .json extension in your loc
 ![Sync Background](images/IMAGE10.png)
 
 #### Verifying that the storage classes are created and listed ####
-1. Click Storage → Storage Classes from the left pane of the OpenShift Web Console. 						
+1. Click **Storage → Storage Classes** from the left pane of the OpenShift Web Console. 						
 2. Verify that the following storage classes are created with the OpenShift Data Foundation cluster creation: 						
     - ocs-external-storagecluster-ceph-rbd 						
     - ocs-external-storagecluster-ceph-rgw 						
@@ -374,7 +376,7 @@ Save the JSON output from this script to a file with .json extension in your loc
 
 ![Sync Background](images/IMAGE11.png)
 
-**NOTE:** If an MDS is not deployed in the external cluster, ocs-external-storagecluster-cephfs storage class will not be created. If you forgot to enable MDS in your Ceph Cluster please refer to Enabling MDS Service on Ceph Cluster. If RGW is not deployed in the external cluster, the ocs-external-storagecluster-ceph-rgw storage class will not be created.
+**NOTE:** If an MDS is not deployed in the external cluster, **ocs-external-storagecluster-cephfs** storage class will not be created. If you forgot to enable MDS in your Ceph Cluster please refer to Enabling MDS Service on Ceph Cluster. If RGW is not deployed in the external cluster, the **ocs-external-storagecluster-ceph-rgw** storage class will not be created.
 
 #### Verifying that Ceph cluster is connected ####
 Run the following command to verify if the OpenShift Data Foundation cluster is connected to the external Red Hat Ceph Storage cluster.   
@@ -383,7 +385,7 @@ $ oc get ceph cluster -n openshift-storage
 ```
 
 #### Verifying that storage cluster is ready ####
-Run the following command to verify if the storage cluster is ready and the External option is set to true.
+Run the following command to verify if the storage cluster is ready and the External option is set to **true**.
 ```console
 $ oc get storagecluster -n openshift-storage
 ```
@@ -449,13 +451,13 @@ Next thing we need to check is connecting to our Ceph GUI and see if our PVC is 
 
 Here in the screenshot above, we can see that our PVC is created as RBD image on our Ceph Cluster in the “ceph-rbd1” pool. Our first openshift cluster was attached to “ceph-rbd1” RBD pool in our Ceph Cluster and second openshift cluster was attached to “ceph-rbd2” RBD pool.
 
-Last thing we can check about this rbd storage is attached to the storage of our pod. So, we can connect to the terminal of our pod in Openshift GUI and run “df -h”.
+Last thing we can check about this rbd storage is attached to the storage of our pod. So, we can connect to the terminal of our pod in Openshift GUI and run **“df -h”**.
 
 ![Sync Background](images/IMAGE13.png)
 
 Here, we can see that our RBD storage is attached in the volume mounts on **/usr/share/busybox**.
 
-**Note:** Similar test can be also done for CephFS connection. Only change needed is editing the storageclass to **“ocs-external-storagecluster-cephfs”** in PVC definition yml.
+**Note:** Similar test can be also done for CephFS connection. Only change needed is editing the storageclass to **“ocs-external-storagecluster-cephfs”** in PVC definition YML.
 
 #### Testing Image Registry to use External Connection ####
 OpenShift Container Platform provides a built-in Container Image Registry which runs as a standard workload on the cluster. A registry is typically used as a publication target for images built on the cluster as well as a source of images for workloads running on the cluster.
@@ -473,11 +475,11 @@ OpenShift Container Platform provides a built-in Container Image Registry which 
 2. Configure the cluster’s Image Registry to use the new Persistent Volume Claim.
     - To configure your registry to use storage, change the spec.storage.pvc in the configs.imageregistry/cluster resource
     - Verify that you do not have a registry pod:
-
 ```console
 $ oc get pod -n openshift-image-registry -l docker-registry=default
 No resourses found in openshift-image-registry namespace
 ```
+
     - Edit the registry configuration:
     
 ```console
@@ -513,7 +515,7 @@ Then, change the line **managementState: Removed** To **managementState: Managed
       - Scroll down to Volumes and verify that the registry-storage volume has a Type that matches your new Persistent Volume Claim, for example, ocs4registry.
       
 ##### Exposing Image Registry #####
-In order to access our image registry outside the openshift cluster(for example from Bastion host) and make some tests, we need to first expose it. To expose the registry using the defaultRoute:
+In order to access our image registry outside the Openshift Cluster(for example from Bastion host) and make some tests, we need to first expose it. To expose the registry using the **defaultRoute**:
 
 1. Set defaultRoute to true:
 ```console
