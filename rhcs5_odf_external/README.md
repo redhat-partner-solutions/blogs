@@ -103,6 +103,17 @@ Lastly, we need to configure local configuration to resolve the hostnames. Add t
 10.19.8.3	prometheus-k8s-openshift-monitoring.apps.rna3.cloud.lab.eng.bos.redhat.com
 10.19.8.3	alertmanager-main-openshift-monitoring.apps.rna3.cloud.lab.eng.bos.redhat.com
 ```
+## Connecting to Openshift CLI ##
+In order to connect to Openshift CLI we need to ensure that we have the kubeconfigs for both clusters present on our bastion host.
+
+Using the post-install playbook from crucible one can generate these kubeconfigs using the commands below (Please note that the cluster_id must be changed for specific clusters accordingly):
+```console
+$ ansible-playbook -i vCP2inventory.yml post_install.yml -e cluster_id=4b4b8007-6e5a-45c6-bd7a-8a2f9b32c87b
+```
+Once the kubeconfig is available on the bastian host we can export the exact location of it to a variable KUBECONFIG
+```console
+$ export KUBECONFIG=/home/redhat/rna3-kubeconfig
+```
 
 # Red Hat Ceph Storage 5 Installation & Setup
 
