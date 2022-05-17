@@ -217,7 +217,7 @@ all:
       vars:
         # Set the login information for any BMCs. Note that these will be SET on the vm_host virtual BMC.
         bmc_user: "root"
-        bmc_password: "100Mgmt-"
+        bmc_password: "XXXXX"
       children:
         masters:
           vars:
