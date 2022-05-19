@@ -20,7 +20,7 @@ The RHCS cluster will also be deployed on top of the 3 BM nodes using the instal
 Crucible automation is a set of playbooks for automating the creation of an OpenShift Container Platform cluster on premise using the Developer Preview version of the OpenShift Assisted Installer.  The key benefits of using crucible automation for our lab environment is it allows us to deploy base Red Hat Openshift 4.9 control planes for both clusters in separate virtual machines across our three physical servers. 
 
 For our particular deployment we need to ensure complete segregation of networks and using crucible this can be automated and all the prerequisites for both Openshift Clusters (DNS/DHCP/Bridging/VLANS) are set up with ease.
-Clone our crucible repository and enter the cloned repository.
+Clone crucible repository using the commands below:
 
 ```console
 $ git clone https://github.com/redhat-partner-solutions/crucible-public
