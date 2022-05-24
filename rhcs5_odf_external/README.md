@@ -347,8 +347,8 @@ $ ceph orch apply mds cephfs --placement="3 metal1.rna3.cloud.lab.eng.bos.redhat
 
 ### External Connection Setup to RHCS ###
 After all prerequisites are completed, we can continue with StorageSystem(external connection) creation from Openshift GUI:
-1. Click **erators → Installed**perators to view all the installed operators. 		
-2. Ensure that the Project selected is **enshift-storage**		
+1. Click **Operators → Installed** to view all the installed operators. 		
+2. Ensure that the Project selected is **Openshift-storage**		
 3. Click OpenShift Data Foundation and then click Create StorageSystem. 
 4. In the Backing storage page, select the following options: 			
     - Select Connect an external storage platform from the available options. 		
