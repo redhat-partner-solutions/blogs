@@ -90,8 +90,8 @@ $ ssh -f -N -D 8085 root@10.19.6.21
 Every time you want to connect to GUI, please make sure that this tunnel is active.
 Later on, we need to configure the proxy settings in your browser. In Firefox, you configure your proxy settings from this menu.
 
-![Sync Background](images/IMAGE4.png)
-![Sync Background](images/IMAGE5.png)
+![Sync Background](images/IMAGE41.png)
+![Sync Background](images/IMAGE51.png)
 
 Lastly, we need to configure local configuration to resolve the hostnames. Add the following entries in your /etc/hosts file:
 ```
