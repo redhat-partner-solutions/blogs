@@ -73,11 +73,11 @@ $ ansible-playbook -i vCP2inventory.yml site.yml -vv
 ```
 When deployment finishes, we can see the GUI address, password, kubeconfig file in our assisted installer GUI. It is possible to reach Assisted Installer GUI from http://<bastion_IP>:8080/clusters
 
-![Sync Background](images/IMAGE2.png)
+![Sync Background](images/IMAGE17.png)
 
 If you click on one of the clusters, you can see the details about that cluster.
 
-![Sync Background](images/IMAGE3.png)
+![Sync Background](images/IMAGE18.png)
 
 ## Connecting to Openshift GUI ##
 
