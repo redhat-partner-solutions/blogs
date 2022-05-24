@@ -486,13 +486,11 @@ OpenShift Container Platform provides a built-in Container Image Registry which 
 2. Configure the cluster’s Image Registry to use the new Persistent Volume Claim.
     - To configure your registry to use storage, change the spec.storage.pvc in the configs.imageregistry/cluster resource
     - Verify that you do not have a registry pod:
-    - Edit the registry configuration:
 ```console
 $ oc get pod -n openshift-image-registry -l docker-registry=default
 No resourses found in openshift-image-registry namespace
 ```
-
-   
+    - Edit the registry configuration:
     
 ```console
 $ oc edit configs.imageregistry.operator.openshift.io
@@ -502,7 +500,6 @@ storage:
       claim: ocs4registry
 ...
 
-```
     - Check the clusteroperator status:
     
 ```console
