@@ -509,7 +509,7 @@ $ oc edit configs.imageregistry/cluster
 ```
 Then, change the line **managementState: Removed** To **managementState: Managed**
 
-![Sync Background](images/IMAGE14.png)
+![Sync Background](images/IMAGE16.png)
 
     - Verify that the new configuration is being used.
       - Click Workloads → Pods.
