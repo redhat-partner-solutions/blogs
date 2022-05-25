@@ -17,7 +17,7 @@ The RHCS cluster will also be deployed on top of the 3 BM nodes using the instal
 
 ## Crucible Automation ##
 
-Crucible automation is a set of playbooks for installing an OpenShift Container platform cluster on premise using the developer preview version of the OpenShift Assisted Installer.  The key benefits of using crucible automation for our lab environment is it allows us to deploy base Red Hat Openshift 4.9 control planes for both clusters in separate virtual machines across our three physical servers. 
+Crucible automation is a set of playbooks for installing an OpenShift Container Platform cluster on premise using the developer preview version of the OpenShift Assisted Installer.  The key benefits of using crucible automation for our lab environment is it allows us to deploy base Red Hat Openshift 4.9 control planes for both clusters in separate virtual machines across our three physical servers. 
 
 For our particular deployment we need to ensure complete segregation of networks and using crucible this can be automated and all the prerequisites for both Openshift Clusters (DNS/DHCP/Bridging/VLANS) are set up with ease.
 Clone crucible repository using the commands below:
@@ -135,7 +135,7 @@ The cephadm utility consists of two main components:
 
 ### Registering the Red Hat Ceph Storage nodes ###
 
-In order to register the Red Hat Ceph Storage nodes to the CDN and to attach subscriptions we need to nake sure that we have the following repositories enabled as part of our Red Hat subscription entitlements on all the hosts in our lab enviroment.
+In order to register the Red Hat Ceph Storage nodes to the CDN and to attach subscriptions, we need to make sure that we have the following repositories enabled as part of our Red Hat subscription entitlements on all the hosts in our lab enviroment.
 ```console
 $ subscription-manager register (Red Hat username:password)
 $ subscription-manager list --available --matches 'Red Hat Ceph Storage'
@@ -216,7 +216,7 @@ Host bastion
 
 ### Running the preflight playbook ###
 
-This cephadmn-preflight.yml playbook configures the Ceph repository and prepares the storage cluster for bootstrapping. It also installs some prerequisites, such as podman, lvm2, chronyd, and cephadm. The default location for cephadm-ansible and cephadm-preflight.yml is **/usr/share/cephadm-ansible** 
+This cephadmn-preflight.yml playbook configures the Red Hat Ceph Storage repository and prepares the storage cluster for bootstrapping. It also installs some prerequisites, such as podman, lvm2, chronyd, and cephadm. The default location for cephadm-ansible and cephadm-preflight.yml is **/usr/share/cephadm-ansible** 
 ```console
 $ ansible-playbook -i /usr/share/cephadm-ansible/hosts cephadm-preflight.yml --extra-vars "ceph_origin=rhcs"
 ```
@@ -285,7 +285,7 @@ $ cephadm bootstrap --apply-spec initial-config159.yaml --mon-ip 10.19.9.21 --al
 
 **NOTE:** mon-ip: should be of the same node from where the command is being executed.
 
-If everything goes well, Ceph cluster will get deployed and one can reach the Ceph GUI from **https://<bastion_host_IP>:8443**. We can use **admin/redhat** as login information to GUI. In order to check Ceph's service containers are fully deployed, we connect to each host and check containers are working (**podman ps --all**). Also, we have to verify that Ceph Health Status is OK. It may take some time for all Ceph's Services to show stable working state.
+If everything goes well, Red Hat Ceph Storage cluster will get deployed and one can reach the Ceph GUI from **https://<bastion_host_IP>:8443**. We can use **admin/redhat** as login information to GUI. In order to check Ceph's service containers are fully deployed, we connect to each host and check containers are working (**podman ps --all**). Also, we have to verify that Ceph Health Status is OK. It may take some time for all Ceph's Services to show stable working state.
 
 ### Openshift Data Foundation Installation & Setup ###
 1. We will log in to the OpenShift Web Console.
