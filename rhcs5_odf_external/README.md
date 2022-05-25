@@ -17,10 +17,10 @@ The RHCS cluster will also be deployed on top of the 3 BM nodes using the instal
 
 ## Crucible Automation ##
 
-Crucible automation is a set of playbooks for automating the creation of an OpenShift Container Platform cluster on premise using the Developer Preview version of the OpenShift Assisted Installer.  The key benefits of using crucible automation for our lab environment is it allows us to deploy base Red Hat Openshift 4.9 control planes for both clusters in separate virtual machines across our three physical servers. 
+Crucible automation is a set of playbooks for installing an OpenShift Container Platform cluster on premise using the developer preview version of the OpenShift Assisted Installer.  The key benefits of using crucible automation for our lab environment is it allows us to deploy base Red Hat Openshift 4.9 control planes for both clusters in separate virtual machines across our three physical servers. 
 
 For our particular deployment we need to ensure complete segregation of networks and using crucible this can be automated and all the prerequisites for both Openshift Clusters (DNS/DHCP/Bridging/VLANS) are set up with ease.
-Clone our crucible repository and enter the cloned repository.
+Clone crucible repository using the commands below:
 
 ```console
 $ git clone https://github.com/redhat-partner-solutions/crucible-public
@@ -71,27 +71,27 @@ When inventory files for our cluster is ready, we can start the crucible deploym
 ```console
 $ ansible-playbook -i vCP2inventory.yml site.yml -vv
 ```
-When deployment finishes, we can see the GUI address, password, kubeconfig file in our assisted installer GUI. It is possible to reach Assisted Installer GUI from http://<bastion_IP>:8080/clusters
+When deployment finishes, we can see the GUI address, password, kubeconfig file in our assisted installer GUI. It is possible to reach Assisted Installer GUI from **http://<bastion_IP>:8080/clusters**
 
-![Sync Background](images/IMAGE2.png)
+![Sync Background](images/IMAGE21.png)
 
 If you click on one of the clusters, you can see the details about that cluster.
 
-![Sync Background](images/IMAGE3.png)
+![Sync Background](images/IMAGE31.png)
 
 ## Connecting to Openshift GUI ##
 
 As we have deployed our Openshift clusters on separate tagged VLANs, we need to enable SSH tunnel and proxy settings on our browser. 
-First we need to create the SSH tunnel to our bastion host. As our Openshift clusters use our Bastion host as gateway, we need to create the SSH tunnel to our bastion host.  In Linux, you  can create this SSH tunnel with this command:
+First we need to create the SSH tunnel to our bastion host. We can create the SSH tunnel using this command:
 
 ```console
 $ ssh -f -N -D 8085 root@10.19.6.21
 ```
-Every time you want to connect to GUI, please make sure that this tunnel is active.
-Later on, we need to configure the proxy settings in your browser. In Firefox, you configure your proxy settings from this menu.
+Every time we want to connect to GUI we have to make sure that this tunnel is active.
+To configure the proxy settings in our browser, In Firefox, we configure our proxy settings from this menu.
 
-![Sync Background](images/IMAGE4.png)
-![Sync Background](images/IMAGE5.png)
+![Sync Background](images/IMAGE41.png)
+![Sync Background](images/IMAGE51.png)
 
 Lastly, we need to configure local configuration to resolve the hostnames. Add the following entries in your /etc/hosts file:
 ```
@@ -135,7 +135,7 @@ The cephadm utility consists of two main components:
 
 ### Registering the Red Hat Ceph Storage nodes ###
 
-Registering the Red Hat Ceph Storage nodes to the CDN and attaching subscriptions. Please ensure that you have the following repositories enabled and correctly as part of your Red Hat subscription entitlements on all your hosts.
+In order to register the Red Hat Ceph Storage nodes to the CDN and to attach subscriptions, we need to make sure that we have the following repositories enabled as part of our Red Hat subscription entitlements on all the hosts in our lab enviroment.
 ```console
 $ subscription-manager register (Red Hat username:password)
 $ subscription-manager list --available --matches 'Red Hat Ceph Storage'
@@ -165,7 +165,7 @@ Click on Red Hat Ceph Storage and make sure that Ceph 5 Tools repositories are s
 ![Sync Background](images/IMAGE8.png)
 
 ### Configuring Ansible inventory location ###
-Once cephadm-ansible is installed please navigate to the **/usr/share/cephadm-ansible/** directory and create/edit hosts file:
+Once cephadm-ansible is installed we navigate to the **/usr/share/cephadm-ansible/** directory and create/edit hosts file:
 ```
 bastion.rna3.cloud.lab.eng.bos.redhat.com
 metal1.rna3.cloud.lab.eng.bos.redhat.com
@@ -177,12 +177,12 @@ bastion.rna3.cloud.lab.eng.bos.redhat.com
 ```
 
 ### Enabling password-less SSH for ansible ###
-Generate the SSH key pair in bastion host, accept the default file name and leave the passphrase empty:
+Then we generate the SSH key pair in bastion host, we will accept the default file name and leave the passphrase empty:
 ```console
 $ ssh-keygen
 ```
 
-Copy the public key to all nodes in the storage cluster.
+After this we copy the public key to all nodes in the storage cluster.
 ```console
 ssh-copy-id root@metal1
 ssh-copy-id root@metal2
@@ -190,7 +190,7 @@ ssh-copy-id root@metal3
 ssh-copy-id root@bastion
 ```
 
-After you create and copy ssh keys to related hosts, you can try to check ssh connection:
+Once we create and copy ssh keys to related hosts, we can verify ssh connections:
 ```console
 ssh root@metal1
 ssh root@metal2
@@ -198,7 +198,7 @@ ssh root@metal3
 ssh root@bastion
 ```
 
-Create the user’s SSH config file:
+Lastly, we create the user’s SSH config file:
 ```yml
 Host metal1
    Hostname metal1.rna3.cloud.lab.eng.bos.redhat.com
@@ -216,14 +216,14 @@ Host bastion
 
 ### Running the preflight playbook ###
 
-This Ansible playbook configures the Ceph repository and prepares the storage cluster for bootstrapping. It also installs some prerequisites, such as podman, lvm2, chronyd, and cephadm. The default location for cephadm-ansible and cephadm-preflight.yml is **/usr/share/cephadm-ansible** 
+This cephadmn-preflight.yml playbook configures the Red Hat Ceph Storage repository and prepares the storage cluster for bootstrapping. It also installs some prerequisites, such as podman, lvm2, chronyd, and cephadm. The default location for cephadm-ansible and cephadm-preflight.yml is **/usr/share/cephadm-ansible** 
 ```console
 $ ansible-playbook -i /usr/share/cephadm-ansible/hosts cephadm-preflight.yml --extra-vars "ceph_origin=rhcs"
 ```
 
 ### Bootstrapping a new storage cluster ###
 
-On the Bastion host **/root** directory create service configuration **inital-config.yaml** file for your storage cluster. The example file directs cephadm bootstrap to configure the initial host and two additional hosts:
+On the Bastion host **/root** directory we will create service configuration **inital-config.yaml** file for our storage cluster. The example file directs cephadm bootstrap to configure the initial host and two additional hosts:
 ```yml
 service_type: host
 addr: 10.19.9.21
@@ -269,7 +269,7 @@ data_devices:
     - /dev/nvme1n1
 ```
 
-On the bastion host **/root** directory, create a JSON file which will include login and password information and then refer to this JSON file during bootstrapping command. Create the JSON file. In this example, the file is named **mylogin.json**.
+On the bastion host **/root** directory, we will create a JSON file which will include login and password information. We will refer to this JSON file during bootstrapping command. We create the JSON file using the example below, the file is named **mylogin.json**.
 ```json
 {
  "url":"registry.redhat.io",
@@ -278,21 +278,21 @@ On the bastion host **/root** directory, create a JSON file which will include l
 }
 ```
 
-Under the **/root** directory in Bastion host, bootstrap the storage cluster with the **--apply-spec** option:
+Once the **mylogin.json** file is saved inside the **/root** directory in bastion host we will bootstrap the storage cluster with the **--apply-spec** option:
 ```console
 $ cephadm bootstrap --apply-spec initial-config159.yaml --mon-ip 10.19.9.21 --allow-fqdn-hostname --registry-json mylogin.json --initial-dashboard-password=redhat --dashboard-password-noupdate
 ```
 
 **NOTE:** mon-ip: should be of the same node from where the command is being executed.
 
-If everything goes well, Ceph cluster will get deployed and it is possible reach Ceph GUI from **https://<bastion_host_IP>:8443**. You can use **admin/redhat** as login information to GUI. In order to check Ceph's service containers are fully deployed, connect to each host and check containers are working (**podman ps --all**). Also, please verify that Ceph Health Status is OK. It may take some time get all Ceph's Services get fully working.
+If everything goes well, Red Hat Ceph Storage cluster will get deployed and one can reach the Ceph GUI from **https://<bastion_host_IP>:8443**. We can use **admin/redhat** as login information to GUI. In order to check Ceph's service containers are fully deployed, we connect to each host and check containers are working (**podman ps --all**). Also, we have to verify that Ceph Health Status is OK. It may take some time for all Ceph's Services to show stable working state.
 
 ### Openshift Data Foundation Installation & Setup ###
-1. Log in to the OpenShift Web Console.
+1. We will log in to the OpenShift Web Console.
 2. Navigate to Operator Hub, search for and install Openshift Data Foundation
 
 ![Sync Background](images/IMAGE9.png)
-3. Set the following options on the Install Operator page:
+3. We will set the following options on the Install Operator page:
     
   - Update Channel as stable-4.9.
   - Installation Mode as A specific namespace on the cluster.
@@ -304,12 +304,12 @@ If everything goes well, Ceph cluster will get deployed and it is possible reach
   - Click Install.
 
 ### Prerequisites before Creating External Connection on ODF ###
-You need to create a new OpenShift Data Foundation Cluster after you install the OpenShift Data Foundation operator.
+We need to create a new OpenShift Data Foundation Cluster after we have installed the OpenShift Data Foundation operator.
 
 #### RBD Pool Creation ####
-The external Ceph cluster should have an RBD pool pre-configured. Red Hat recommends using a separate pool for each OpenShift Data Foundation cluster.
+We will have to make sure that the external Ceph cluster should have an RBD pool pre-configured. Red Hat recommends using a separate pool for each OpenShift Data Foundation cluster.
 
-On the bastion host create new RBD pools for each OCS Cluster:
+On the bastion host we will create new RBD pools for each OCS Cluster:
 ```console
 $ ceph osd pool create ceph-rbd1 3 3 replicated
 $ ceph osd pool application enable ceph-rbd1 rbd --yes-i-really-mean-it
@@ -347,8 +347,8 @@ $ ceph orch apply mds cephfs --placement="3 metal1.rna3.cloud.lab.eng.bos.redhat
 
 ### External Connection Setup to RHCS ###
 After all prerequisites are completed, we can continue with StorageSystem(external connection) creation from Openshift GUI:
-1. Click **erators → Installed**perators to view all the installed operators. 		
-2. Ensure that the Project selected is **enshift-storage**		
+1. Click **Operators → Installed** to view all the installed operators. 		
+2. Ensure that the Project selected is **Openshift-storage**		
 3. Click OpenShift Data Foundation and then click Create StorageSystem. 
 4. In the Backing storage page, select the following options: 			
     - Select Connect an external storage platform from the available options. 		
@@ -390,13 +390,13 @@ Save the JSON output from this script to a file with .json extension in your loc
 **NOTE:** If an MDS is not deployed in the external cluster, **ocs-external-storagecluster-cephfs** storage class will not be created. If you forgot to enable MDS in your Ceph Cluster please refer to Enabling MDS Service on Ceph Cluster. If RGW is not deployed in the external cluster, the **ocs-external-storagecluster-ceph-rgw** storage class will not be created.
 
 #### Verifying that Ceph cluster is connected ####
-Run the following command to verify if the OpenShift Data Foundation cluster is connected to the external Red Hat Ceph Storage cluster.   
+We can run the following command to verify if the OpenShift Data Foundation cluster is connected to the external Red Hat Ceph Storage cluster.   
 ```console
 $ oc get ceph cluster -n openshift-storage
 ```
 
 #### Verifying that storage cluster is ready ####
-Run the following command to verify if the storage cluster is ready and the External option is set to **true**.
+We can run the following command to verify if the storage cluster is ready and the External option is set to **true**.
 ```console
 $ oc get storagecluster -n openshift-storage
 ```
@@ -439,12 +439,12 @@ spec:
       claimName: production-application
 ```
 
-After our PVC and Pod definitions are ready, we can create these resources on our Openshift cluster:
+After we have PVC and Pod definitions ready, we can create these resources on our Openshift cluster:
 ```console
 $ oc apply -f pvc.yml
 ```
 
-After PVC is created, you check the status of PVC. In this output of the following command, the important thing is to check that the Status of PVC should be **Bound**, this means that our RBD storage class is working.
+After PVC is created, we check the status of PVC. In this output of the following command, the important thing is to check that the Status of PVC should be **Bound**, this means that our RBD storage class is working.
 
 ```console
 $ oc get pvc
@@ -474,8 +474,8 @@ Here, we can see that our RBD storage is attached in the volume mounts on **/usr
 OpenShift Container Platform provides a built-in Container Image Registry which runs as a standard workload on the cluster. A registry is typically used as a publication target for images built on the cluster as well as a source of images for workloads running on the cluster.
 ##### Configuring Image Registry #####
 1. Create a Persistent Volume Claim for the Image Registry to use.
-    - In the OpenShift Web Console, click Storage → Persistent Volume Claims.
-    - Set the Project to openshift-image-registry.
+    - In the OpenShift Web Console, click **Storage → Persistent Volume Claims**.
+    - Set the Project to **openshift-image-registry**.
     - Click Create Persistent Volume Claim.
       - From the list of available storage classes retrieved above, specify the Storage Class with the provisioner openshift-storage.cephfs.csi.ceph.com.
       - Specify the Persistent Volume Claim Name, for example, ocs4registry.
@@ -485,38 +485,31 @@ OpenShift Container Platform provides a built-in Container Image Registry which 
         Wait until the status of the new Persistent Volume Claim is listed as Bound.
 2. Configure the cluster’s Image Registry to use the new Persistent Volume Claim.
     - To configure your registry to use storage, change the spec.storage.pvc in the configs.imageregistry/cluster resource
-    - Verify that you do not have a registry pod:
+
+Verify that you do not have a registry pod:
 ```console
 $ oc get pod -n openshift-image-registry -l docker-registry=default
 No resourses found in openshift-image-registry namespace
-```
-
-    - Edit the registry configuration:
-    
+``` 
+Edit the registry configuration.
 ```console
 $ oc edit configs.imageregistry.operator.openshift.io
-...
+
 storage:
     pvc:
       claim: ocs4registry
-...
-
 ```
-    - Check the clusteroperator status:
-    
+Check the clusteroperator status:
 ```console
 $ oc get clusteroperator image-registry
-```
-
-    - Ensure that your registry is set to managed to enable building and pushing of images.
-    
+```    
+Ensure that your registry is set to managed to enable building and pushing of images. 
 ```console
 $ oc edit configs.imageregistry/cluster
 ```
-
 Then, change the line **managementState: Removed** To **managementState: Managed**
 
-![Sync Background](images/IMAGE14.png)
+![Sync Background](images/IMAGE16.png)
 
     - Verify that the new configuration is being used.
       - Click Workloads → Pods.
@@ -575,3 +568,12 @@ $ podman push default-route-openshift-image-registry.apps.rna4.cloud.lab.eng.bos
 In order to verify that, image is being pushed to our Ceph-FS, we can connect to Ceph GUI and check File Sytems tab on the left hand side.
 
 ![Sync Background](images/IMAGE15.png)
+
+
+# Summary
+To sum up, we highlighted how using RHCS in external mode and Openshift Data Fabric (ODF) together can achieve the desired flexibility for our storage needs on a minimum hardware footprint. For our Openshift cluster deployments it was beneficial to use Crucible automation to get the desired segregation for our Openshift clusters on three distinct physical servers. All the important steps for installing RHCS 5 and ODF 4.9.6 were also highlighted as part of the blog. 
+
+To learn more about installing RHCS 5, ODF and to use Crucible automation, check out the following resources:
+- https://access.redhat.com/documentation/en-us/red_hat_ceph_storage/5/html/installation_guide/red-hat-ceph-storage-installation#bootstrapping-a-new-storage-cluster_install
+- https://access.redhat.com/documentation/en-us/red_hat_openshift_data_foundation/4.9/html/deploying_openshift_data_foundation_in_external_mode/index
+- https://github.com/redhat-partner-solutions/crucible
