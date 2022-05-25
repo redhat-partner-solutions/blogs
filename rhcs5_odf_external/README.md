@@ -568,3 +568,7 @@ $ podman push default-route-openshift-image-registry.apps.rna4.cloud.lab.eng.bos
 In order to verify that, image is being pushed to our Ceph-FS, we can connect to Ceph GUI and check File Sytems tab on the left hand side.
 
 ![Sync Background](images/IMAGE15.png)
+
+
+# Summary
+To sum up, we highlighted how using RHCS in External Mode and Openshift Data Fabric (ODF) together can achieve the desired flexibility for our storage needs which are required by multiple clusters running on distinct physical servers in this blog post. To make the deployment of the OCS cluster, we used Crucible Automation Project and we used RHCS 5 and ODF 4.9.6 for the storage side. We hope that it was a beneficial blog post for everyone who wants to test similar architecture in their lab environmment which aims to have a minimum hardware environment for RHCS and OCP to work together.
