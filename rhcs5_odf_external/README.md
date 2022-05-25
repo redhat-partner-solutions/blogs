@@ -71,7 +71,7 @@ When inventory files for our cluster is ready, we can start the crucible deploym
 ```console
 $ ansible-playbook -i vCP2inventory.yml site.yml -vv
 ```
-When deployment finishes, we can see the GUI address, password, kubeconfig file in our assisted installer GUI. It is possible to reach Assisted Installer GUI from http://<bastion_IP>:8080/clusters
+When deployment finishes, we can see the GUI address, password, kubeconfig file in our assisted installer GUI. It is possible to reach Assisted Installer GUI from **http://<bastion_IP>:8080/clusters**
 
 ![Sync Background](images/IMAGE21.png)
 
@@ -307,7 +307,7 @@ If everything goes well, Ceph cluster will get deployed and one can reach the Ce
 We need to create a new OpenShift Data Foundation Cluster after we have installed the OpenShift Data Foundation operator.
 
 #### RBD Pool Creation ####
-We will have to makesure that the external Ceph cluster should have an RBD pool pre-configured. Red Hat recommends using a separate pool for each OpenShift Data Foundation cluster.
+We will have to make sure that the external Ceph cluster should have an RBD pool pre-configured. Red Hat recommends using a separate pool for each OpenShift Data Foundation cluster.
 
 On the bastion host we will create new RBD pools for each OCS Cluster:
 ```console
@@ -474,8 +474,8 @@ Here, we can see that our RBD storage is attached in the volume mounts on **/usr
 OpenShift Container Platform provides a built-in Container Image Registry which runs as a standard workload on the cluster. A registry is typically used as a publication target for images built on the cluster as well as a source of images for workloads running on the cluster.
 ##### Configuring Image Registry #####
 1. Create a Persistent Volume Claim for the Image Registry to use.
-    - In the OpenShift Web Console, click Storage → Persistent Volume Claims.
-    - Set the Project to openshift-image-registry.
+    - In the OpenShift Web Console, click **Storage → Persistent Volume Claims**.
+    - Set the Project to **openshift-image-registry**.
     - Click Create Persistent Volume Claim.
       - From the list of available storage classes retrieved above, specify the Storage Class with the provisioner openshift-storage.cephfs.csi.ceph.com.
       - Specify the Persistent Volume Claim Name, for example, ocs4registry.
