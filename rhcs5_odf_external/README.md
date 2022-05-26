@@ -285,7 +285,9 @@ $ cephadm bootstrap --apply-spec initial-config159.yaml --mon-ip 10.19.9.21 --al
 
 **NOTE:** mon-ip: should be of the same node from where the command is being executed.
 
-If everything goes well, Red Hat Ceph Storage cluster will get deployed and one can reach the Ceph GUI from **https://<bastion_host_IP>:8443**. We can use **admin/redhat** as login information to GUI. In order to check Ceph's service containers are fully deployed, we connect to each host and check containers are working (**podman ps --all**). Also, we have to verify that Ceph Health Status is OK. It may take some time for all Ceph's Services to show stable working state.
+If everything goes well, Red Hat Ceph Storage cluster will get deployed and one can reach the Ceph GUI from **https://<bastion_host_IP>:8443**. We can use **admin/redhat** as login information to GUI. In order to check Ceph's service containers are fully deployed, we need to connect to each host and check containers are working (**podman ps --all**). Also, we have to verify that Ceph Health Status is OK. 
+
+**Note:** It may take some time for all Ceph's Services to show stable working state.
 
 ### Openshift Data Foundation Installation & Setup ###
 1. We will log in to the OpenShift Web Console.
