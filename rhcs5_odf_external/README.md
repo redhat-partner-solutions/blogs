@@ -11,7 +11,7 @@ Using the crucible automation (which is mentioned later in the documentation), R
 
 The RHCS cluster will also be deployed on top of the 3 BM nodes using the installation guide that this documentation covers. Similar to the OCP clusters, the RHCS cluster will also be deployed on a separate VLAN and network in order to ensure and validate that the RHCS cluster can run in “external mode” efficiently. Each of the BM nodes consist of 3 x NVMe free drives as mentioned in the hardware specification and those will be leveraged inside our RHCS cluster, so in total we will have 9 OSDs configured.
 
-![Sync Background](images/IMAGE1.png)
+![Sync Background](images/IMAGE11.png)
 
 # Openshift Clusters Installation & Setup using Crucible Automation
 
@@ -90,8 +90,8 @@ $ ssh -f -N -D 8085 root@10.19.6.21
 Every time we want to connect to GUI we have to make sure that this tunnel is active.
 To configure the proxy settings in our browser, In Firefox, we configure our proxy settings from this menu.
 
-![Sync Background](images/IMAGE41.png)
-![Sync Background](images/IMAGE51.png)
+![Sync Background](images/IMAGE42.png)
+![Sync Background](images/IMAGE53.png)
 
 Lastly, we need to configure local configuration to resolve the hostnames. Add the following entries in your /etc/hosts file:
 ```
@@ -285,7 +285,9 @@ $ cephadm bootstrap --apply-spec initial-config159.yaml --mon-ip 10.19.9.21 --al
 
 **NOTE:** mon-ip: should be of the same node from where the command is being executed.
 
-If everything goes well, Red Hat Ceph Storage cluster will get deployed and one can reach the Ceph GUI from **https://<bastion_host_IP>:8443**. We can use **admin/redhat** as login information to GUI. In order to check Ceph's service containers are fully deployed, we connect to each host and check containers are working (**podman ps --all**). Also, we have to verify that Ceph Health Status is OK. It may take some time for all Ceph's Services to show stable working state.
+If everything goes well, Red Hat Ceph Storage cluster will get deployed and one can reach the Ceph GUI from **https://<bastion_host_IP>:8443**. We can use **admin/redhat** as login information to GUI. In order to check Ceph's service containers are fully deployed, we need to connect to each host and check containers are working (**podman ps --all**). Also, we have to verify that Ceph Health Status is OK. 
+
+**Note:** It may take some time for all Ceph's Services to show stable working state.
 
 ### Openshift Data Foundation Installation & Setup ###
 1. We will log in to the OpenShift Web Console.
@@ -375,7 +377,7 @@ Save the JSON output from this script to a file with .json extension in your loc
 1. Click **Workloads → Pods** from the left pane of the OpenShift Web Console. 						
 2. Select openshift-storage from the Project drop-down list.
 
-![Sync Background](images/IMAGE10.png)
+![Sync Background](images/IMAGE101.JPG)
 
 #### Verifying that the storage classes are created and listed ####
 1. Click **Storage → Storage Classes** from the left pane of the OpenShift Web Console. 						
@@ -385,7 +387,7 @@ Save the JSON output from this script to a file with .json extension in your loc
     - ocs-external-storagecluster-cephfs 						
     - openshift-storage.noobaa.io
 
-![Sync Background](images/IMAGE11.png)
+![Sync Background](images/IMAGE111.JPG)
 
 **NOTE:** If an MDS is not deployed in the external cluster, **ocs-external-storagecluster-cephfs** storage class will not be created. If you forgot to enable MDS in your Ceph Cluster please refer to Enabling MDS Service on Ceph Cluster. If RGW is not deployed in the external cluster, the **ocs-external-storagecluster-ceph-rgw** storage class will not be created.
 
@@ -458,7 +460,7 @@ $ oc apply -f test_pod.yml
 ```
 
 Next thing we need to check is connecting to our Ceph GUI and see if our PVC is created ad RBD image on our Ceph cluster. On the Ceph GUI, we should navigate to **Block→Images**
-![Sync Background](images/IMAGE12.png)
+![Sync Background](images/IMAGE122.png)
 
 Here in the screenshot above, we can see that our PVC is created as RBD image on our Ceph Cluster in the “ceph-rbd1” pool. Our first openshift cluster was attached to “ceph-rbd1” RBD pool in our Ceph Cluster and second openshift cluster was attached to “ceph-rbd2” RBD pool.
 
@@ -494,10 +496,11 @@ No resourses found in openshift-image-registry namespace
 Edit the registry configuration.
 ```console
 $ oc edit configs.imageregistry.operator.openshift.io
-
+...
 storage:
-    pvc:
-      claim: ocs4registry
+  pvc:
+    claim: ocs4registry
+ ...output omitted...
 ```
 Check the clusteroperator status:
 ```console
