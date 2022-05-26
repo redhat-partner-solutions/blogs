@@ -11,7 +11,7 @@ Using the crucible automation (which is mentioned later in the documentation), R
 
 The RHCS cluster will also be deployed on top of the 3 BM nodes using the installation guide that this documentation covers. Similar to the OCP clusters, the RHCS cluster will also be deployed on a separate VLAN and network in order to ensure and validate that the RHCS cluster can run in “external mode” efficiently. Each of the BM nodes consist of 3 x NVMe free drives as mentioned in the hardware specification and those will be leveraged inside our RHCS cluster, so in total we will have 9 OSDs configured.
 
-![Sync Background](images/IMAGE1.png)
+![Sync Background](images/IMAGE11.png)
 
 # Openshift Clusters Installation & Setup using Crucible Automation
 
