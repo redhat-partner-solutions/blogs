@@ -377,7 +377,7 @@ Save the JSON output from this script to a file with .json extension in your loc
 1. Click **Workloads → Pods** from the left pane of the OpenShift Web Console. 						
 2. Select openshift-storage from the Project drop-down list.
 
-![Sync Background](images/IMAGE10.png)
+![Sync Background](images/IMAGE101.JPG)
 
 #### Verifying that the storage classes are created and listed ####
 1. Click **Storage → Storage Classes** from the left pane of the OpenShift Web Console. 						
