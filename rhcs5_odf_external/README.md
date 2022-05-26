@@ -460,7 +460,7 @@ $ oc apply -f test_pod.yml
 ```
 
 Next thing we need to check is connecting to our Ceph GUI and see if our PVC is created ad RBD image on our Ceph cluster. On the Ceph GUI, we should navigate to **Block→Images**
-![Sync Background](images/IMAGE121.png)
+![Sync Background](images/IMAGE122.png)
 
 Here in the screenshot above, we can see that our PVC is created as RBD image on our Ceph Cluster in the “ceph-rbd1” pool. Our first openshift cluster was attached to “ceph-rbd1” RBD pool in our Ceph Cluster and second openshift cluster was attached to “ceph-rbd2” RBD pool.
 
