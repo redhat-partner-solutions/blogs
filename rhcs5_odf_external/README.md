@@ -496,10 +496,11 @@ No resourses found in openshift-image-registry namespace
 Edit the registry configuration.
 ```console
 $ oc edit configs.imageregistry.operator.openshift.io
-
+...
 storage:
-    pvc:
-      claim: ocs4registry
+  pvc:
+    claim: ocs4registry
+ ...output omitted...
 ```
 Check the clusteroperator status:
 ```console
