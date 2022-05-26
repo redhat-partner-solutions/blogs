@@ -91,7 +91,7 @@ Every time we want to connect to GUI we have to make sure that this tunnel is ac
 To configure the proxy settings in our browser, In Firefox, we configure our proxy settings from this menu.
 
 ![Sync Background](images/IMAGE41.png)
-![Sync Background](images/IMAGE51.png)
+![Sync Background](images/IMAGE52.png)
 
 Lastly, we need to configure local configuration to resolve the hostnames. Add the following entries in your /etc/hosts file:
 ```
@@ -387,7 +387,7 @@ Save the JSON output from this script to a file with .json extension in your loc
     - ocs-external-storagecluster-cephfs 						
     - openshift-storage.noobaa.io
 
-![Sync Background](images/IMAGE11.png)
+![Sync Background](images/IMAGE111.JPG)
 
 **NOTE:** If an MDS is not deployed in the external cluster, **ocs-external-storagecluster-cephfs** storage class will not be created. If you forgot to enable MDS in your Ceph Cluster please refer to Enabling MDS Service on Ceph Cluster. If RGW is not deployed in the external cluster, the **ocs-external-storagecluster-ceph-rgw** storage class will not be created.
 
@@ -460,7 +460,7 @@ $ oc apply -f test_pod.yml
 ```
 
 Next thing we need to check is connecting to our Ceph GUI and see if our PVC is created ad RBD image on our Ceph cluster. On the Ceph GUI, we should navigate to **Block→Images**
-![Sync Background](images/IMAGE12.png)
+![Sync Background](images/IMAGE121.png)
 
 Here in the screenshot above, we can see that our PVC is created as RBD image on our Ceph Cluster in the “ceph-rbd1” pool. Our first openshift cluster was attached to “ceph-rbd1” RBD pool in our Ceph Cluster and second openshift cluster was attached to “ceph-rbd2” RBD pool.
 
