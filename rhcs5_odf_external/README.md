@@ -296,7 +296,7 @@ If everything goes well, Red Hat Ceph Storage cluster will get deployed and one 
     
   - Update Channel as stable-4.9.
   - Installation Mode as A specific namespace on the cluster.
-  - Installed Namespace as Operator recommended namespace openshift-storage. If Namespace openshift-storage does not exist, it is created during the operator installation.
+  - Installed Namespace as Operator recommended namespace openshift-storage. If namespace openshift-storage does not exist, it is created during the operator installation.
   - Select Approval Strategy as Automatic or Manual.
   - If you select Automatic updates, then the Operator Lifecycle Manager (OLM) automatically upgrades the running instance of your Operator without any intervention.
   - If you select Manual updates, then the OLM creates an update request. As a cluster administrator, you must then manually approve that update request to update the Operator to a newer version.
