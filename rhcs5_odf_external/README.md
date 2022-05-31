@@ -23,7 +23,7 @@ For our particular deployment we need to ensure complete segregation of networks
 Clone crucible repository using the commands below:
 
 ```console
-$ git clone https://github.com/redhat-partner-solutions/crucible-public
+$ git clone https://github.com/redhat-partner-solutions/crucible
 ```
 In order to use these playbooks to deploy OpenShift, the availability of a jump/bastion host (which can be virtual or physical) and a minimum of three target systems for the resulting cluster (which can be either virtual or physical) is required.  These playbooks are intended to be run from the jump/bastion host that itself is subscribed to Red Hat Subscription Manager.
 For this lab based deployment guide we will try to create 2 clusters, the playbook can be ran on separate inventory files to deploy OpenShift’s control plane as 1 Virtual Machines per baremetal nodes and 3 nodes in total.
