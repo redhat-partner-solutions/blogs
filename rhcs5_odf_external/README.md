@@ -69,7 +69,7 @@ Crucible Inventory files of our 2 OCP  clusters can be retrieved here:
 
 When inventory files for our cluster is ready, we can start the crucible deployment with following:
 ```console
-$ ansible-playbook -i vCP2inventory.yml site.yml -vv
+$ ansible-playbook -i vCP2inventory.yml site.yml
 ```
 When deployment finishes, we can see the GUI address, password, kubeconfig file in our assisted installer GUI. It is possible to reach Assisted Installer GUI from **http://<bastion_IP>:8080/clusters**
 
