@@ -69,7 +69,7 @@ Crucible Inventory files of our 2 OCP  clusters can be retrieved here:
 
 When inventory files for our cluster is ready, we can start the crucible deployment with following:
 ```console
-$ ansible-playbook -i vCP2inventory.yml site.yml -vv
+$ ansible-playbook -i vCP2inventory.yml site.yml
 ```
 When deployment finishes, we can see the GUI address, password, kubeconfig file in our assisted installer GUI. It is possible to reach Assisted Installer GUI from **http://<bastion_IP>:8080/clusters**
 
@@ -106,10 +106,8 @@ Lastly, we need to configure local configuration to resolve the hostnames. Add t
 ## Connecting to Openshift CLI ##
 In order to connect to Openshift CLI we need to ensure that we have the kubeconfigs for both clusters present on our bastion host.
 
-Using the post-install playbook from crucible one can generate these kubeconfigs using the commands below (Please note that the cluster_id must be changed for specific clusters accordingly):
-```console
-$ ansible-playbook -i vCP2inventory.yml post_install.yml -e cluster_id=4b4b8007-6e5a-45c6-bd7a-8a2f9b32c87b
-```
+Using the post-install playbook which is one of the playbooks we run as part of site.yml in installation steps above, one can generate these kubeconfigs automatically. If you do not deploy using crucible you will need to fetch the kubeconfig.
+
 Once the kubeconfig is available on the bastian host we can export the exact location of it to a variable KUBECONFIG
 ```console
 $ export KUBECONFIG=/home/redhat/rna3-kubeconfig
@@ -298,7 +296,7 @@ If everything goes well, Red Hat Ceph Storage cluster will get deployed and one 
     
   - Update Channel as stable-4.9.
   - Installation Mode as A specific namespace on the cluster.
-  - Installed Namespace as Operator recommended namespace openshift-storage. If Namespace openshift-storage does not exist, it is created during the operator installation.
+  - Installed Namespace as Operator recommended namespace openshift-storage. If namespace openshift-storage does not exist, it is created during the operator installation.
   - Select Approval Strategy as Automatic or Manual.
   - If you select Automatic updates, then the Operator Lifecycle Manager (OLM) automatically upgrades the running instance of your Operator without any intervention.
   - If you select Manual updates, then the OLM creates an update request. As a cluster administrator, you must then manually approve that update request to update the Operator to a newer version.
