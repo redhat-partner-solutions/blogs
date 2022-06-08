@@ -2,7 +2,7 @@
 
 Having a software defined storage fabric such as Red Hat Ceph Storage (RHCS) is advantageous to provide file, block and object storage services for workloads deployed on top of Openshift. In many cases Openshift clusters are required to have a storage solution in place that is highly available for multiple clusters to leverage and which can be easily deployed using a minimum hardware footprint. The approach described below can help use the hardware resources efficiently.
 
-This blog post highlights how using RHCS in External Mode and Openshift Data Fabric (ODF) together can achieve the desired flexibility for our storage needs which are required by multiple clusters running on distinct physical servers. We will demonstrate this by deploying multiple Openshift clusters and RHCS on top of 3 physical distinct servers with available NVMe drives. To fully achieve this we will make use of the Crucible automation project (which is a set of ansible playbooks used to deploy a Openshift cluster and all its prerequisites), RHCS 5 and ODF 4.9.6. The goal for this article is to underline all important steps required to set up a minimum hardware environment for RHCS and ODF to work together.
+This blog post highlights how using RHCS in External Mode and OpenShift Data Fabric (ODF) together can achieve the desired flexibility for our storage needs which are required by multiple clusters running on distinct physical servers. We will demonstrate this by deploying multiple OpenShift clusters and RHCS on top of 3 physical distinct servers with available NVMe drives. To fully achieve this we will make use of the Crucible automation project (which is a set of ansible playbooks used to deploy a OpenShift cluster and all its prerequisites), RHCS 5 and ODF 4.9.6. The goal for this article is to underline all important steps required to set up a minimum hardware environment for RHCS and ODF to work together.
 
 # Setting up the Lab Environment
 In order to run trails on a minimum hardware footprint, the lab environment is set up on top of 4 bare metal server nodes. One of the nodes will be the bastion/ansible host node that will be used to set up the OCP and RHCS clusters on the other remaining 3 bare metal nodes.
@@ -13,13 +13,13 @@ The RHCS cluster will also be deployed on top of the 3 BM nodes using the instal
 
 ![Sync Background](images/IMAGE11.png)
 
-# Openshift Clusters Installation & Setup using Crucible Automation
+# OpenShift Clusters Installation & Setup using Crucible Automation
 
 ## Crucible Automation ##
 
-Crucible automation is a set of playbooks for installing an OpenShift Container Platform cluster on premise using the developer preview version of the OpenShift Assisted Installer.  The key benefits of using crucible automation for our lab environment is it allows us to deploy base Red Hat Openshift 4.9 control planes for both clusters in separate virtual machines across our three physical servers. 
+Crucible automation is a set of playbooks for installing an OpenShift Container Platform cluster on premise using the developer preview version of the OpenShift Assisted Installer.  The key benefits of using crucible automation for our lab environment is it allows us to deploy base Red Hat OpenShift 4.9 control planes for both clusters in separate virtual machines across our three physical servers. 
 
-For our particular deployment we need to ensure complete segregation of networks and using crucible this can be automated and all the prerequisites for both Openshift Clusters (DNS/DHCP/Bridging/VLANS) are set up with ease.
+For our particular deployment we need to ensure complete segregation of networks and using crucible this can be automated and all the prerequisites for both OpenShift Clusters (DNS/DHCP/Bridging/VLANS) are set up with ease.
 Clone crucible repository using the commands below:
 
 ```console
@@ -28,7 +28,7 @@ $ git clone https://github.com/redhat-partner-solutions/crucible
 In order to use these playbooks to deploy OpenShift, the availability of a jump/bastion host (which can be virtual or physical) and a minimum of three target systems for the resulting cluster (which can be either virtual or physical) is required.  These playbooks are intended to be run from the jump/bastion host that itself is subscribed to Red Hat Subscription Manager.
 For this lab based deployment guide we will try to create 2 clusters, the playbook can be ran on separate inventory files to deploy OpenShift’s control plane as 1 Virtual Machines per baremetal nodes and 3 nodes in total.
 
-Each virtual machine for Control Plane nodes of Openshift cluster should have at least following specifications:
+Each virtual machine for Control Plane nodes of OpenShift cluster should have at least following specifications:
 - vCPU: 6
 - Memory: 24GB
 - Disk: 120gb
@@ -79,9 +79,9 @@ If you click on one of the clusters, you can see the details about that cluster.
 
 ![Sync Background](images/IMAGE31.png)
 
-## Connecting to Openshift GUI ##
+## Connecting to OpenShift GUI ##
 
-As we have deployed our Openshift clusters on separate tagged VLANs, we need to enable SSH tunnel and proxy settings on our browser. 
+As we have deployed our OpenShift clusters on separate tagged VLANs, we need to enable SSH tunnel and proxy settings on our browser. 
 First we need to create the SSH tunnel to our bastion host. We can create the SSH tunnel using this command:
 
 ```console
@@ -103,8 +103,8 @@ Lastly, we need to configure local configuration to resolve the hostnames. Add t
 10.19.8.3	prometheus-k8s-openshift-monitoring.apps.rna3.cloud.lab.eng.bos.redhat.com
 10.19.8.3	alertmanager-main-openshift-monitoring.apps.rna3.cloud.lab.eng.bos.redhat.com
 ```
-## Connecting to Openshift CLI ##
-In order to connect to Openshift CLI we need to ensure that we have the kubeconfigs for both clusters present on our bastion host.
+## Connecting to OpenShift CLI ##
+In order to connect to OpenShift CLI we need to ensure that we have the kubeconfigs for both clusters present on our bastion host.
 
 Using the post-install playbook which is one of the playbooks we run as part of site.yml in installation steps above, one can generate these kubeconfigs automatically. If you do not deploy using crucible you will need to fetch the kubeconfig.
 
@@ -287,16 +287,16 @@ If everything goes well, Red Hat Ceph Storage cluster will get deployed and one 
 
 **Note:** It may take some time for all Ceph's Services to show stable working state.
 
-### Openshift Data Foundation Installation & Setup ###
+### OpenShift Data Foundation Installation & Setup ###
 1. We will log in to the OpenShift Web Console.
-2. Navigate to Operator Hub, search for and install Openshift Data Foundation
+2. Navigate to Operator Hub, search for and install OpenShift Data Foundation
 
 ![Sync Background](images/IMAGE9.png)
 3. We will set the following options on the Install Operator page:
     
   - Update Channel as stable-4.9.
   - Installation Mode as A specific namespace on the cluster.
-  - Installed Namespace as Operator recommended namespace openshift-storage. If namespace openshift-storage does not exist, it is created during the operator installation.
+  - Installed Namespace as Operator recommended namespace openShift-storage. If namespace openShift-storage does not exist, it is created during the operator installation.
   - Select Approval Strategy as Automatic or Manual.
   - If you select Automatic updates, then the Operator Lifecycle Manager (OLM) automatically upgrades the running instance of your Operator without any intervention.
   - If you select Manual updates, then the OLM creates an update request. As a cluster administrator, you must then manually approve that update request to update the Operator to a newer version.
@@ -346,7 +346,7 @@ $ ceph orch apply mds cephfs --placement="3 metal1.rna3.cloud.lab.eng.bos.redhat
 ```
 
 ### External Connection Setup to RHCS ###
-After all prerequisites are completed, we can continue with StorageSystem(external connection) creation from Openshift GUI:
+After all prerequisites are completed, we can continue with StorageSystem(external connection) creation from OpenShift GUI:
 1. Click **Operators → Installed** to view all the installed operators. 		
 2. Ensure that the Project selected is **Openshift-storage**		
 3. Click OpenShift Data Foundation and then click Create StorageSystem. 
@@ -355,7 +355,7 @@ After all prerequisites are completed, we can continue with StorageSystem(extern
     - Select Red Hat Ceph Storage for Storage platform. 				
     - Click Next.
 5. In the Connection details page, provide the necessary information: 		
-Click on the Download Script link to download the python script for extracting Ceph cluster details.(If this downloaded script is empty, make sure your Openshift version is 4.9.26/27/28, there is a bug in 4.9.0 version which we have faced) Save this file to the bastion host. Run this script with related information from your ceph cluster on the bastion host. It will generate a JSON file which will be needed to save for uploading to ODF. You can check the example from our setup:		
+Click on the Download Script link to download the python script for extracting Ceph cluster details.(If this downloaded script is empty, make sure your OpenShift version is 4.9.26/27/28, there is a bug in 4.9.0 version which we have faced) Save this file to the bastion host. Run this script with related information from your ceph cluster on the bastion host. It will generate a JSON file which will be needed to save for uploading to ODF. You can check the example from our setup:		
 
 ```console
 python3 ceph-external-cluster-details-exporter.py --rbd-data-pool-name ceph-rbd2 --monitoring-endpoint 10.19.9.21,10.19.9.20,10.19.9.19,10.19.9.18 --run-as-user client.ocs --rgw-endpoint 10.19.9.20:80
@@ -402,7 +402,7 @@ $ oc get storagecluster -n openshift-storage
 ```
 
 #### Testing Ceph RBD Connection ####
-It is possible to test RBD connection with creating a PVC with RBD Storage Class on our Openshift cluster and attaching it to a pod.
+It is possible to test RBD connection with creating a PVC with RBD Storage Class on our OpenShift cluster and attaching it to a pod.
 Example of such PVC is like that:
 ```yml
 apiVersion: v1
@@ -439,7 +439,7 @@ spec:
       claimName: production-application
 ```
 
-After we have PVC and Pod definitions ready, we can create these resources on our Openshift cluster:
+After we have PVC and Pod definitions ready, we can create these resources on our OpenShift cluster:
 ```console
 $ oc apply -f pvc.yml
 ```
@@ -460,9 +460,9 @@ $ oc apply -f test_pod.yml
 Next thing we need to check is connecting to our Ceph GUI and see if our PVC is created ad RBD image on our Ceph cluster. On the Ceph GUI, we should navigate to **Block→Images**
 ![Sync Background](images/IMAGE122.png)
 
-Here in the screenshot above, we can see that our PVC is created as RBD image on our Ceph Cluster in the “ceph-rbd1” pool. Our first openshift cluster was attached to “ceph-rbd1” RBD pool in our Ceph Cluster and second openshift cluster was attached to “ceph-rbd2” RBD pool.
+Here in the screenshot above, we can see that our PVC is created as RBD image on our Ceph Cluster in the “ceph-rbd1” pool. Our first OpenShift cluster was attached to “ceph-rbd1” RBD pool in our Ceph Cluster and second openShift cluster was attached to “ceph-rbd2” RBD pool.
 
-Last thing we can check about this rbd storage is attached to the storage of our pod. So, we can connect to the terminal of our pod in Openshift GUI and run **“df -h”**.
+Last thing we can check about this rbd storage is attached to the storage of our pod. So, we can connect to the terminal of our pod in OpenShift GUI and run **“df -h”**.
 
 ![Sync Background](images/IMAGE13.png)
 
@@ -520,7 +520,7 @@ Then, change the line **managementState: Removed** To **managementState: Managed
       - Scroll down to Volumes and verify that the registry-storage volume has a Type that matches your new Persistent Volume Claim, for example, ocs4registry.
       
 ##### Exposing Image Registry #####
-In order to access our image registry outside the Openshift Cluster(for example from Bastion host) and make some tests, we need to first expose it. To expose the registry using the **defaultRoute**:
+In order to access our image registry outside the OpenShift Cluster(for example from Bastion host) and make some tests, we need to first expose it. To expose the registry using the **defaultRoute**:
 
 1. Set defaultRoute to true:
 ```console
@@ -572,7 +572,7 @@ In order to verify that, image is being pushed to our Ceph-FS, we can connect to
 
 
 # Summary
-To sum up, we highlighted how using RHCS in external mode and Openshift Data Fabric (ODF) together can achieve the desired flexibility for our storage needs on a minimum hardware footprint. For our Openshift cluster deployments it was beneficial to use Crucible automation to get the desired segregation for our Openshift clusters on three distinct physical servers. All the important steps for installing RHCS 5 and ODF 4.9.6 were also highlighted as part of the blog. 
+To sum up, we highlighted how using RHCS in external mode and OpenShift Data Fabric (ODF) together can achieve the desired flexibility for our storage needs on a minimum hardware footprint. For our OpenShift cluster deployments it was beneficial to use Crucible automation to get the desired segregation for our OpenShift clusters on three distinct physical servers. All the important steps for installing RHCS 5 and ODF 4.9.6 were also highlighted as part of the blog. 
 
 To learn more about installing RHCS 5, ODF and to use Crucible automation, check out the following resources:
 - https://access.redhat.com/documentation/en-us/red_hat_ceph_storage/5/html/installation_guide/red-hat-ceph-storage-installation#bootstrapping-a-new-storage-cluster_install
