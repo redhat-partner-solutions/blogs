@@ -7,7 +7,7 @@ This blog highlights how using Red Hat Ceph Storage (RHCS) in External Mode and 
 # Setting up the Lab Environment
 In order to run trails on a minimum hardware footprint, the lab environment uses 4 bare-metal server. One of the servers will be the bastion/ansible host from which we will set up Red Hat OpenShift and Red Hat Ceph Storage (RHCS) clusters on the other remaining 3 bare-metal servers.
 
-Using Crucible Automation, Kernel-based Virtual Machine(KVM) hypervisor will be deployed on all of the 3 bare-metal server nodes and for both Red Hat OpenShift(OCP) clusters individual VMs will be created on top of each bare-metal node. In total we will have 6 running VMs and each of these seperately will be the control plane nodes for our OpenShift clusters. Separate VLANs will be created for both the OpenShift clusters.
+Using Crucible Automation, Kernel-based Virtual Machine (KVM) hypervisor will be deployed on all of the 3 bare-metal server nodes and for both Red Hat OpenShift(OCP) clusters individual VMs will be created on top of each bare-metal node. In total we will have 6 running VMs and each of these seperately will be the control plane nodes for our OpenShift clusters. Separate VLANs will be created for both the OpenShift clusters.
 
 Similar to the OpenShift clusters, the Red Hat Ceph Storage (RHCS) cluster will also be deployed on a separate VLAN in order to validate that the cluster can run in “external mode” efficiently. Each of the 3 bare-metal servers consist of 3 x NVMe free drives and those will be leveraged for our Red Hat Ceph Storage (RHCS) cluster, so in total we will have 9 Object Storage Daemon(OSD) configured.
 
