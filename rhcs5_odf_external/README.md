@@ -19,7 +19,7 @@ Similar to the OpenShift clusters, the Red Hat Ceph Storage (RHCS) cluster will 
 
 Crucible Automation is a set of playbooks for installing an OpenShift cluster on-premise using the developer preview version of the OpenShift Assisted Installer. Using Crucible, one can install and set up multiple OpenShift 4.9 clusters in a simplified automated way.
 
-For our particular deployment we need to ensure complete segregation of networks and using Crucible all the prerequisites for both OpenShift Clusters (DNS/DHCP/Bridging/VLANS) are set up with ease.
+For our particular deployment, we need to ensure complete segregation of networks and using Crucible all the prerequisites for both OpenShift Clusters (DNS/DHCP/Bridging/VLANS) are set up with ease.
 
 
 Clone Crucible repository using the commands below:
@@ -29,14 +29,14 @@ $ git clone https://github.com/redhat-partner-solutions/crucible
 ```
 In order to use these playbooks to deploy OpenShift, the availability of a jump/bastion host (which can be virtual or physical) and a minimum of three target systems for the resulting cluster is required. These playbooks are intended to be run from the jump/bastion host that itself is subscribed to Red Hat Subscription Manager.
 
-For this lab based deployment guide we will try to create 2 clusters in total. The playbooks will run twice using separate inventory files for both clusters. Running the playbooks will deploy and set up a fully operational OpenShift cluster with control plane nodes deployed as virtual machines on top of each bare-metal server.
+For this lab based deployment guide, we will try to create 2 clusters in total. The playbooks will run twice using separate inventory files for both clusters. Running the playbooks will deploy and set up a fully operational OpenShift cluster with control plane nodes deployed as virtual machines on top of each bare-metal server.
 
 Each virtual machine for control plane nodes of OpenShift cluster should have the following minimum specifications:
 - vCPU: 6
 - Memory: 24GB
 - Disk: 120gb
 
-**Note:** Make sure that firewall **“masquerade”** is **“yes”** because after the installation of Ceph this turns into **“no”**. If this stays in **“no”**, Crucible installation fails. 
+**Note:** Make sure that firewall **“masquerade”** is **“yes”** because after the installation of Ceph this turns into **“no”**. If it stays in **“no”**, Crucible installation fails. 
 
 You can check this configuration in bastion host with following command:
 
