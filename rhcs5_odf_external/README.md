@@ -2,14 +2,14 @@
 
 Having an open, robust and compelling software-defined storage fabric such as Red Hat Ceph Storage (RHCS) is advantageous to provide object, block, and file access methods for workloads deployed on Red Hat OpenShift Container Platform. In many cases OpenShift clusters are required to have data storage solution in place that is highly available for multiple OpenShift clusters to utilize and easily deployable using a minimum hardware footprint.
 
-This blog highlights how using Red Hat Ceph Storage (RHCS) in External Mode and OpenShift Data Foundation (ODF) together can achieve the desired flexibility for our storage needs. We will demonstrate this by deploying multiple OpenShift clusters and Red Hat Ceph Storage (RHCS) on top of 3 physical distinct servers with available NVMe drives. OpenShift clusters will be deployed using Crucible Automation, then we will deploy Red Hat Ceph Storage 5 and lastly install and set up OpenShift Data Foundation(ODF) 4.9.6 operator on top of the OpenShift. All important steps required to set this minimum hardware environment for Red Hat Ceph Storage (RHCS) and OpenShift Data Foundation(ODF) to work together are captured as part of this blog. 
+This blog highlights how using Red Hat Ceph Storage (RHCS) in External Mode and OpenShift Data Foundation (ODF) together can achieve the desired flexibility for our storage needs. We will demonstrate this by deploying multiple OpenShift clusters and Red Hat Ceph Storage (RHCS) on top of 3 physical distinct servers with available NVMe drives. OpenShift clusters will be deployed using Crucible Automation, then we will deploy Red Hat Ceph Storage 5 and lastly install and set up OpenShift Data Foundation (ODF) 4.9.6 operator on top of the OpenShift. All important steps required to set this minimum hardware environment for Red Hat Ceph Storage (RHCS) and OpenShift Data Foundation(ODF) to work together are captured as part of this blog. 
 
 # Setting up the Lab Environment
 In order to run trails on a minimum hardware footprint, the lab environment uses 4 bare-metal server. One of the servers will be the bastion/ansible host from which we will set up Red Hat OpenShift and Red Hat Ceph Storage (RHCS) clusters on the other remaining 3 bare-metal servers.
 
-Using Crucible Automation, Kernel-based Virtual Machine(KVM) hypervisor will be deployed on all of the 3 bare-metal server nodes and for both Red Hat OpenShift(OCP) clusters individual VMs will be created on top of each bare-metal node. In total we will have 6 running VMs and each of these seperately will be the control plane nodes for our OpenShift clusters. Separate VLANs will be created for both the OpenShift clusters.
+Using Crucible Automation, Kernel-based Virtual Machine (KVM) hypervisor will be deployed on all of the 3 bare-metal server nodes and for both Red Hat OpenShift (OCP) clusters individual VMs will be created on top of each bare-metal node. In total we will have 6 running VMs and each of these seperately will be the control plane nodes for our OpenShift clusters. Separate VLANs will be created for both the OpenShift clusters.
 
-Similar to the OpenShift clusters, the Red Hat Ceph Storage (RHCS) cluster will also be deployed on a separate VLAN in order to validate that the cluster can run in “external mode” efficiently. Each of the 3 bare-metal servers consist of 3 x NVMe free drives and those will be leveraged for our Red Hat Ceph Storage (RHCS) cluster, so in total we will have 9 Object Storage Daemon(OSD) configured.
+Similar to the OpenShift clusters, the Red Hat Ceph Storage (RHCS) cluster will also be deployed on a separate VLAN in order to validate that the cluster can run in “external mode” efficiently. Each of the 3 bare-metal servers consist of 3 x NVMe free drives and those will be leveraged for our Red Hat Ceph Storage (RHCS) cluster, so in total we will have 9 Object Storage Daemon (OSD) configured.
 
 ![Sync Background](images/IMAGE11.png)
 
@@ -577,9 +577,7 @@ In order to verify that, image is being pushed to our Ceph-FS, we can connect to
 
 
 # Summary
-To sum up, we highlighted how using RHCS in external mode and OpenShift Data Foundation (ODF) together can achieve the desired flexibility for our storage needs on a minimum hardware footprint. For our OpenShift cluster deployments it was beneficial to use Crucible automation to get the desired segregation for our OpenShift clusters on three distinct physical servers. All the important steps for installing RHCS 5 and ODF 4.9.6 were also highlighted as part of the blog. 
-
-To learn more about installing RHCS 5, ODF and to use Crucible automation, check out the following resources:
+To sum up, we highlighted how using Red Hat Ceph Storage (RHCS) in external mode and OpenShift Data Foundation (ODF) together can achieve the desired flexibility for our storage needs on a minimum hardware footprint. For our OpenShift cluster deployments it was beneficial to use Crucible automation to get the desired segregation for our OpenShift clusters on three distinct physical servers. The approach as well as all the important steps for installing Red Hat Ceph Storage (RHCS) 5 and OpenShift Data Foundation (ODF) 4.9.6 were highlighted and check out the following resources:
 - https://access.redhat.com/documentation/en-us/red_hat_ceph_storage/5/html/installation_guide/red-hat-ceph-storage-installation#bootstrapping-a-new-storage-cluster_install
 - https://access.redhat.com/documentation/en-us/red_hat_openshift_data_foundation/4.9/html/deploying_openshift_data_foundation_in_external_mode/index
 - https://github.com/redhat-partner-solutions/crucible
