@@ -1,15 +1,15 @@
 # Deploying RHCS using minimum hardware and making it work for multiple OCP clusters via ODF
 
-Having a software defined storage fabric such as Red Hat Ceph Storage (RHCS) is advantageous to provide file, block and object storage services for workloads deployed on top of Openshift. In many cases Openshift clusters are required to have a storage solution in place that is highly available for multiple clusters to leverage and which can be easily deployed using a minimum hardware footprint. The approach described below can help use the hardware resources efficiently.
+Having an open,robust and compelling software-defined storage fabric such as Red Hat Ceph Storage(RHCS) is advantageous to provide object, block, and file access methods for workloads deployed on Red Hat OpenShift Container Platform. In many cases OpenShift clusters are required to have data storage solution in place that is highly available for multiple OpenShift clusters to utilize and easily deployable using a minimum hardware footprint.
 
-This blog post highlights how using RHCS in External Mode and OpenShift Data Foundation (ODF) together can achieve the desired flexibility for our storage needs which are required by multiple clusters running on distinct physical servers. We will demonstrate this by deploying multiple OpenShift clusters and RHCS on top of 3 physical distinct servers with available NVMe drives. To fully achieve this we will make use of the Crucible automation project (which is a set of ansible playbooks used to deploy a OpenShift cluster and all its prerequisites), RHCS 5 and ODF 4.9.6. The goal for this article is to underline all important steps required to set up a minimum hardware environment for RHCS and ODF to work together.
+This blog highlights how using Red Hat Ceph Storage(RHCS) in External Mode and OpenShift Data Foundation(ODF) together can achieve the desired flexibility for our storage needs. We will demonstrate this by deploying multiple OpenShift clusters and Red Hat Ceph Storage(RHCS) on top of 3 physical distinct servers with available NVMe drives. OpenShift clusters will be deployed using Crucible Automation, then we will deploy Red Hat Ceph Storage 5 and lastly install and set up OpenShift Data Foundation(ODF) 4.9.6 operator on top of the OpenShift. All important steps required to set this minimum hardware environment for Red Hat Ceph Storage(RHCS) and OpenShift Data Foundation(ODF) to work together are captured as part of this blog. 
 
 # Setting up the Lab Environment
-In order to run trails on a minimum hardware footprint, the lab environment is set up on top of 4 bare metal server nodes. One of the nodes will be the bastion/ansible host node that will be used to set up the OCP and RHCS clusters on the other remaining 3 bare metal nodes.
+In order to run trails on a minimum hardware footprint, the lab environment uses 4 bare-metal server. One of the servers will be the bastion/ansible host from which we will set up Red Hat OpenShift and Red Hat Ceph Storage(RHCS) clusters on the other remaining 3 bare-metal servers.
 
-Using the crucible automation (which is mentioned later in the documentation), RHEL KVM will be deployed on 3 bare metal server nodes and for both OCP clusters, and separate individual VMs will be created on top of each bare metal node. Separate VLANs and networks will be created for both the OCP clusters and the RHCS cluster. The BM hardware specification as well the VM hardware specification are listed below.
+Using Crucible Automation, Kernel-based Virtual Machine(KVM) hypervisor will be deployed on all of the 3 bare-metal server nodes and for both Red Hat OpenShift(OCP) clusters individual VMs will be created on top of each bare-metal node. In total we will have 6 running VMs and each of these seperately will be the control plane nodes for our OpenShift clusters. Separate VLANs will be created for both the OpenShift clusters.
 
-The RHCS cluster will also be deployed on top of the 3 BM nodes using the installation guide that this documentation covers. Similar to the OCP clusters, the RHCS cluster will also be deployed on a separate VLAN and network in order to ensure and validate that the RHCS cluster can run in “external mode” efficiently. Each of the BM nodes consist of 3 x NVMe free drives as mentioned in the hardware specification and those will be leveraged inside our RHCS cluster, so in total we will have 9 OSDs configured.
+Similar to the OpenShift clusters, the Red Hat Ceph Storage(RHCS) cluster will also be deployed on a separate VLAN in order to validate that the cluster can run in “external mode” efficiently. Each of the 3 bare-metal servers consist of 3 x NVMe free drives and those will be leveraged for our Red Hat Ceph Storage(RHCS) cluster, so in total we will have 9 Object Storage Daemon(OSD) configured.
 
 ![Sync Background](images/IMAGE11.png)
 
@@ -17,25 +17,28 @@ The RHCS cluster will also be deployed on top of the 3 BM nodes using the instal
 
 ## Crucible Automation ##
 
-Crucible automation is a set of playbooks for installing an OpenShift Container Platform cluster on premise using the developer preview version of the OpenShift Assisted Installer.  The key benefits of using crucible automation for our lab environment is it allows us to deploy base Red Hat OpenShift 4.9 control planes for both clusters in separate virtual machines across our three physical servers. 
+Crucible Automation is a set of playbooks for installing an OpenShift cluster on-premise using the developer preview version of the OpenShift Assisted Installer. Using Crucible, one can install and set up multiple OpenShift 4.9 clusters in a simplified automated way.
 
-For our particular deployment we need to ensure complete segregation of networks and using crucible this can be automated and all the prerequisites for both OpenShift Clusters (DNS/DHCP/Bridging/VLANS) are set up with ease.
-Clone crucible repository using the commands below:
+For our particular deployment we need to ensure complete segregation of networks and using Crucible all the prerequisites for both OpenShift Clusters (DNS/DHCP/Bridging/VLANS) are set up with ease.
+
+
+Clone Crucible repository using the commands below:
 
 ```console
 $ git clone https://github.com/redhat-partner-solutions/crucible
 ```
-In order to use these playbooks to deploy OpenShift, the availability of a jump/bastion host (which can be virtual or physical) and a minimum of three target systems for the resulting cluster (which can be either virtual or physical) is required.  These playbooks are intended to be run from the jump/bastion host that itself is subscribed to Red Hat Subscription Manager.
-For this lab based deployment guide we will try to create 2 clusters, the playbook can be ran on separate inventory files to deploy OpenShift’s control plane as 1 Virtual Machines per baremetal nodes and 3 nodes in total.
+In order to use these playbooks to deploy OpenShift, the availability of a jump/bastion host (which can be virtual or physical) and a minimum of three target systems for the resulting cluster is required. These playbooks are intended to be run from the jump/bastion host that itself is subscribed to Red Hat Subscription Manager.
 
-Each virtual machine for Control Plane nodes of OpenShift cluster should have at least following specifications:
+For this lab based deployment guide we will try to create 2 clusters in total. The playbooks will run twice using separate inventory files for both clusters. Running the playbooks will deploy and set up a fully operational OpenShift cluster with control plane nodes deployed as virtual machines on top of each bare-metal server.
+
+Each virtual machine for control plane nodes of OpenShift cluster should have the following minimum specifications:
 - vCPU: 6
 - Memory: 24GB
 - Disk: 120gb
 
 **Note:** Make sure that firewall **“masquerade”** is **“yes”** because after the installation of Ceph this turns into **“no”**. If this stays in **“no”**, Crucible installation fails. 
 
-You can check this configuration in Bastion host with following command:
+You can check this configuration in bastion host with following command:
 
 ```console
 $ firewall-cmd --list-all
@@ -81,13 +84,15 @@ If you click on one of the clusters, you can see the details about that cluster.
 
 ## Connecting to OpenShift GUI ##
 
-As we have deployed our OpenShift clusters on separate tagged VLANs, we need to enable SSH tunnel and proxy settings on our browser. 
+As we have deployed our OpenShift clusters on separate tagged VLANs, we need to enable SSH tunnel and proxy settings on our browser.
+
 First we need to create the SSH tunnel to our bastion host. We can create the SSH tunnel using this command:
 
 ```console
 $ ssh -f -N -D 8085 root@10.19.6.21
 ```
 Every time we want to connect to GUI we have to make sure that this tunnel is active.
+
 To configure the proxy settings in our browser, In Firefox, we configure our proxy settings from this menu.
 
 ![Sync Background](images/IMAGE42.png)
