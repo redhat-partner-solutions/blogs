@@ -577,7 +577,7 @@ In order to verify that, image is being pushed to our Ceph-FS, we can connect to
 
 
 # Summary
-To sum up, we highlighted how using Red Hat Ceph Storage (RHCS) in external mode and OpenShift Data Foundation (ODF) together can achieve the desired flexibility for our storage needs on a minimum hardware footprint. For our OpenShift cluster deployments it was beneficial to use Crucible automation to get the desired segregation for our OpenShift clusters on three distinct physical servers. The approach as well as all the important steps for installing Red Hat Ceph Storage (RHCS) 5 and OpenShift Data Foundation (ODF) 4.9.6 were highlighted and check out the following resources:
+To sum up, we highlighted how using Red Hat Ceph Storage (RHCS) in external mode and OpenShift Data Foundation (ODF) together can achieve the desired flexibility for our storage needs on a minimum hardware footprint. For our OpenShift cluster deployments it was beneficial to use Crucible automation to get the desired segregation for our OpenShift clusters on three distinct physical servers. The approach as well as all important steps for installing Red Hat Ceph Storage (RHCS) 5 and OpenShift Data Foundation (ODF) 4.9.6 were shown as part of the blog and for more reference please check out the following resources:
 - https://access.redhat.com/documentation/en-us/red_hat_ceph_storage/5/html/installation_guide/red-hat-ceph-storage-installation#bootstrapping-a-new-storage-cluster_install
 - https://access.redhat.com/documentation/en-us/red_hat_openshift_data_foundation/4.9/html/deploying_openshift_data_foundation_in_external_mode/index
 - https://github.com/redhat-partner-solutions/crucible
