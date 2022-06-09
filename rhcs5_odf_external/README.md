@@ -7,7 +7,7 @@ This blog highlights how using Red Hat Ceph Storage (RHCS) in External Mode and 
 # Setting up the Lab Environment
 In order to run trails on a minimum hardware footprint, the lab environment uses 4 bare-metal server. One of the servers will be the bastion/ansible host from which we will set up Red Hat OpenShift and Red Hat Ceph Storage (RHCS) clusters on the other remaining 3 bare-metal servers.
 
-Using Crucible Automation, Kernel-based Virtual Machine (KVM) hypervisor will be deployed on all of the 3 bare-metal server nodes and for both Red Hat OpenShift (OCP) clusters individual VMs will be created on top of each bare-metal node. In total we will have 6 running VMs and each of these seperately will be the control plane nodes for our OpenShift clusters. Separate VLANs will be created for both the OpenShift clusters.
+Using Crucible Automation, Kernel-based Virtual Machine (KVM) hypervisor will be deployed on all of the 3 bare-metal server nodes and for both Red Hat OpenShift(OCP) clusters individual VMs will be created on top of each bare-metal node. In total we will have 6 running VMs and each of these seperately will be the control plane nodes for our OpenShift clusters. Separate VLANs will be created for both the OpenShift clusters.
 
 Similar to the OpenShift clusters, the Red Hat Ceph Storage (RHCS) cluster will also be deployed on a separate VLAN in order to validate that the cluster can run in “external mode” efficiently. Each of the 3 bare-metal servers consist of 3 x NVMe free drives and those will be leveraged for our Red Hat Ceph Storage (RHCS) cluster, so in total we will have 9 Object Storage Daemon (OSD) configured.
 
@@ -19,7 +19,7 @@ Similar to the OpenShift clusters, the Red Hat Ceph Storage (RHCS) cluster will 
 
 Crucible Automation is a set of playbooks for installing an OpenShift cluster on-premise using the developer preview version of the OpenShift Assisted Installer. Using Crucible, one can install and set up multiple OpenShift 4.9 clusters in a simplified automated way.
 
-For our particular deployment we need to ensure complete segregation of networks and using Crucible all the prerequisites for both OpenShift Clusters (DNS/DHCP/Bridging/VLANS) are set up with ease.
+For our particular deployment, we need to ensure complete segregation of networks and using Crucible all the prerequisites for both OpenShift Clusters (DNS/DHCP/Bridging/VLANS) are set up with ease.
 
 
 Clone Crucible repository using the commands below:
@@ -29,14 +29,14 @@ $ git clone https://github.com/redhat-partner-solutions/crucible
 ```
 In order to use these playbooks to deploy OpenShift, the availability of a jump/bastion host (which can be virtual or physical) and a minimum of three target systems for the resulting cluster is required. These playbooks are intended to be run from the jump/bastion host that itself is subscribed to Red Hat Subscription Manager.
 
-For this lab based deployment guide we will try to create 2 clusters in total. The playbooks will run twice using separate inventory files for both clusters. Running the playbooks will deploy and set up a fully operational OpenShift cluster with control plane nodes deployed as virtual machines on top of each bare-metal server.
+For this lab based deployment guide, we will try to create 2 clusters in total. The playbooks will run twice using separate inventory files for both clusters. Running the playbooks will deploy and set up a fully operational OpenShift cluster with control plane nodes deployed as virtual machines on top of each bare-metal server.
 
 Each virtual machine for control plane nodes of OpenShift cluster should have the following minimum specifications:
 - vCPU: 6
 - Memory: 24GB
 - Disk: 120gb
 
-**Note:** Make sure that firewall **“masquerade”** is **“yes”** because after the installation of Ceph this turns into **“no”**. If this stays in **“no”**, Crucible installation fails. 
+**Note:** Make sure that firewall **“masquerade”** is **“yes”** because after the installation of Ceph this turns into **“no”**. If it stays in **“no”**, Crucible installation fails. 
 
 You can check this configuration in bastion host with following command:
 
@@ -91,14 +91,14 @@ First we need to create the SSH tunnel to our bastion host. We can create the SS
 ```console
 $ ssh -f -N -D 8085 root@10.19.6.21
 ```
-Every time we want to connect to GUI we have to make sure that this tunnel is active.
+Every time we want to connect to GUI, we have to make sure that this tunnel is active.
 
 To configure the proxy settings in our browser, In Firefox, we configure our proxy settings from this menu.
 
 ![Sync Background](images/IMAGE42.png)
 ![Sync Background](images/IMAGE53.png)
 
-Lastly, we need to configure local configuration to resolve the hostnames. Add the following entries in your /etc/hosts file:
+Lastly, we need to configure local configuration to resolve the hostnames. Add the following entries in your **/etc/hosts** file:
 ```
 10.19.8.1	api.rna3.cloud.lab.eng.bos.redhat.com
 10.19.8.3	oauth-openshift.apps.rna3.cloud.lab.eng.bos.redhat.com
@@ -109,11 +109,11 @@ Lastly, we need to configure local configuration to resolve the hostnames. Add t
 10.19.8.3	alertmanager-main-openshift-monitoring.apps.rna3.cloud.lab.eng.bos.redhat.com
 ```
 ## Connecting to OpenShift CLI ##
-In order to connect to OpenShift CLI we need to ensure that we have the kubeconfigs for both clusters present on our bastion host.
+In order to connect to OpenShift CLI, we need to ensure that we have the kubeconfigs for both clusters present on our bastion host.
 
-Using the post-install playbook which is one of the playbooks we run as part of site.yml in installation steps above, one can generate these kubeconfigs automatically. If you do not deploy using crucible you will need to fetch the kubeconfig.
+Using the **post-install.yml** playbook which is one of the playbooks we run as part of **site.yml** in installation steps above, one can generate these kubeconfigs automatically. If you do not deploy using crucible you will need to fetch the kubeconfig.
 
-Once the kubeconfig is available on the bastian host we can export the exact location of it to a variable KUBECONFIG
+Once the kubeconfig is available on the bastian host, we can export the exact location of it to a variable KUBECONFIG
 ```console
 $ export KUBECONFIG=/home/redhat/rna3-kubeconfig
 ```
@@ -153,7 +153,7 @@ $ yum install cephadm-ansible
 ```
 
 To register via satellite: https://access.redhat.com/articles/1750863
-If you are using Red Hat Satellite please ensure that you have the following repositories enabled and correctly synced.
+If you are using Red Hat Satellite, please ensure that you have the following repositories enabled and correctly synced.
 
 **Content>Red Hat Repositories**
 
@@ -168,7 +168,7 @@ Click on Red Hat Ceph Storage and make sure that Ceph 5 Tools repositories are s
 ![Sync Background](images/IMAGE8.png)
 
 ### Configuring Ansible inventory location ###
-Once cephadm-ansible is installed we navigate to the **/usr/share/cephadm-ansible/** directory and create/edit hosts file:
+Once cephadm-ansible is installed, we navigate to the **/usr/share/cephadm-ansible/** directory and create/edit hosts file:
 ```
 bastion.rna3.cloud.lab.eng.bos.redhat.com
 metal1.rna3.cloud.lab.eng.bos.redhat.com
@@ -185,7 +185,7 @@ Then we generate the SSH key pair in bastion host, we will accept the default fi
 $ ssh-keygen
 ```
 
-After this we copy the public key to all nodes in the storage cluster.
+After this, we copy the public key to all nodes in the storage cluster.
 ```console
 ssh-copy-id root@metal1
 ssh-copy-id root@metal2
@@ -219,7 +219,7 @@ Host bastion
 
 ### Running the preflight playbook ###
 
-This cephadmn-preflight.yml playbook configures the Red Hat Ceph Storage repository and prepares the storage cluster for bootstrapping. It also installs some prerequisites, such as podman, lvm2, chronyd, and cephadm. The default location for cephadm-ansible and cephadm-preflight.yml is **/usr/share/cephadm-ansible** 
+This **cephadmn-preflight.yml** playbook configures the Red Hat Ceph Storage repository and prepares the storage cluster for bootstrapping. It also installs some prerequisites, such as podman, lvm2, chronyd, and cephadm. The default location for cephadm-ansible and **cephadm-preflight.yml** is **/usr/share/cephadm-ansible** 
 ```console
 $ ansible-playbook -i /usr/share/cephadm-ansible/hosts cephadm-preflight.yml --extra-vars "ceph_origin=rhcs"
 ```
@@ -281,14 +281,14 @@ On the bastion host **/root** directory, we will create a JSON file which will i
 }
 ```
 
-Once the **mylogin.json** file is saved inside the **/root** directory in bastion host we will bootstrap the storage cluster with the **--apply-spec** option:
+Once the **mylogin.json** file is saved inside the **/root** directory in bastion host, we will bootstrap the storage cluster with the **--apply-spec** option:
 ```console
 $ cephadm bootstrap --apply-spec initial-config159.yaml --mon-ip 10.19.9.21 --allow-fqdn-hostname --registry-json mylogin.json --initial-dashboard-password=redhat --dashboard-password-noupdate
 ```
 
 **NOTE:** mon-ip: should be of the same node from where the command is being executed.
 
-If everything goes well, Red Hat Ceph Storage cluster will get deployed and one can reach the Ceph GUI from **https://<bastion_host_IP>:8443**. We can use **admin/redhat** as login information to GUI. In order to check Ceph's service containers are fully deployed, we need to connect to each host and check containers are working (**podman ps --all**). Also, we have to verify that Ceph Health Status is OK. 
+If everything goes well, Red Hat Ceph Storage cluster will get deployed and it is possible to reach the Ceph GUI from **https://<bastion_host_IP>:8443**. We can use **admin/redhat** as login information to GUI. In order to check Ceph's service containers are fully deployed, we need to connect to each host and check containers are working (**podman ps --all**). Also, we have to verify that Ceph Health Status is OK. 
 
 **Note:** It may take some time for all Ceph's Services to show stable working state.
 
