@@ -91,14 +91,14 @@ First we need to create the SSH tunnel to our bastion host. We can create the SS
 ```console
 $ ssh -f -N -D 8085 root@10.19.6.21
 ```
-Every time we want to connect to GUI we have to make sure that this tunnel is active.
+Every time we want to connect to GUI, we have to make sure that this tunnel is active.
 
 To configure the proxy settings in our browser, In Firefox, we configure our proxy settings from this menu.
 
 ![Sync Background](images/IMAGE42.png)
 ![Sync Background](images/IMAGE53.png)
 
-Lastly, we need to configure local configuration to resolve the hostnames. Add the following entries in your /etc/hosts file:
+Lastly, we need to configure local configuration to resolve the hostnames. Add the following entries in your **/etc/hosts** file:
 ```
 10.19.8.1	api.rna3.cloud.lab.eng.bos.redhat.com
 10.19.8.3	oauth-openshift.apps.rna3.cloud.lab.eng.bos.redhat.com
@@ -109,11 +109,11 @@ Lastly, we need to configure local configuration to resolve the hostnames. Add t
 10.19.8.3	alertmanager-main-openshift-monitoring.apps.rna3.cloud.lab.eng.bos.redhat.com
 ```
 ## Connecting to OpenShift CLI ##
-In order to connect to OpenShift CLI we need to ensure that we have the kubeconfigs for both clusters present on our bastion host.
+In order to connect to OpenShift CLI, we need to ensure that we have the kubeconfigs for both clusters present on our bastion host.
 
-Using the post-install playbook which is one of the playbooks we run as part of site.yml in installation steps above, one can generate these kubeconfigs automatically. If you do not deploy using crucible you will need to fetch the kubeconfig.
+Using the **post-install.yml** playbook which is one of the playbooks we run as part of **site.yml** in installation steps above, one can generate these kubeconfigs automatically. If you do not deploy using crucible you will need to fetch the kubeconfig.
 
-Once the kubeconfig is available on the bastian host we can export the exact location of it to a variable KUBECONFIG
+Once the kubeconfig is available on the bastian host, we can export the exact location of it to a variable KUBECONFIG
 ```console
 $ export KUBECONFIG=/home/redhat/rna3-kubeconfig
 ```
@@ -153,7 +153,7 @@ $ yum install cephadm-ansible
 ```
 
 To register via satellite: https://access.redhat.com/articles/1750863
-If you are using Red Hat Satellite please ensure that you have the following repositories enabled and correctly synced.
+If you are using Red Hat Satellite, please ensure that you have the following repositories enabled and correctly synced.
 
 **Content>Red Hat Repositories**
 
@@ -168,7 +168,7 @@ Click on Red Hat Ceph Storage and make sure that Ceph 5 Tools repositories are s
 ![Sync Background](images/IMAGE8.png)
 
 ### Configuring Ansible inventory location ###
-Once cephadm-ansible is installed we navigate to the **/usr/share/cephadm-ansible/** directory and create/edit hosts file:
+Once cephadm-ansible is installed, we navigate to the **/usr/share/cephadm-ansible/** directory and create/edit hosts file:
 ```
 bastion.rna3.cloud.lab.eng.bos.redhat.com
 metal1.rna3.cloud.lab.eng.bos.redhat.com
@@ -185,7 +185,7 @@ Then we generate the SSH key pair in bastion host, we will accept the default fi
 $ ssh-keygen
 ```
 
-After this we copy the public key to all nodes in the storage cluster.
+After this, we copy the public key to all nodes in the storage cluster.
 ```console
 ssh-copy-id root@metal1
 ssh-copy-id root@metal2
@@ -219,7 +219,7 @@ Host bastion
 
 ### Running the preflight playbook ###
 
-This cephadmn-preflight.yml playbook configures the Red Hat Ceph Storage repository and prepares the storage cluster for bootstrapping. It also installs some prerequisites, such as podman, lvm2, chronyd, and cephadm. The default location for cephadm-ansible and cephadm-preflight.yml is **/usr/share/cephadm-ansible** 
+This **cephadmn-preflight.yml** playbook configures the Red Hat Ceph Storage repository and prepares the storage cluster for bootstrapping. It also installs some prerequisites, such as podman, lvm2, chronyd, and cephadm. The default location for cephadm-ansible and **cephadm-preflight.yml** is **/usr/share/cephadm-ansible** 
 ```console
 $ ansible-playbook -i /usr/share/cephadm-ansible/hosts cephadm-preflight.yml --extra-vars "ceph_origin=rhcs"
 ```
@@ -281,14 +281,14 @@ On the bastion host **/root** directory, we will create a JSON file which will i
 }
 ```
 
-Once the **mylogin.json** file is saved inside the **/root** directory in bastion host we will bootstrap the storage cluster with the **--apply-spec** option:
+Once the **mylogin.json** file is saved inside the **/root** directory in bastion host, we will bootstrap the storage cluster with the **--apply-spec** option:
 ```console
 $ cephadm bootstrap --apply-spec initial-config159.yaml --mon-ip 10.19.9.21 --allow-fqdn-hostname --registry-json mylogin.json --initial-dashboard-password=redhat --dashboard-password-noupdate
 ```
 
 **NOTE:** mon-ip: should be of the same node from where the command is being executed.
 
-If everything goes well, Red Hat Ceph Storage cluster will get deployed and one can reach the Ceph GUI from **https://<bastion_host_IP>:8443**. We can use **admin/redhat** as login information to GUI. In order to check Ceph's service containers are fully deployed, we need to connect to each host and check containers are working (**podman ps --all**). Also, we have to verify that Ceph Health Status is OK. 
+If everything goes well, Red Hat Ceph Storage cluster will get deployed and it is possible to reach the Ceph GUI from **https://<bastion_host_IP>:8443**. We can use **admin/redhat** as login information to GUI. In order to check Ceph's service containers are fully deployed, we need to connect to each host and check containers are working (**podman ps --all**). Also, we have to verify that Ceph Health Status is OK. 
 
 **Note:** It may take some time for all Ceph's Services to show stable working state.
 
