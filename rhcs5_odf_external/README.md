@@ -65,7 +65,7 @@ $ firewall-cmd --zone=public --add-masquerade
 ```
 ## Installation Steps ##
 
-Crucible Inventory files of our 2 OCP  clusters can be retrieved here:
+Crucible Inventory files of our 2 OpenShift clusters can be retrieved here:
 
 ![Cluster1 Inventory YML](addmat/vCP1inventory.yml)
 ![Cluster2 Inventory YML](addmat/vCP2inventory.yml)
