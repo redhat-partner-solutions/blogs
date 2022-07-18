@@ -1,6 +1,6 @@
 # Replacing Supervisor nodes for Telco Deployments
 
-Description
+## Description
 
 This document captures details to evaluate replacing a supervisor (control plane) node in Red Hat OpenShift 4.  It is targeted to Rakuten Symphony RAN trials that NEC the system integrator is taking on.  In these limited field trials, a smaller hardware footprint is desired where the production target hardware has not been ordered yet.  
 
@@ -89,7 +89,7 @@ In order to verify and check the functionality of OCP cluster before and after t
 
 The following are the yaml files for our deployments, persistent volumes and persistent volume claims:
 
-Deployment
+## Deployment
 oc create -f - <<EOF
 apiVersion: apps/v1
 kind: Deployment
@@ -119,7 +119,8 @@ spec:
           claimName: nfs-claim1
 EOF
 
-Persistent Volume
+## Persistent Volume
+                     
 oc create -f - <<EOF
 apiVersion: v1
 kind: PersistentVolume
@@ -136,7 +137,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain 
 EOF
 
-Persistent Volume Claim
+## Persistent Volume Claim
 oc create -f - <<EOF
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -152,8 +153,9 @@ spec:
   storageClassName: ""
 EOF
 
-Extract the ignition for the control plane from the cluster
-Once we have the cluster deployed with running workloads, we are ready to extract the ignition for the control place from the cluster.
+## Extract the ignition for the control plane from the cluster
+
+                    Once we have the cluster deployed with running workloads, we are ready to extract the ignition for the control place from the cluster.
 https://access.redhat.com/solutions/5504291
 
 Using oc extract -n openshift-machine-api secret/master-user-data --keys=userData --to= {/PATH}
@@ -214,41 +216,40 @@ Check the status of the EtcdMembers Available status condition using the followi
 
 oc get etcd -o=jsonpath='{range .items[0].status.conditions[?(@.type=="EtcdMembersAvailable")]}{.message}{"\n"}'
 
-Removing the member:
+## Removing the member:
 In a terminal that has access to the cluster as a cluster-admin user, run the following command:
 oc get pods -n openshift-etcd | grep -v etcd-quorum-guard | grep etcd
 Connect to the running etcd container, passing in the name of a pod that is not on the removing node:
 In a terminal that has access to the cluster as a cluster-admin user, run the following command:
 oc rsh -n openshift-etcd etcd-ip-10-0-154-204.ec2.internal
-View the member list:
+## View the member list:
 etcdctl member list -w table
 sh-4.2# etcdctl member list -w table
-Remove the etcd member by providing the ID to the etcdctl member remove command:
+## Remove the etcd member by providing the ID to the etcdctl member remove command:
 etcdctl member remove 6fc1e7c9db35841d
 etcdctl member list -w table
-Remove the old secrets for the etcd member that was removed:
+## Remove the old secrets for the etcd member that was removed:
 List the secrets for the etcd member that was removed.
 oc get secrets -n openshift-etcd | grep ip-10-0-131-183.ec2.internal 
-Delete the secrets for the etcd member that was removed:
-Delete the peer secret:
+## Delete the secrets for the etcd member that was removed:
+### Delete the peer secret:
 oc delete secret -n openshift-etcd etcd-peer-ip-10-0-131-183.ec2.internal
-Delete the serving secret:
+### Delete the serving secret:
 oc delete secret -n openshift-etcd etcd-serving-ip-10-0-131-183.ec2.internal
 
-Delete the metrics secret:
+### Delete the metrics secret:
 oc delete secret -n openshift-etcd etcd-serving-metrics-ip-10-0-131-183.ec2.internal
 
 Delete and recreate the control plane machine. After this machine is recreated, a new revision is forced and etcd scales up automatically.
 
 If you are running installer-provisioned infrastructure, or you used the Machine API to create your machines, follow these steps. Otherwise, you must create the new master using the same method that was used to originally create it.
 
-Obtain the machine for the removed member:
-
+## Obtain the machine for the removed member:
 In a terminal that has access to the cluster as a cluster-admin user, run the following command:
 oc get machines -n openshift-machine-api -o wide
 
-Delete the machine of the member:
+## Delete the machine of the member:
 oc delete machine -n openshift-machine-api clustername-8qw5l-master-0 
 
-Verify that the machine was deleted:
+## Verify that the machine was deleted:
 oc get machines -n openshift-machine-api -o wide
