@@ -1,4 +1,4 @@
-Replacing Supervisor nodes for Telco Deployments
+# Replacing Supervisor nodes for Telco Deployments
 
 Description
 
@@ -16,14 +16,19 @@ Can we research and investigate a replacement procedure, hereby moving a virtual
 
 
 https://docs.openshift.com/container-platform/4.8/installing/installing_bare_metal_ipi/ipi-install-expanding-the-cluster.html#replacing-a-bare-metal-control-plane-node_ipi-install-expanding
-NFS Installation on Bastion Host
+
+# NFS Installation on Bastion Host
+
 Next is the installation of the NFS server packages on RHEL / CentOS 8 system.
 sudo yum -y install nfs-utils
+
 Now create the directory that will be shared by NFS:
 mkdir /var/nfsshare
+
 Change the permissions of the folder as follows:
 chmod -R 755 /var/nfsshare
 chown nfsnobody:nfsnobody /var/nfsshare
+
 After the installation, start and enable nfs-server service:
 sudo systemctl enable --now nfs-server rpcbind
 Next, we need to start the services and enable them to be started at boot time. 
@@ -35,26 +40,37 @@ systemctl start rpcbind
 systemctl start nfs-server
 systemctl start nfs-lock
 systemctl start nfs-idmap
+
 Now we will share the NFS directory over the network a follows:
 vi /etc/exports
 /var/nfsshare   10.19.6.18(rw,sync,no_root_squash,no_all_squash)
 /var/nfsshare    10.19.6.6(rw,sync,no_root_squash,no_all_squash)
 /var/nfsshare    10.19.6.7(rw,sync,no_root_squash,no_all_squash)
 /var/nfsshare    10.19.6.8(rw,sync,no_root_squash,no_all_squash)
+
 Finally, start the NFS service:
 systemctl restart nfs-server
+
 Again we need to add the NFS service override in CentOS 7 firewall-cmd public zone service as:
 firewall-cmd --permanent --zone=public --add-service=nfs
 firewall-cmd --permanent --zone=public --add-service=mountd
 firewall-cmd --permanent --zone=public --add-service=rpc-bind
 firewall-cmd --reload
-OCP Installation with Crucible
+
+#OCP Installation with Crucible
+
 Crucible Automation is a set of playbooks for installing an OpenShift cluster on-premise using the developer preview version of the OpenShift Assisted Installer. Using Crucible, one can install and set up multiple OpenShift 4.9 clusters in a simplified automated way.
+
 For our particular deployment, we need to ensure complete segregation of networks and using Crucible all the prerequisites for both OpenShift Clusters (DNS/DHCP/Bridging/VLANS) are set up with ease.
+
 Clone Crucible repository using the commands below:
+
 $ git clone https://github.com/redhat-partner-solutions/crucible
+
 In order to use these playbooks to deploy OpenShift, the availability of a jump/bastion host (which can be virtual or physical) and a minimum of three target systems for the resulting cluster is required. These playbooks are intended to be run from the jump/bastion host that itself is subscribed to Red Hat Subscription Manager.
+
 For this lab based deployment guide, we will try to create 1 clusters in total. Running the playbooks will deploy and set up a fully operational OpenShift cluster with control plane nodes deployed as virtual machines on top of each bare-metal server.
+
 Each virtual machine for control plane nodes of OpenShift cluster should have the following minimum specifications:
 vCPU: 6
 Memory: 24GB
@@ -62,12 +78,13 @@ Disk: 120gb
 When inventory files for our cluster is ready, we can start the crucible deployment with following:
 
 ansible-playbook -i 2361inventory.yml site.yml -vv
-When deployment finishes, we can see the GUI address, password, kubeconfig file in our assisted installer GUI. It is possible to reach Assisted Installer GUI from http://<bastion_IP>:8080/clusters
 
+When deployment finishes, we can see the GUI address, password, kubeconfig file in our assisted installer GUI. It is possible to reach Assisted Installer GUI from http://<bastion_IP>:8080/clusters
 
 If you click on the cluster, you can see the details about that cluster.
 
-Workload Deployment on OCP Cluster
+# Workload Deployment on OCP Cluster
+
 In order to verify and check the functionality of OCP cluster before and after the master node replacement, we will create some workload on our cluster so we will deploy some deployments, persistent volumes and persistent volume claims on our OCP cluster using the NFS that we deployed on the previous steps.
 
 The following are the yaml files for our deployments, persistent volumes and persistent volume claims:
@@ -134,12 +151,12 @@ spec:
   volumeName: pv0001
   storageClassName: ""
 EOF
+
 Extract the ignition for the control plane from the cluster
 Once we have the cluster deployed with running workloads, we are ready to extract the ignition for the control place from the cluster.
 https://access.redhat.com/solutions/5504291
 
-Using 
-oc extract -n openshift-machine-api secret/master-user-data --keys=userData --to= {/PATH}
+Using oc extract -n openshift-machine-api secret/master-user-data --keys=userData --to= {/PATH}
 
 We will extract the ignition file for the current state of the cluster and save the ignition file to an HTTP server accessible location.
 Once the ignition configuration has been extracted it should look similar to:
@@ -147,7 +164,7 @@ Once the ignition configuration has been extracted it should look similar to:
 
 The file will be saved as a userData file. Save this as a .ign file and store it on the http server.
 
-Replacing Supervisor RHCOS bare metal machines using an ISO image stored in HTTP Store
+# Replacing Supervisor RHCOS bare metal machines using an ISO image stored in HTTP Store
 
 You can create more Red Hat Enterprise Linux CoreOS (RHCOS) compute machines for your cluster by using an ISO image to create the machines.
 nmcli connection show 
@@ -156,10 +173,14 @@ sudo nmcli con mod "Wired connection 2" ipv4.addresses "10.19.6.19/24"
 nmcli con mod Wired\ connection\ 2 ipv4.gateway 10.19.6.254
 nmcli con mod Wired\ connection\ 2 ipv4.dns 10.19.143.247
 sudo nmcli con up "Wired connection 2"
+
 How to configure persistent hostname when creating RHCOS in OpenShift 4.6 or later?
 Hostname can not persist while passing the --copy-network option to the coreos-installer command when creating RHCOS
+
 The recommended way to configure the hostname would be to provide a unique Ignition config that writes out /etc/hostname with the desired value for the system during install time.
+
 {"ignition":{"config":{"merge":[{"source":"https://10.19.6.1:22623/config/master"}]},"security":{"tls":{"certificateAuthorities":[{"source":"data:text/plain;charset=utf-8;base64,LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUR…"}]}},"version":"3.2.0"},"storage":{"files":[{"path":"/etc/hostname","contents":{"source":"data:,metal2"},"mode":420}]}}
+
 In the example, a storage section has been added to the Ignition config. This section instructs Ignition to write out /etc/hostname with the contents worker0.example.com
 
 It is necessary to create modified Ignition configurations for each node of which the hostname needs to be configured and then make them available via HTTP or HTTPS.
@@ -188,9 +209,7 @@ $ oc get csr -o go-template='{{range .items}}{{if not .status}}{{.metadata.name}
 Now that your client requests are approved, you must review the server requests for each machine that you added to the cluster:
 $ oc get csr 
 
-
-
-Steps to remove ETCD membership
+# Steps to remove ETCD membership
 Check the status of the EtcdMembers Available status condition using the following command:
 
 oc get etcd -o=jsonpath='{range .items[0].status.conditions[?(@.type=="EtcdMembersAvailable")]}{.message}{"\n"}'
