@@ -207,16 +207,20 @@ In the example, a storage section has been added to the Ignition config. This se
 
 It is necessary to create modified Ignition configurations for each node of which the hostname needs to be configured and then make them available via HTTP or HTTPS.
 
-Once ignition file has been created following the steps above and stored within the http store we will be required to remove one of the existing Supervisor CP node from our OpenShift Cluster. The following commands below would be used:
-```
-oc delete node <node-name>
-```
-Using the command below we start installation:
+Once ignition file has been created following the steps above and stored within the http store we boot the node with RHCOS ISO, or by using the boot ISO playbooks in Crucible
+
+In the CLI of the booted node, issue command below to pull the master.ign file from a http server:
 ```
 sudo coreos-installer install /dev/sda --ignition-url http://10.19.6.21/discovery/master.ign --insecure-ignition --copy-network  --firstboot-args 'rd.neednet=1'
 ```
-
 rd.neednet=1 boolean, bring up network even without netroot set
+
+After the installation of the RHCOS and network configuration completes, reboot the node.
+
+we will be required to remove one of the existing Supervisor CP node from our OpenShift Cluster. The following commands below would be used:
+```
+oc delete node <node-name>
+```
 
 ## Approving the certificate signing requests for your machines
 When you add machines to a cluster, two pending certificate signing requests (CSRs) are generated for each machine that you added. You must confirm that these CSRs are approved or, if necessary, approve them yourself. The client requests must be approved first, followed by the server requests.
