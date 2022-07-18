@@ -207,6 +207,10 @@ In the example, a storage section has been added to the Ignition config. This se
 
 It is necessary to create modified Ignition configurations for each node of which the hostname needs to be configured and then make them available via HTTP or HTTPS.
 
+Once ignition file has been created following the steps above and stored within the http store we will be required to remove one of the existing Supervisor CP node from our OpenShift Cluster. The following commands below would be used:
+```
+oc delete node <node-name>
+```
 Using the command below we start installation:
 ```
 sudo coreos-installer install /dev/sda --ignition-url http://10.19.6.21/discovery/master.ign --insecure-ignition --copy-network  --firstboot-args 'rd.neednet=1'
