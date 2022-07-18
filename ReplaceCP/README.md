@@ -64,7 +64,7 @@ firewall-cmd --permanent --zone=public --add-service=mountd
 firewall-cmd --permanent --zone=public --add-service=rpc-bind
 firewall-cmd --reload
 ```
-#OCP Installation with Crucible
+# OCP Installation with Crucible
 
 Crucible Automation is a set of playbooks for installing an OpenShift cluster on-premise using the developer preview version of the OpenShift Assisted Installer. Using Crucible, one can install and set up multiple OpenShift 4.9 clusters in a simplified automated way.
 
