@@ -192,11 +192,13 @@ sudo nmcli con mod "Wired connection xyz" ipv4.addresses "10.19.6.19/24"
 nmcli con mod Wired\ connection\ xyz ipv4.gateway 10.19.6.254
 nmcli con mod Wired\ connection\ xyz ipv4.dns 10.19.143.247
 sudo nmcli con up "Wired connection xyz"
+```
 
 How to configure persistent hostname when creating RHCOS in OpenShift 4.6 or later?
 Hostname can not persist while passing the --copy-network option to the coreos-installer command when creating RHCOS
 
 The recommended way to configure the hostname would be to provide a unique Ignition config that writes out /etc/hostname with the desired value for the system during install time.
+
 ```
 {"ignition":{"config":{"merge":[{"source":"https://10.19.6.1:22623/config/master"}]},"security":{"tls":{"certificateAuthorities":[{"source":"data:text/plain;charset=utf-8;base64,LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUR…"}]}},"version":"3.2.0"},"storage":{"files":[{"path":"/etc/hostname","contents":{"source":"data:,metal2"},"mode":420}]}}
 ```
