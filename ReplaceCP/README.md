@@ -88,7 +88,7 @@ When inventory files for our cluster is ready, we can start the crucible deploym
 ```
 ansible-playbook -i 2361inventory.yml site.yml -vv
 ```
-When deployment finishes, we can see the GUI address, password, kubeconfig file in our assisted installer GUI. It is possible to reach Assisted Installer GUI from http://<bastion_IP>:8080/clusters
+When deployment finishes, we can see the GUI address, password, kubeconfig file in our assisted installer GUI. It is possible to reach Assisted Installer GUI from **http://<bastion_IP>:8080/clusters**
 
 If you click on the cluster, you can see the details about that cluster.
 
