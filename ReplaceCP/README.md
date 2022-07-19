@@ -80,9 +80,12 @@ In order to use these playbooks to deploy OpenShift, the availability of a jump/
 For this lab based deployment guide, we will try to create 1 clusters in total. Running the playbooks will deploy and set up a fully operational OpenShift cluster with control plane nodes deployed as virtual machines on top of each bare-metal server.
 
 Each virtual machine for control plane nodes of OpenShift cluster should have the following minimum specifications:
-vCPU: 6
-Memory: 24GB
-Disk: 120gb
+
+**vCPU**: 6
+
+**Memory**: 24GB
+
+**Disk**: 120gb
 
 When inventory files for our cluster is ready, we can start the crucible deployment with following:
 ```
