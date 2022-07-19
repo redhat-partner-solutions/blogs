@@ -11,9 +11,45 @@ In the Telco use cases, these trials are used with live traffic as qualification
 
 https://docs.openshift.com/container-platform/4.8/installing/installing_bare_metal_ipi/ipi-install-expanding-the-cluster.html#replacing-a-bare-metal-control-plane-node_ipi-install-expanding
 
+
+# OCP Installation with Crucible
+
+Crucible Automation is a set of playbooks for installing an OpenShift cluster on-premise using the developer preview version of the OpenShift Assisted Installer. Using Crucible, one can install and set up multiple OpenShift 4.9 clusters in a simplified automated way.
+
+For our particular deployment, we need to ensure complete segregation of networks and using Crucible all the prerequisites for both OpenShift Clusters (DNS/DHCP/Bridging/VLANS) are set up with ease.
+
+Clone Crucible repository using the commands below:
+```
+$ git clone https://github.com/redhat-partner-solutions/crucible
+```
+
+In order to use these playbooks to deploy OpenShift, the availability of a jump/bastion host (which can be virtual or physical) and a minimum of three target systems for the resulting cluster is required. These playbooks are intended to be run from the jump/bastion host that itself is subscribed to Red Hat Subscription Manager.
+
+For this lab based deployment guide, we will try to create 1 clusters in total. Running the playbooks will deploy and set up a fully operational OpenShift cluster with control plane nodes deployed as virtual machines on top of each bare-metal server.
+
+Each virtual machine for control plane nodes of OpenShift cluster should have the following minimum specifications:
+
+**vCPU**: 6
+
+**Memory**: 24GB
+
+**Disk**: 120gb
+
+When inventory files for our cluster is ready, we can start the crucible deployment with following:
+```
+ansible-playbook -i 2361inventory.yml site.yml -vv
+```
+When deployment finishes, we can see the GUI address, password, kubeconfig file in our assisted installer GUI. It is possible to reach Assisted Installer GUI from **http://<bastion_IP>:8080/clusters**
+
+![Sync Background](images/image1.JPG)
+
+If you click on the cluster, you can see the details about that cluster.
+
+![Sync Background](images/image2.JPG)
+
 # NFS Installation on Bastion Host
 
-Next is the installation of the NFS server packages on RHEL / CentOS 8 system.
+In order to create some workload on the OCP cluster, we will first NFS to our bastion host and create some workload on OCP using this NFS. So this step will be the installation of the NFS server packages on the RHEL/CentOS 8 system.
 ```
 sudo yum -y install nfs-utils
 ```
@@ -58,40 +94,6 @@ firewall-cmd --permanent --zone=public --add-service=mountd
 firewall-cmd --permanent --zone=public --add-service=rpc-bind
 firewall-cmd --reload
 ```
-# OCP Installation with Crucible
-
-Crucible Automation is a set of playbooks for installing an OpenShift cluster on-premise using the developer preview version of the OpenShift Assisted Installer. Using Crucible, one can install and set up multiple OpenShift 4.9 clusters in a simplified automated way.
-
-For our particular deployment, we need to ensure complete segregation of networks and using Crucible all the prerequisites for both OpenShift Clusters (DNS/DHCP/Bridging/VLANS) are set up with ease.
-
-Clone Crucible repository using the commands below:
-```
-$ git clone https://github.com/redhat-partner-solutions/crucible
-```
-
-In order to use these playbooks to deploy OpenShift, the availability of a jump/bastion host (which can be virtual or physical) and a minimum of three target systems for the resulting cluster is required. These playbooks are intended to be run from the jump/bastion host that itself is subscribed to Red Hat Subscription Manager.
-
-For this lab based deployment guide, we will try to create 1 clusters in total. Running the playbooks will deploy and set up a fully operational OpenShift cluster with control plane nodes deployed as virtual machines on top of each bare-metal server.
-
-Each virtual machine for control plane nodes of OpenShift cluster should have the following minimum specifications:
-
-**vCPU**: 6
-
-**Memory**: 24GB
-
-**Disk**: 120gb
-
-When inventory files for our cluster is ready, we can start the crucible deployment with following:
-```
-ansible-playbook -i 2361inventory.yml site.yml -vv
-```
-When deployment finishes, we can see the GUI address, password, kubeconfig file in our assisted installer GUI. It is possible to reach Assisted Installer GUI from **http://<bastion_IP>:8080/clusters**
-
-![Sync Background](images/image1.JPG)
-
-If you click on the cluster, you can see the details about that cluster.
-
-![Sync Background](images/image2.JPG)
 
 # Workload Deployment on OCP Cluster
 
