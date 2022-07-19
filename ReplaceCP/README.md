@@ -8,6 +8,12 @@ In the context of project, we are initially deploying the OCP cluster with 3 con
 
 In the Telco use cases, these trials are used with live traffic as qualification phase for the actual projects so that redeploying the cluster on-prem really is problematic, especially with live traffic. Therefore, our suggested solution aims to create a replacemet procedure hereby moving a VM based master node to a physical machine based master node without impacting the availability of the cluster.
 
+Starting architecture of our system is like the following:
+![Sync Background](images/diagram1.JPG)
+
+After replacement of the control plane nodes are completed, architecture will be like following:
+![Sync Background](images/diagram2.JPG)
+
 
 https://docs.openshift.com/container-platform/4.8/installing/installing_bare_metal_ipi/ipi-install-expanding-the-cluster.html#replacing-a-bare-metal-control-plane-node_ipi-install-expanding
 
