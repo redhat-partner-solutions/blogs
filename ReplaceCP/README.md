@@ -2,17 +2,11 @@
 
 ## Description
 
-This document captures details to evaluate replacing a supervisor (control plane) node in Red Hat OpenShift 4.  It is targeted to Rakuten Symphony RAN trials that NEC the system integrator is taking on.  In these limited field trials, a smaller hardware footprint is desired where the production target hardware has not been ordered yet.  
+This document captures details to evaluate replacing a control plane node which is initially deployed on a VM to baremetal node in Red Hat OpenShift 4.9. In these limited field trials, a smaller hardware footprint is desired where the production target hardware has not been ordered yet so that it may be possible to deploy your cluster on top of some VMs and then replace them with baremetal nodes.
 
-The timeline for availability of this is targeted towards a 200 site deployment at TEF by NEC, in the October 2022 time frame.  Our technical stakeholder at NEC is Ranjith Palanivelu.
+In the context of project, we are initially deploying the OCP cluster with 3 control plane (masters) as virtual machine systems on a single physical box presently using Crucible Automation tool. One important question came up, and it was regarding how to "move" these virtual machines to baremetal nodes without having to redeploy the cluster. This scenario can be also pertinent for telecommunication service providers in the field (early trials, POCs, and not in production quite yet, which could be useful for other projects in Ecosystem Engineering and by the field) Generally, field trials for RAN deployments require full High Availability configurations, but they have limited hardware availability so that this kind of solution can be helpful in their trials.
 
-In the context of NEC, they are currently deploying the control plane (3 masters) as virtual machine systems on a single physical box presently using Crucible.  One important question came up, and it was regarding how to "move" these virtual machines to baremetal without having to redeploy the cluster.  Red Hat does not really have a good answer for this today, instead focusing on how to backup the etcd database.  This scenario is also pertinent for other telecommunication service provider customers in the field (early trials, POCs, and not in production quite yet, which could be useful for other projects in Ecosystem Engineering and by the field. 
-
-Field trials for RAN deployments require full High Availability configurations, but they have limited hardware availability.
-
-These trials are used with live traffic as qualification phase for the actual projects
-Redeploying the cluster on-prem really is problematic, especially with live traffic
-Can we research and investigate a replacement procedure, hereby moving a virtual machine based master to a physical machine based master without impacting the availability of the cluster?
+In the Telco use cases, these trials are used with live traffic as qualification phase for the actual projects so that redeploying the cluster on-prem really is problematic, especially with live traffic. Therefore, our suggested solution aims to create a replacemet procedure hereby moving a VM based master node to a physical machine based master node without impacting the availability of the cluster.
 
 
 https://docs.openshift.com/container-platform/4.8/installing/installing_bare_metal_ipi/ipi-install-expanding-the-cluster.html#replacing-a-bare-metal-control-plane-node_ipi-install-expanding
