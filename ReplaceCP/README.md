@@ -234,7 +234,6 @@ After the installation of the RHCOS and network configuration completes, reboot 
 ```
 oc delete node <node-name>
 ```
-![Sync Background](images/image7.png)
   
 # Steps to remove ETCD membership
 Check the status of the EtcdMembers Available status condition using the following command:
