@@ -6,13 +6,17 @@ This blog captures details to evaluate replacing a supervisor (control plane) no
 
 To summarize, this will be achieved by deploying a VM-based 3 supervisor node OpenShift cluster by using crucible automation. Once the cluster is up, workloads will be created on top of the cluster to demonstrate a functioning state. After this, the Ignition file from the supervisor nodes will be extracted and stored inside a HTTP server to be consumed by new bare metal nodes. Bare metal nodes will boot using the RHCOS image and with the use of these ignition files and by accepting some required CSR they will be added to the cluster. This documentation will also cover how to successfully decommission the nodes that are being relieved from their supervisor duties, how to ensure they no longer have ETCD membership and remove any secrets associated with them. Lastly, the documentation covers steps to perform a minor upgrade and all validation steps to ensure a successful replacement.
 
-## Description
+## Background
 
-This document captures details to evaluate replacing a control plane node which is initially deployed on a VM to baremetal node in Red Hat OpenShift 4.9. In these limited field trials, a smaller hardware footprint is desired where the production target hardware has not been ordered yet so that it may be possible to deploy your cluster on top of some VMs and then replace them with baremetal nodes.
+In some deployment environments, hardware is constrained where the partner or customer desires to evaluate OpenShift but not dedicate three distinct physical servers to the control plane.  In these limited field trials, a smaller hardware footprint is desired initially, where the production target hardware has not been ordered yet.  
 
-In the context of project, we are initially deploying the OCP cluster with 3 control plane (masters) as virtual machine systems on a single physical box presently using Crucible Automation tool. One important question came up, and it was regarding how to "move" these virtual machines to baremetal nodes without having to redeploy the cluster. This scenario can be also pertinent for telecommunication service providers in the field (early trials, POCs, and not in production quite yet, which could be useful for other projects in Ecosystem Engineering and by the field) Generally, field trials for RAN deployments require full High Availability configurations, but they have limited hardware availability so that this kind of solution can be helpful in their trials.
+The timeline for availability of this is targeted towards a 200 site deployment at TEF by NEC, in the October 2022 time frame.  The technical stakeholders at NEC are Ranjith Palanivelu and Shashank Sharma.
 
-In the Telco use cases, these trials are used with live traffic as qualification phase for the actual projects so that redeploying the cluster on-prem really is problematic, especially with live traffic. Therefore, our suggested solution aims to create a replacemet procedure hereby moving a VM based master node to a physical machine based master node without impacting the availability of the cluster.
+In the context of NEC the system integrator, they are currently deploying the control plane (3 masters) as virtual machine systems on a single physical box presently using Crucible.  One important question came up, and it was regarding how to "move" these virtual machines to bare-metal without having to redeploy the cluster.  Red Hat does not have a commercially supported procedure for this today, instead focusing on how to backup the etcd database in supported product documentation:
+
+https://docs.openshift.com/container-platform/4.10/backup_and_restore/control_plane_backup_and_restore/backing-up-etcd.html
+
+This scenario is also pertinent for other telecommunication service provider customers in the field (early trials, POCs, and not in production quite yet, which could be useful for other projects in Ecosystem Engineering and by the field. 
 
 Starting architecture of our system is like the following:
 ![Sync Background](images/diagram1.JPG)
