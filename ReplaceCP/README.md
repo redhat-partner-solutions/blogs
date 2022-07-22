@@ -18,12 +18,6 @@ https://docs.openshift.com/container-platform/4.10/backup_and_restore/control_pl
 
 This scenario is also pertinent for other telecommunication service provider customers in the field (early trials, POCs, and not in production quite yet, which could be useful for other projects in Ecosystem Engineering and by the field. 
 
-Starting architecture of our system is like the following:
-![Sync Background](images/diagram1.JPG)
-
-After replacement of the control plane nodes are completed, architecture will be like following:
-![Sync Background](images/diagram2.JPG)
-
 
 https://docs.openshift.com/container-platform/4.8/installing/installing_bare_metal_ipi/ipi-install-expanding-the-cluster.html#replacing-a-bare-metal-control-plane-node_ipi-install-expanding
 
@@ -62,6 +56,12 @@ When deployment finishes, we can see the GUI address, password, kubeconfig file 
 If you click on the cluster, you can see the details about that cluster.
 
 ![Sync Background](images/image2.JPG)
+
+After the deployment is completed, architecture of our system is like the following:
+![Sync Background](images/diagram1.JPG)
+
+After replacement of the virtual supervisor nodes  are completed, architecture will be like following at the end:
+![Sync Background](images/diagram2.JPG)
 
 # NFS Installation on Bastion Host
 
