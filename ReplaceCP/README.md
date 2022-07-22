@@ -4,23 +4,7 @@
 
 This blog captures details to evaluate replacing a supervisor (control plane) node in Red Hat OpenShift 4.  It illustrates a use case of migrating from a virtual machine based supervisor node (hosted on a single Red Hat Enterprise Linux KVM hypervisor system) to a physical bare-metal system. 
 
-To summarize, this will be achieved by deploying a VM-based 3 supervisor node OpenShift cluster by using crucible automation. Once the cluster is up, workloads will be created on top of the cluster to demonstrate a functioning state. After this, the Ignition file from the supervisor nodes will be extracted and stored inside a HTTP server to be consumed by new bare metal nodes. Bare metal nodes will boot using the RHCOS image and with the use of these ignition files and by accepting some required CSR they will be added to the cluster. This documentation will also cover how to successfully decommission the nodes that are being relieved from their supervisor duties, how to ensure they no longer have ETCD membership and remove any secrets associated with them. Lastly, the documentation covers steps to perform a minor upgrade and all validation steps to ensure a successful replacement.
-
-## Background
-
-In some deployment environments, hardware is constrained where the partner or customer desires to evaluate OpenShift but not dedicate three distinct physical servers to the control plane.  In these limited field trials, a smaller hardware footprint is desired initially, where the production target hardware has not been ordered yet.  
-
-The timeline for availability of this is targeted towards a 200 site deployment at TEF by NEC, in the October 2022 time frame.  The technical stakeholders at NEC are Ranjith Palanivelu and Shashank Sharma.
-
-In the context of NEC the system integrator, they are currently deploying the control plane (3 masters) as virtual machine systems on a single physical box presently using Crucible.  One important question came up, and it was regarding how to "move" these virtual machines to bare-metal without having to redeploy the cluster.  Red Hat does not have a commercially supported procedure for this today, instead focusing on how to backup the etcd database in supported product documentation:
-
-https://docs.openshift.com/container-platform/4.10/backup_and_restore/control_plane_backup_and_restore/backing-up-etcd.html
-
-This scenario is also pertinent for other telecommunication service provider customers in the field (early trials, POCs, and not in production quite yet, which could be useful for other projects in Ecosystem Engineering and by the field. 
-
-
-https://docs.openshift.com/container-platform/4.8/installing/installing_bare_metal_ipi/ipi-install-expanding-the-cluster.html#replacing-a-bare-metal-control-plane-node_ipi-install-expanding
-
+This will be achieved by deploying a VM-based 3 supervisor node OpenShift cluster by using crucible automation. Once the cluster is up, workloads will be created on top of the cluster to demonstrate a functioning state. After this, the Ignition file from the supervisor nodes will be extracted and stored inside a HTTP server to be consumed by new bare metal nodes. Bare metal nodes will boot using the RHCOS image and with the use of these ignition files and by accepting some required CSR they will be added to the cluster. This documentation will also cover how to successfully decommission the nodes that are being relieved from their supervisor duties, how to ensure they no longer have ETCD membership and remove any secrets associated with them. Lastly, the documentation covers steps to perform a minor upgrade and all validation steps to ensure a successful replacement.
 
 # OCP Installation with Crucible
 
@@ -240,38 +224,6 @@ we will be required to remove one of the existing Supervisor CP node from our Op
 ```
 oc delete node <node-name>
 ```
-
-## Approving the certificate signing requests for your machines
-When you add machines to a cluster, two pending certificate signing requests (CSRs) are generated for each machine that you added. You must confirm that these CSRs are approved or, if necessary, approve them yourself. The client requests must be approved first, followed by the server requests.
-
-## Procedure
-
-Confirm that the cluster recognizes the machines: 
-```
-$ oc get nodes
-```
-
-Review the pending CSRs and ensure that you see the client requests with the Pending or Approved status for each machine that you added to the cluster:
-```
-$ oc get csr
-```
-
-If the CSRs were not approved, after all of the pending CSRs for the machines you added are in Pending status, approve the CSRs for your cluster machines:
-
-To approve them individually, run the following command for each valid CSR:
-```
-$ oc adm certificate approve <csr_name>
-```
-
-To approve all pending CSRs, run the following command:
-```
-$ oc get csr -o go-template='{{range .items}}{{if not .status}}{{.metadata.name}}{{"\n"}}{{end}}{{end}}' | xargs --no-run-if-empty oc adm certificate approve
-```
-Now that your client requests are approved, you must review the server requests for each machine that you added to the cluster:
-```
-$ oc get csr 
-```
-
 # Steps to remove ETCD membership
 Check the status of the EtcdMembers Available status condition using the following command:
 ```
@@ -317,22 +269,49 @@ oc delete secret -n openshift-etcd etcd-serving-ip-10-0-131-183.ec2.internal
 ```
 oc delete secret -n openshift-etcd etcd-serving-metrics-ip-10-0-131-183.ec2.internal
 ```
-Delete and recreate the control plane machine. After this machine is recreated, a new revision is forced and etcd scales up automatically.
-
-If you are running installer-provisioned infrastructure, or you used the Machine API to create your machines, follow these steps. Otherwise, you must create the new master using the same method that was used to originally create it.
-
 ## Obtain the machine for the removed member:
 In a terminal that has access to the cluster as a cluster-admin user, run the following command:
 ```
 oc get machines -n openshift-machine-api -o wide
 ```
-
 ## Delete the machine of the member:
 ```
 oc delete machine -n openshift-machine-api clustername-8qw5l-master-0 
 ```
-
 ## Verify that the machine was deleted:
 ```
 oc get machines -n openshift-machine-api -o wide
 ```
+
+## Approving the certificate signing requests for your machines
+When you add machines to a cluster, two pending certificate signing requests (CSRs) are generated for each machine that you added. You must confirm that these CSRs are approved or, if necessary, approve them yourself. The client requests must be approved first, followed by the server requests.
+
+## Procedure
+
+Confirm that the cluster recognizes the machines: 
+```
+$ oc get nodes
+```
+
+Review the pending CSRs and ensure that you see the client requests with the Pending or Approved status for each machine that you added to the cluster:
+```
+$ oc get csr
+```
+
+If the CSRs were not approved, after all of the pending CSRs for the machines you added are in Pending status, approve the CSRs for your cluster machines:
+
+To approve them individually, run the following command for each valid CSR:
+```
+$ oc adm certificate approve <csr_name>
+```
+
+To approve all pending CSRs, run the following command:
+```
+$ oc get csr -o go-template='{{range .items}}{{if not .status}}{{.metadata.name}}{{"\n"}}{{end}}{{end}}' | xargs --no-run-if-empty oc adm certificate approve
+```
+Now that your client requests are approved, you must review the server requests for each machine that you added to the cluster:
+```
+$ oc get csr 
+```
+
+
