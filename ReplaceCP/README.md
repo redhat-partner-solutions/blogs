@@ -187,7 +187,7 @@ Once the ignition configuration has been extracted it should look similar to thi
 
 The file will be saved as a userData file. Save this as a .ign file and store it on the http server.
 
-![Sync Background](images/image3.JPG)
+![Sync Background](images/image3.png)
 
 # Replacing Supervisor RHCOS bare metal machines using an ISO image stored in HTTP Store
 
@@ -196,7 +196,7 @@ You can create more Red Hat Enterprise Linux CoreOS (RHCOS) compute machines for
 1. Boot the node with RHCOS ISO, or by using the boot ISO playbooks in Crucible.
 
 Once you have boot the ISO on your BM machine and start the server, you will be prompted to an installer screen shown below:
-![Sync Background](images/image4.JPG)
+![Sync Background](images/image4.png)
 
 2. In order to ensure the network configuration is set correctly we need to statically assign the IP address, gateway and dns on the BM supervisor node. Use nmcli commands mentioned below as an example:
 ```
@@ -219,14 +219,14 @@ In the example, a storage section has been added to the Ignition config. This se
 It is necessary to create modified Ignition configurations for each node of which the hostname needs to be configured and then make them available via HTTP or HTTPS.
 
 4. After that save the master.ign file to an HTTP server accessible location. Your master.ign file should now  look similar to this with the storage section added:
-![Sync Background](images/image5.JPG)
+![Sync Background](images/image5.png)
 
 5. In the CLI of the booted node, issue coreos-installer install --ignition-url <ignition> to pull the master.ign file from a http server and install Red Hat Enterprise Linux CoreOS on disk device /dev/sda:
 
 ```
 sudo coreos-installer install /dev/sda --ignition-url http://10.19.6.21/discovery/master.ign --insecure-ignition --copy-network
 ```
-![Sync Background](images/image6.JPG)
+![Sync Background](images/image6.png)
   
 After the installation of the RHCOS and network configuration completes, reboot the node.
 
@@ -234,7 +234,7 @@ After the installation of the RHCOS and network configuration completes, reboot 
 ```
 oc delete node <node-name>
 ```
-![Sync Background](images/image7.JPG)
+![Sync Background](images/image7.png)
   
 # Steps to remove ETCD membership
 Check the status of the EtcdMembers Available status condition using the following command:
