@@ -6,7 +6,7 @@ This blog captures details to evaluate replacing a supervisor (control plane) no
 
 This will be achieved by deploying a VM-based 3 supervisor node OpenShift cluster by using crucible automation. Once the cluster is up, workloads will be created on top of the cluster to demonstrate a functioning state. After this, the Ignition file from the supervisor nodes will be extracted and stored inside a HTTP server to be consumed by new bare metal nodes. Bare metal nodes will boot using the RHCOS image and with the use of these ignition files and by accepting some required CSR they will be added to the cluster. This documentation will also cover how to successfully decommission the nodes that are being relieved from their supervisor duties, how to ensure they no longer have ETCD membership and remove any secrets associated with them. Lastly, the documentation covers steps to perform a minor upgrade and all validation steps to ensure a successful replacement.
 
-# OCP Installation with Crucible
+# OpenShift Container Platform Installation with Crucible
 
 Crucible Automation is a set of playbooks for installing an OpenShift cluster on-premise using the developer preview version of the OpenShift Assisted Installer. Using Crucible, one can install and set up multiple OpenShift 4.9 clusters in a simplified automated way.
 
@@ -169,7 +169,9 @@ EOF
 ```
 ## Extract the ignition for the control plane from the cluster
 
-Once we have the cluster deployed with running workloads, we are ready to extract the ignition for the control place from the cluster.
+Once we have the cluster deployed with running workloads, we are ready to begin the process of migrating to physical supervisor machines.  First, we need to extract the ignition for the control plane servers (masters) to begin this process.  
+
+Red Hat’s Knowledge Base Articles show how to do this.  To extract the ignition for the control place from the cluster.
 https://access.redhat.com/solutions/5504291
 
 Using 
@@ -177,17 +179,26 @@ Using
 oc extract -n openshift-machine-api secret/master-user-data --keys=userData --to= {/PATH}
 ```
 
-We will extract the ignition file for the current state of the cluster and save the ignition file to an HTTP server accessible location.
-Once the ignition configuration has been extracted it should look similar to:
+We will extract the ignition file for the current state of the cluster, and save the ignition file to an HTTP server accessible location.
+Once the ignition configuration has been extracted it should look similar to this example:
 ```
 {"ignition":{"config":{"merge":[{"source":"https://10.19.6.1:22623/config/master"}]},"security":{"tls":{"certificateAuthorities":[{"source":"data:text/plain;charset=utf-8;base64,LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURFRENDQWZpZ0F3SUJBZ0lJYnpFMDJ0U0lNQW93RFFZSktvWklodmNOQVFFTEJRQXdKakVTTUJBR0ExVUUKQ3hNSmIzQmxibk5vYVdaME1SQXdEZ1lEVlFRREV3ZHliMjkwTFdOaE1CNFhEVEl5TURZeE16RTBNRFF6T0ZvWApEVE15TURZeE1ERTBNRFF6T0Zvd0pqRVNNQkFHQTFVRUN4TUpiM0JsYm5Ob2FXWjBNUkF3RGdZRFZRUURFd2R5CmIyOTBMV05oTUlJQklqQU5CZ2txaGtpRzl3MEJBUUVGQUFPQ0FROEFNSUlCQ2dLQ0FRRUF0N2F4WWg3L3NsamMKcm1RME1qOG9JVUtFdkx4NEl0MTRkcjBjMyt5aW9nOStJZFhDM1hpWmhHcGpNQ1Yxa1FvSmR5VVoyZWo2bCtjVQpHQXZnOURTdHE2OW04OEdvZlErMHJ6UUlRMmROS1krUDJJejRPaTNITFF2MEQzUXV4dlZRbjJSY2UrcU82ZHNGClB6eDdCV0JraVBPSHdLN2NSMVd0azFlb0tmZGVJUjhYU3VyT1pmS2w4RUV1a1BMVC8wekg0WmwrVi9GQ0ZIVHAKaTBBdTdWdzMyRWVpMkFjOHFXUmE0QVNkSmtBeFBUS1FNN0VvZmlZWkU4L1o2NUU5UHRkVFVldXNzWExUWmRTYQoxbkhEalJ5SkdPNnloaUxrc2RUdmZWd0dyYlJqOFV6VG9pQ3U5cEpETlR5bldDei9jS3NEOUtrVHBZYk11UUR1CmhkWWpuaEVDN1FJREFRQUJvMEl3UURBT0JnTlZIUThCQWY4RUJBTUNBcVF3RHdZRFZSMFRBUUgvQkFVd0F3RUIKL3pBZEJnTlZIUTRFRmdRVVRuQ1V5cERKRjlaanBBL3VjeFhBREVwamxNNHdEUVlKS29aSWh2Y05BUUVMQlFBRApnZ0VCQUZaaThDaFpuWWt6czlsaXJRVDBheWdTMm9kSTRQRzFCZC9jT0MwbmNSYlQxb01vMUw4MWlsZ3prRXlNClJMcXJkbzY4OXU3aWpUYXQxcjNkdExQdnZjWS9JeGZUT0JPU0kwdDV3aXBZWWUyRnpVVDF5NDU0RnM0cXhvbGMKRURBMDFoRERiR20vanlIdmoxa2xOci9pNUdQd1p3RjdvbnhVUXRhaFVMNjkvaU5ZR3Ivazl6cFBxcXNuV1dLegpsdVp5dFhkdUNjM1RHRXdSSVNNaElGTjJNOFVuNlRlUFFTN0Z3OHJXZERtbFlyV0h2azFSK25vVUQvbTJNQ3BTCjZBejZvZHVCdW9tMi9sMTBUSkZXS2RKOFlGK1J5STlGVDc0SFhBREljbTc1UFdEOTlCK21HdGZHMkQxNE84bjcKTklQNkdqT3hxOERTYnB6UTVvUEs1T0FKSDFJPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg=="}]}}
 ```
 
 The file will be saved as a userData file. Save this as a .ign file and store it on the http server.
 
+![Sync Background](images/image3.JPG)
+
 # Replacing Supervisor RHCOS bare metal machines using an ISO image stored in HTTP Store
 
 You can create more Red Hat Enterprise Linux CoreOS (RHCOS) compute machines for your cluster by using an ISO image to create the machines.
+
+1. Boot the node with RHCOS ISO, or by using the boot ISO playbooks in Crucible.
+
+Once you have boot the ISO on your BM machine and start the server, you will be prompted to an installer screen shown below:
+![Sync Background](images/image4.JPG)
+
+2. In order to ensure the network configuration is set correctly we need to statically assign the IP address, gateway and dns on the BM supervisor node. Use nmcli commands mentioned below as an example:
 ```
 nmcli connection show 
 sudo nmcli con mod "Wired connection xyz" ipv4.method manual
@@ -196,10 +207,7 @@ nmcli con mod Wired\ connection\ xyz ipv4.gateway 10.19.6.254
 nmcli con mod Wired\ connection\ xyz ipv4.dns 10.19.143.247
 sudo nmcli con up "Wired connection xyz"
 ```
-
-How to configure persistent hostname when creating RHCOS in OpenShift 4.6 or later?
-Hostname can not persist while passing the --copy-network option to the coreos-installer command when creating RHCOS
-
+3. In order to configure persistent hostname when creating RHCOS in OpenShift 4.6 or later, Hostname can not persist while passing the --copy-network option to the coreos-installer command when creating RHCOS
 The recommended way to configure the hostname would be to provide a unique Ignition config that writes out /etc/hostname with the desired value for the system during install time.
 
 ```
@@ -210,20 +218,24 @@ In the example, a storage section has been added to the Ignition config. This se
 
 It is necessary to create modified Ignition configurations for each node of which the hostname needs to be configured and then make them available via HTTP or HTTPS.
 
-Once ignition file has been created following the steps above and stored within the http store we boot the node with RHCOS ISO, or by using the boot ISO playbooks in Crucible
+4. After that save the master.ign file to an HTTP server accessible location. Your master.ign file should now  look similar to this with the storage section added:
+![Sync Background](images/image5.JPG)
 
-In the CLI of the booted node, issue command below to pull the master.ign file from a http server:
-```
-sudo coreos-installer install /dev/sda --ignition-url http://10.19.6.21/discovery/master.ign --insecure-ignition --copy-network  --firstboot-args 'rd.neednet=1'
-```
-rd.neednet=1 boolean, bring up network even without netroot set
+5. In the CLI of the booted node, issue coreos-installer install --ignition-url <ignition> to pull the master.ign file from a http server and install Red Hat Enterprise Linux CoreOS on disk device /dev/sda:
 
+```
+sudo coreos-installer install /dev/sda --ignition-url http://10.19.6.21/discovery/master.ign --insecure-ignition --copy-network
+```
+![Sync Background](images/image6.JPG)
+  
 After the installation of the RHCOS and network configuration completes, reboot the node.
 
-we will be required to remove one of the existing Supervisor CP node from our OpenShift Cluster. The following commands below would be used:
+6. We will be required to remove one of the existing Supervisor node from our OpenShift Cluster. The following commands below would be used:
 ```
 oc delete node <node-name>
 ```
+![Sync Background](images/image7.JPG)
+  
 # Steps to remove ETCD membership
 Check the status of the EtcdMembers Available status condition using the following command:
 ```
