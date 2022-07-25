@@ -6,7 +6,7 @@ This blog captures details to evaluate replacing a supervisor (control plane) no
 
 This will be achieved by deploying a VM-based 3 supervisor node OpenShift cluster by using crucible automation. Once the cluster is up, workloads will be created on top of the cluster to demonstrate a functioning state. After this, the Ignition file from the supervisor nodes will be extracted and stored inside a HTTP server to be consumed by new bare metal nodes. Bare metal nodes will boot using the RHCOS image and with the use of these ignition files and by accepting some required CSR they will be added to the cluster. This documentation will also cover how to successfully decommission the nodes that are being relieved from their supervisor duties, how to ensure they no longer have ETCD membership and remove any secrets associated with them. Lastly, the documentation covers steps to perform a minor upgrade and all validation steps to ensure a successful replacement.
 
-# OpenShift Container Platform Installation with Crucible
+## OpenShift Container Platform Installation with Crucible
 
 Crucible Automation is a set of playbooks for installing an OpenShift cluster on-premise using the developer preview version of the OpenShift Assisted Installer. Using Crucible, one can install and set up multiple OpenShift 4.9 clusters in a simplified automated way.
 
@@ -47,7 +47,7 @@ After the deployment is completed, architecture of our system is like the follow
 After replacement of the virtual supervisor nodes  are completed, architecture will be like following at the end:
 ![Sync Background](images/diagram2.JPG)
 
-# NFS Installation on Bastion Host
+## NFS Installation on Bastion Host
 
 In order to create some workload on the OCP cluster, we will first NFS to our bastion host and create some workload on OCP using this NFS. So this step will be the installation of the NFS server packages on the RHEL/CentOS 8 system.
 ```
@@ -95,7 +95,7 @@ firewall-cmd --permanent --zone=public --add-service=rpc-bind
 firewall-cmd --reload
 ```
 
-# Workload Deployment on OCP Cluster
+## Workload Deployment on OCP Cluster
 
 In order to verify and check the functionality of OCP cluster before and after the master node replacement, we will create some workload on our cluster so we will deploy some deployments, persistent volumes and persistent volume claims on our OCP cluster using the NFS that we deployed on the previous steps.
 
@@ -297,7 +297,7 @@ oc get machines -n openshift-machine-api -o wide
 ## Approving the certificate signing requests for your machines
 When you add machines to a cluster, two pending certificate signing requests (CSRs) are generated for each machine that you added. You must confirm that these CSRs are approved or, if necessary, approve them yourself. The client requests must be approved first, followed by the server requests.
 
-## Procedure
+### Procedure
 
 Confirm that the cluster recognizes the machines: 
 ```
@@ -324,5 +324,29 @@ Now that your client requests are approved, you must review the server requests 
 ```
 $ oc get csr 
 ```
+
+## Minor Cluster Upgrade
+
+As a successful migration from virtual machine based supervisor nodes, take the cluster through a minor upgrade. 
+This can be easily achieved using the OpenShift Web GUI.
+
+From the OpenShift Web console proceed to click **“Upgrade Cluster”** or go **Cluster Settings > Details > Click “Update”** to upgrade.
+  
+From the drop down menu of possible releases select and Click “Update”:
+  
+The machine config operators will do a rolling upgrade of the platform and this will upgrade all the OpenShift cluster operators and the operating system of the identified node roles (e.g master & workers) to the desired version. 
+
+Please allow approximately 1 hr for the upgrade to complete. Once the upgrade is completed you can verify all cluster operators are back in healthy state.
+  
+Also validate that the workloads you put into place earlier are also running smoothly after the upgrade.
+
+## Conclusion
+
+To conclude, in this document we have shown all the steps required to successfully replace a supervisor node in Red Hat OpenShift 4, correct steps to decommission the supervisor nodes and also validate that a minor upgrade on our new supervisor nodes are happening successfully.
+
+The document illustrates specifically a use case of migrating from a virtual machine based supervisor node (hosted on a single Red Hat Enterprise Linux KVM hypervisor system) to a physical bare-metal system.
+
+The validation steps covered in this document show that the control plane traffic as well as all running workloads were not interrupted and remained up and accessible.
+
 
 
