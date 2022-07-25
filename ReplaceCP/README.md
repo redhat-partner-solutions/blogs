@@ -195,9 +195,17 @@ The file will be saved as a userData file. Save this as a .ign file and store it
 
 # Replacing Supervisor RHCOS bare metal machines using an ISO image stored in HTTP Store
 
-You can create more Red Hat Enterprise Linux CoreOS (RHCOS) compute machines for your cluster by using an ISO image to create the machines.
+You can create more Red Hat Enterprise Linux CoreOS (RHCOS) supervisor machines for your cluster by using an ISO image to create the machines.
+
+The following link provides the basic RHCOS ISO image:
+https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.9/
+
+After downloading the RHCOS ISO image from that link, we again need to place this image in the HTTP store (/opt/http_store/data/discovery/ directory) so that we can later boot our server this image from iDRAC or ILO of the servers.
+![Sync Background](images/httpstore.png)
 
 1. Boot the node with RHCOS ISO, or by using the boot ISO playbooks in Crucible.
+![Sync Background](images/idrac.png)
+
 
 Once you have boot the ISO on your BM machine and start the server, you will be prompted to an installer screen shown below:
 ![Sync Background](images/image4.png)
