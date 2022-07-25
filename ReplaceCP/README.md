@@ -29,6 +29,10 @@ Each virtual machine for control plane nodes of OpenShift cluster should have th
 
 **Disk**: 120gb
 
+Crucible Inventory file of our OpenShift cluster can be retrieved here:
+
+![Cluster Inventory YML](addmat/2361inventory.yml)
+
 When inventory files for our cluster is ready, we can start the crucible deployment with following:
 ```
 ansible-playbook -i 2361inventory.yml site.yml -vv
