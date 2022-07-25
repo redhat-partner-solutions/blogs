@@ -234,65 +234,88 @@ After the installation of the RHCOS and network configuration completes, reboot 
 ```
 oc delete node <node-name>
 ```
+
+![Sync Background](images/getnodes_remove_etcd.png)
   
-# Steps to remove ETCD membership
+## Steps to remove ETCD membership
 Check the status of the EtcdMembers Available status condition using the following command:
 ```
 oc get etcd -o=jsonpath='{range .items[0].status.conditions[?(@.type=="EtcdMembersAvailable")]}{.message}{"\n"}'
 ```
 
-## Removing the member:
+### Removing the member:
 In a terminal that has access to the cluster as a cluster-admin user, run the following command:
 ```
 oc get pods -n openshift-etcd | grep -v etcd-quorum-guard | grep etcd
 ```
+![Sync Background](images/getpods_etcd.png)
 
 Connect to the running etcd container, passing in the name of a pod that is not on the removing node:
 In a terminal that has access to the cluster as a cluster-admin user, run the following command:
 ```
-oc rsh -n openshift-etcd etcd-ip-10-0-154-204.ec2.internal
+oc rsh -n openshift-etcd etcd-super2
 ```
+![Sync Background](images/oc_rsh.png)
 
-## View the member list:
+### View the member list:
 ```
 sh-4.2# etcdctl member list -w table
 ```
-## Remove the etcd member by providing the ID to the etcdctl member remove command:
+![Sync Background](images/etcd_memberlist.png)
+
+### Remove the etcd member by providing the ID to the etcdctl member remove command:
 ```
 etcdctl member remove 6fc1e7c9db35841d
 etcdctl member list -w table
 ```
-## Remove the old secrets for the etcd member that was removed:
+
+![Sync Background](images/member_remove.png)
+![Sync Background](images/member_list.png)
+
+### Remove the old secrets for the etcd member that was removed:
 List the secrets for the etcd member that was removed.
 ```
-oc get secrets -n openshift-etcd | grep ip-10-0-131-183.ec2.internal 
+oc get secrets -n openshift-etcd | grep super1
 ```
-## Delete the secrets for the etcd member that was removed:
-### Delete the peer secret:
+![Sync Background](images/get_secrets.png)
+
+### Delete the secrets for the etcd member that was removed:
+#### Delete the peer secret:
 ```
 oc delete secret -n openshift-etcd etcd-peer-ip-10-0-131-183.ec2.internal
 ```
-### Delete the serving secret:
+#### Delete the serving secret:
 ```
 oc delete secret -n openshift-etcd etcd-serving-ip-10-0-131-183.ec2.internal
 ```
-### Delete the metrics secret:
+#### Delete the metrics secret:
 ```
 oc delete secret -n openshift-etcd etcd-serving-metrics-ip-10-0-131-183.ec2.internal
 ```
-## Obtain the machine for the removed member:
+![Sync Background](images/delete_secrets.png)
+
+### Obtain the machine for the removed member:
 In a terminal that has access to the cluster as a cluster-admin user, run the following command:
 ```
 oc get machines -n openshift-machine-api -o wide
 ```
-## Delete the machine of the member:
+![Sync Background](images/get_machines.png)
+
+### Delete the machine of the member:
 ```
 oc delete machine -n openshift-machine-api clustername-8qw5l-master-0 
 ```
-## Verify that the machine was deleted:
+### Verify that the machine was deleted:
 ```
 oc get machines -n openshift-machine-api -o wide
 ```
+![Sync Background](images/get_deleted_machine.png)
+
+Lastly, Ensure that the replaced node is in powered off and in shutdown mode.
+
+![Sync Background](images/virsh_list.png)
+
+![Sync Background](images/virsh_deleted_list.png)
 
 ## Approving the certificate signing requests for your machines
 When you add machines to a cluster, two pending certificate signing requests (CSRs) are generated for each machine that you added. You must confirm that these CSRs are approved or, if necessary, approve them yourself. The client requests must be approved first, followed by the server requests.
@@ -308,6 +331,7 @@ Review the pending CSRs and ensure that you see the client requests with the Pen
 ```
 $ oc get csr
 ```
+![Sync Background](images/get_csr.png)
 
 If the CSRs were not approved, after all of the pending CSRs for the machines you added are in Pending status, approve the CSRs for your cluster machines:
 
@@ -316,14 +340,31 @@ To approve them individually, run the following command for each valid CSR:
 $ oc adm certificate approve <csr_name>
 ```
 
+
 To approve all pending CSRs, run the following command:
 ```
 $ oc get csr -o go-template='{{range .items}}{{if not .status}}{{.metadata.name}}{{"\n"}}{{end}}{{end}}' | xargs --no-run-if-empty oc adm certificate approve
 ```
+![Sync Background](images/approve_csr.png)
+
 Now that your client requests are approved, you must review the server requests for each machine that you added to the cluster:
 ```
 $ oc get csr 
 ```
+![Sync Background](images/get_csr2.png)
+
+Confirm that the cluster recognizes the machines: 
+```
+$ oc get nodes 
+```
+![Sync Background](images/get_nodes.png)
+
+Once the new supervisor node is added please allow some time for the cluster to reach a healthy state. Keep a check on the cluster operators, if any particular errors occur they will be captured using the following command:
+![Sync Background](images/get_co.png)
+
+Validate that the workloads you put into place earlier are also running smoothly after adding new supervisor nodes and deleting the replaced supervisor nodes.
+![Sync Background](images/validate_workloads.png)
+
 
 ## Minor Cluster Upgrade
 
@@ -331,14 +372,19 @@ As a successful migration from virtual machine based supervisor nodes, take the 
 This can be easily achieved using the OpenShift Web GUI.
 
 From the OpenShift Web console proceed to click **“Upgrade Cluster”** or go **Cluster Settings > Details > Click “Update”** to upgrade.
-  
+![Sync Background](images/update_path.png)
+
 From the drop down menu of possible releases select and Click “Update”:
+![Sync Background](images/update_versions.png)
   
 The machine config operators will do a rolling upgrade of the platform and this will upgrade all the OpenShift cluster operators and the operating system of the identified node roles (e.g master & workers) to the desired version. 
+![Sync Background](images/update_process.png)
 
 Please allow approximately 1 hr for the upgrade to complete. Once the upgrade is completed you can verify all cluster operators are back in healthy state.
-  
+![Sync Background](images/get_co2.png)
+
 Also validate that the workloads you put into place earlier are also running smoothly after the upgrade.
+![Sync Background](images/get_pods_cluster_update.png)
 
 ## Conclusion
 
