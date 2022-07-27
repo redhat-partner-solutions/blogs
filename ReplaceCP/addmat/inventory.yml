@@ -172,9 +172,9 @@ all:
           cert_state: NC
 
           # Configure the following secret values in the inventory.vault.yml file
-          REGISTRY_HTTP_SECRET: 747d59badfe2a61e53abb950ffd535cb97f9103e2c3758b0a73e0744795b2935
-          disconnected_registry_user: discoreguser
-          disconnected_registry_password: discoClassics
+          REGISTRY_HTTP_SECRET: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+          disconnected_registry_user: XXXXXXXXXXXXXX
+          disconnected_registry_password: XXXXXXXXXXXXXXXXXXXX
 
           # # registry_container_image defaults to docker.io/library/registry:2
           # # Note that docker.io may rate-limit heavy users. Use this to provide your own image.
@@ -254,8 +254,8 @@ all:
       #       given host.:
       vars:
         # Set the login information for any BMCs. Note that these will be SET on the vm_host virtual BMC.
-        bmc_user: "root"
-        bmc_password: "100Mgmt-"
+        bmc_user: "XXXX"
+        bmc_password: "XXXXXX"
       children:
         masters:
           vars:
@@ -283,45 +283,3 @@ all:
               vm_host: metal3
               ansible_host: 10.19.6.8
               mac: "DE:AD:BE:EF:84:14"
-
-#        day2_workers:
-#          vars:
-#            role: worker
-#            vendor: Dell # This example uses baremetal worker nodes
-#          hosts:
-#            metal3:
-#             ansible_host: 10.19.6.19
-#              bmc_address: 10.19.143.119
-#              mac: B8:59:9F:B1:16:AD
-#              installation_disk_path: /dev/nvme0n1
-#              disks:
-#                 - device: "{{ installation_disk_path }}" #DO NOT CHANGE
-#                   extra_partitions:
-#                      partition_1: 1024
-#                      partition_2: 1024
-#                      partition_3: 1024
-#                      partition_4: 1024
-#              # # Uncomment to set custom BMC credentials for the node
-#              # # These variables must be set in the inventory.vault.yml file
-#              # bmc_user: "{{ VAULT_NODES_WORKER1_BMC_USER | mandatory }}"
-#              # bmc_password: "{{ VAULT_NODES_WORKER1_BMC_PASSWORD | mandatory }}"
-#
-#             # # Uncomment to set an alternate installation disk device for the node
-#              # installation_disk_path: /dev/sdb
-#
-#            metal1:
-#              ansible_host: 10.19.6.20
-#              bmc_address: 10.19.143.120
-#              mac: B8:59:9F:B1:11:C5
-#              installation_disk_path: /dev/nvme0n1
-#              # # Uncomment to set additional partitions if required. Please provide the correct label and size(MiB)
-#              # # Add all additional paritions required under extra_partitions (examples for label:size provided below).
-#              # # Additional partitions can only be created for OCP 4.8+ deployments
-#              disks:
-#                 - device: "{{ installation_disk_path }}" #DO NOT CHANGE
-#                   extra_partitions:
-#                      partition_1: 1024
-#                      partition_2: 1024
-
-              # # Uncomment to set an alternate installation disk device for the node
-              # installation_disk_path: /dev/sdb
