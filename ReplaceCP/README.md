@@ -6,14 +6,6 @@ This blog captures details to evaluate replacing a supervisor (control plane) no
 
 This will be achieved by deploying a VM-based three-node Compact Cluster, which are cluster nodes that host both control plane functions and user facing workloads. Once the cluster is up, workloads will be created on top of the cluster to demonstrate that workloads remain up and running, even during Supervisor node replacement, one at a time.During this procedure, the Ignition file from the supervisor nodes will be extracted from the running cluster and stored on an accessible HTTP server to be consumed by new baremetal nodes. These bare metal nodes will boot using the RHCOS ISO, and with a few commands, the new baremetal node will be added to the cluster. This document will also cover how to successfully decommission the virtual-machine based nodes that are being relieved from their supervisor duties, how to ensure they no longer have ETCD membership and remove any secrets associated with them. Finally, we will cover steps to perform a minor OpenShift cluster upgrade and all validation steps to ensure a successful replacement.
 
-## Background
-In some deployment environments, hardware is constrained where the partner or customer desires to evaluate OpenShift but not dedicate three distinct physical servers to the control plane.  In these limited deployments, a smaller hardware footprint is desired initially, where the production target hardware has not been ordered yet.  
-
-In the context of our existing environment being evaluated in this document,, we are currently deploying the OpenShift control plane (3 supervisors) as virtual machine systems on a single physical box presently using Crucible.  One important consideration came up, and it was regarding how to "move" these virtual machines to bare-metal without having to redeploy the cluster.  Red Hat does not have a commercially supported procedure for this during authoring of this document, instead our product documentation focuses on how to backup the etcd database in product documentation:
-
-https://docs.openshift.com/container-platform/4.10/backup_and_restore/control_plane_backup_and_restore/backing-up-etcd.html
-
-This procedure is also pertinent for other target customers in the field (early trials, POCs, and not in production quite yet
 
 ## OpenShift Container Platform Installation with Crucible
 
