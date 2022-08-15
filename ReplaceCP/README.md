@@ -49,17 +49,17 @@ ansible-playbook -i 2361inventory.yml site.yml -vv
 ```
 When deployment finishes, we can see the GUI address, password, kubeconfig file in our assisted installer GUI. It is possible to reach Assisted Installer GUI from **http://<bastion_IP>:8080/clusters**
 
-![Sync Background](images/image1.JPG)
+![Sync Background](images/image001.png)
 
 If you click on the cluster, you can see the details about that cluster.
 
-![Sync Background](images/image2.JPG)
+![Sync Background](images/image003.png)
 
 After the deployment is completed, architecture of our system is like the following:
-![Sync Background](images/diagram1.JPG)
+![Sync Background](images/image005.png)
 
 After replacement of the virtual supervisor nodes  are completed, the overall system architecture will be like following at the end:
-![Sync Background](images/diagram2.JPG)
+![Sync Background](images/image007.png)
 
 ## Cluster Customization
 Now that we have an OpenShift cluster up, we need a few other pieces of system infrastructure to simulate workloads running on it during the replacement procedure.
@@ -186,6 +186,7 @@ spec:
           claimName: nfs-claim1
 EOF
 ```
+![Sync Background](images/image009.png)
 
 ## Supervisor Replacement Procedure
 
@@ -213,7 +214,7 @@ Once the ignition configuration has been extracted it should look similar to thi
 
 The file will be saved as a userData file. Save this as a .ign file and store it on the http server.
 
-![Sync Background](images/image3.png)
+![Sync Background](images/image011.png)
 
 While we were using Crucible automation, HTTP store is already deployed on bastion host and our directory for placing the file is **/opt/http_store/data/discovery/** so the ignition file can be stored under this directory.
 
@@ -223,24 +224,29 @@ Mark the nodes unschedulable before performing the pod evacuation.
 ```
 oc adm cordon <node–name>
 ```
-![Sync Background](images/image3.png)
+![Sync Background](images/image013.png)
 
 Check that the node status is NotReady,SchedulingDisabled:
 ```
 oc get node <node–name>
 ```
-
+![Sync Background](images/image015.png)
+Evacuate all or selected pods on the node.Force the deletion of bare pods using the --force option. When set to true, deletion continues even if there are pods not managed by a replication controller, replica set, job, daemon set, or stateful set. Ignore pods managed by daemon sets using the --ignore-daemonsets flag set to true.
+```
+oc adm drain <node-name> --force=true --ignore-daemonsets=true --delete-local-data=true  --disable-eviction
+```
+![Sync Background](images/image017.png)
 Delete the node from the cluster: 
 ```
 oc delete node <node-name>
 ```
-![Sync Background](images/image3.png)
+![Sync Background](images/image019.png)
 
 Lastly, ensure that the replaced VM system is gracefully shutdown.
 
-![Sync Background](images/image3.png)
-![Sync Background](images/image3.png)
-![Sync Background](images/image3.png)
+![Sync Background](images/image021.png)
+![Sync Background](images/image023.png)
+![Sync Background](images/image025.png)
 After deleting the node, wait sometime and then we will also have to remove its ETCD membership. 
 
 ### Step 3: Remove etcd membership
@@ -256,7 +262,7 @@ In a terminal that has access to the cluster as a cluster-admin user, run the fo
 ```
 oc get pods -n openshift-etcd | grep -v etcd-quorum-guard | grep etcd
 ```
-![Sync Background](images/image3.png)
+![Sync Background](images/image027.png)
 
 Connect to the running etcd container, passing in the name of a pod that is not on the removing node.  In our example, we have removed super1 already, so we need to connect to either super2 or super3.
 
@@ -264,32 +270,32 @@ In a terminal that has access to the cluster as a cluster-admin user, run the fo
 ```
 oc rsh -n openshift-etcd etcd-super2
 ```
-![Sync Background](images/image3.png)
+![Sync Background](images/image029.png)
 
 View the member list:
 ```
 etcdctl member list -w table
 ```
-![Sync Background](images/image3.png)
+![Sync Background](images/image031.png)
 
 Remove the deleted etcd member by providing the ID to the etcdctl member remove command:
 ```
 etcdctl member remove <ID>
 ```
-![Sync Background](images/image3.png)
+![Sync Background](images/image033.png)
 
 Note: This command might give etcdserver: unhealthy error. Allow sometime and try again.
 ```
 etcdctl member list -w table
 ```
-![Sync Background](images/image3.png)
+![Sync Background](images/image035.png)
 
 Remove the old secrets for the deleted etcd member that was removed:
 List the secrets for the etcd member that was removed.
 ```
 etcdctl member list -w table
 ```
-![Sync Background](images/image3.png)
+![Sync Background](images/image037.png)
 
 Delete the secrets for the etcd member that was removed:
 Delete the peer secret:
@@ -304,13 +310,13 @@ Delete the metrics secret:
 ```
 oc delete secret -n openshift-etcd etcd-serving-metrics-super1
 ```
-![Sync Background](images/image3.png)
+![Sync Background](images/image039.png)
 
 In a terminal that has access to the cluster as a cluster-admin user, run the following command:
 ```
 oc get bmh -n openshift-machine-api -o wide
 ```
-![Sync Background](images/image3.png)
+![Sync Background](images/image041.png)
 
 Capture the master BMH CR to file, we will use this file later in later stages(STEP 6).
 ```
@@ -320,7 +326,7 @@ In a terminal that has access to the cluster as a cluster-admin user, run the fo
 ```
 oc get machines -n openshift-machine-api -o wide
 ```
-![Sync Background](images/image3.png)
+![Sync Background](images/image043.png)
 
 Capture master Machine CR to file, we will use this file later in later stages(STEP 6).
 ```
@@ -343,10 +349,10 @@ Verify that the machine was deleted:
 ```
 oc get machines -n openshift-machine-api -o wide
 ```
-![Sync Background](images/image3.png)
+![Sync Background](images/image045.png)
 
 After performing all the steps above check on the cluster operators, if any particular errors occur they will be captured using the following command:
-![Sync Background](images/image3.png)
+![Sync Background](images/image047.png)
 
 ### Step 4: Booting supervisor RHCOS bare metal machines using an ISO image stored in HTTP Store
 You can create a replacement Red Hat Enterprise Linux CoreOS (RHCOS) supervisor machine for your cluster by using an ISO image to create the machines.
@@ -358,14 +364,14 @@ https://mirror.openshift.com/pub/openshift-v4/dependencies/rhcos/4.9/
 
 After downloading the RHCOS ISO image from that link, we again need to place this image in the HTTP store (/opt/http_store/data/discovery/ directory) so that we can later boot our server this image from the BMC (iDRAC, iLO, etc) of the servers.
 
-![Sync Background](images/httpstore.png)
+![Sync Background](images/image049.png)
 
 1. Boot the node with RHCOS ISO, or by using the boot ISO playbooks in Crucible. In our case, we booted the ISO from iDRAC management system of our node:
-![Sync Background](images/idrac.png)
+![Sync Background](images/image051.png)
 
 
 Once you have boot the ISO on your BM machine and start the server, you will be prompted to an installer screen shown below:
-![Sync Background](images/image4.png)
+![Sync Background](images/image053.png)
 
 2. In order to ensure the network configuration is set correctly we need to statically assign the IP address, gateway and DNS on the baremetal supervisor node. Use nmcli commands mentioned below as an example:
 ```
@@ -390,14 +396,14 @@ In the example, a storage section has been added to the Ignition config. This se
 It is necessary to create modified Ignition configurations for each node of which the hostname needs to be configured and then make them available via HTTP or HTTPS.
 
 4. After that save the master.ign file to an HTTP server accessible location. Your master.ign file should now  look similar to this with the storage section added:
-![Sync Background](images/image5.png)
+![Sync Background](images/image055.png)
 
 5. In the CLI of the booted node, issue **coreos-installer install --ignition-url <ignition>** to pull the master.ign file from a HTTP server and install Red Hat Enterprise Linux CoreOS on disk device **/dev/sda**:
 
 ```
 sudo coreos-installer install /dev/sdc --ignition-url http://10.19.6.21/discovery/master.ign --insecure-ignition --copy-network
 ```
-![Sync Background](images/image6.png)
+![Sync Background](images/image057.png)
   
 Once installation on the disk is completed, reboot the node.
 
@@ -412,7 +418,7 @@ Review the pending CSRs and ensure that you see the client requests with the Pen
 ```
 $ oc get csr
 ```
-![Sync Background](images/get_csr.png)
+![Sync Background](images/image059.png)
 
 If the CSRs were not approved, after all of the pending CSRs for the machines you added are in Pending status, approve the CSRs for your cluster machines:
 To approve them individually, run the following command for each valid CSR:
@@ -421,31 +427,31 @@ To approve them individually, run the following command for each valid CSR:
 ```
 $ oc adm certificate approve <csr_name>
 ```
-![Sync Background](images/get_csr.png)
+![Sync Background](images/image061.png)
 
 Alternatively, to approve all pending CSRs, run the following command:
 ```
 $ oc get csr -o go-template='{{range .items}}{{if not .status}}{{.metadata.name}}{{"\n"}}{{end}}{{end}}' | xargs --no-run-if-empty oc adm certificate approve
 ```
-![Sync Background](images/approve_csr.png)
+![Sync Background](images/image063.png)
 
 Now that your client requests are approved, you must review the server requests for each machine that you added to the cluster:
 ```
 $ oc get csr 
 ```
-![Sync Background](images/get_csr2.png)
+![Sync Background](images/image065.png)
 
 Confirm that the cluster recognizes the machines: 
 ```
 $ oc get nodes 
 ```
-![Sync Background](images/get_nodes.png)
+![Sync Background](images/image067.png)
 
 Once the new supervisor node is added please allow some time for the cluster to reach a healthy state. Keep a check on the cluster operators, if any particular errors occur they will be captured using the following command:
-![Sync Background](images/get_co.png)
+![Sync Background](images/image069.png)
 
 Validate that the workloads you put into place earlier are also running smoothly after adding new supervisor nodes and deleting the replaced supervisor nodes.
-![Sync Background](images/validate_workloads.png)
+![Sync Background](images/image070.png)
 
 ### Step 6: Create new BMH and Machine CR
 To re-create objects that were originally created for the virtual machine based supervisor systems, we have to create them manually for the new bare metal system.  These Custom Resource Definitions include BareMetalHost and Machine CRs, respectively.
@@ -453,50 +459,50 @@ To re-create objects that were originally created for the virtual machine based 
  **Create new BMH (based on original BMH)**
 Open the file saved earlier using a text editor and delete all parameters inside the file except the following below in the screenshot:
 Name & MAC address should be changed to match replaced BM node MAC address.
-![Sync Background](images/newphoto.png)
+![Sync Background](images/image072.png)
 
 Once these changes have been made, re-apply the BMH file:
 ```
 $ oc apply -f bmh.yaml
 ```
-![Sync Background](images/newphoto.png)
+![Sync Background](images/image074.png)
 
 **Create new Machine (Based on original Machine)**
 Open the file saved earlier using a text editor and delete all parameters inside the file except the following below in the screenshot:
 Keep the base of the metadata->name, just change the last number to something new.
-![Sync Background](images/newphoto.png)
+![Sync Background](images/image076.png)
 
 Once these changes have been made, re-apply the machine file:
 ```
 $ oc apply -f machine.yaml
 ```
-![Sync Background](images/newphoto.png)
+![Sync Background](images/image078.png)
   
 After all the process is completed, we can verify if etcd has fully recovered and control plane functionality is “normalized”. In order to do this, we can first check if all the etcd pods are running fine:
 
 ```
 $ oc get pods -n openshift-etcd | grep -v etcd-quorum-guard | grep etcd
 ```
-![Sync Background](images/newphoto.png)
+![Sync Background](images/image080.png)
 
 Then, we should verify that etcd has exactly 3 member so we first need to connect to one of the etcd pods:
 ```
 $ oc rsh -n openshift-etcd etcd-metal1
 ```
-![Sync Background](images/newphoto.png)
+![Sync Background](images/image082.png)
   
 Use the following command to view the etcd member list:
 ```
 $ etcdctl member list -w table
 ```
-![Sync Background](images/newphoto.png)  
+![Sync Background](images/image084.png)  
 
 Here, we can verify that our new baremetal node is registered as a member of etcd and we have a total of 3 etcd members right now. 
 Another thing we can verify is that etcd endpoint health when connected to one of the etcd pods:
 ```
 $ etcdctl endpoint health
 ```
-![Sync Background](images/newphoto.png)
+![Sync Background](images/image086.png)
 
 ### Step 7: Replacing 2nd supervisor
 Repeat steps 2 through 6 to replace the second supervisor node.
@@ -505,9 +511,9 @@ Repeat steps 2 through 6 to replace the second supervisor node.
 Repeat steps 2 through 6 to replace the third supervisor node.
 
 Once all supervisor nodes have been replaced, we can verify that all supervisor nodes are in healthy condition:
-![Sync Background](images/newphoto.png)
-![Sync Background](images/newphoto.png)
-![Sync Background](images/newphoto.png)
+![Sync Background](images/image088.png)
+![Sync Background](images/image090.png)
+![Sync Background](images/image092.png)
   
 ## Minor Cluster Upgrade
 
@@ -516,21 +522,21 @@ This can be easily achieved using the OpenShift Web GUI.
 
   From the OpenShift Web console proceed to click “Upgrade Cluster” or navigate to **Cluster Settings > Details > Click “Update”** to upgrade.
 
-![Sync Background](images/update_path.png)
+![Sync Background](images/image094.png)
 
 From the drop down menu of possible releases select and Click **“Update”**:
-![Sync Background](images/update_versions.png)
+![Sync Background](images/image096.png)
   
 The machine config operators will do a rolling upgrade of the platform and this will upgrade all the OpenShift cluster operators and the operating system of the identified node roles (e.g master & workers) to the desired version.
 
-![Sync Background](images/update_process.png)
+![Sync Background](images/image098.png)
 
 Please allow approximately 1 hour for the upgrade to complete. Once the upgrade is completed, you can verify all cluster operators are back in healthy state.
-![Sync Background](images/get_co2.png)
+![Sync Background](images/image100.png)
 
 Also validate that the workloads you put into place earlier are also running smoothly after the upgrade, and get deployed on the new supervisor nodes.
-![Sync Background](images/get_pods_cluster_update.png)
-![Sync Background](images/newphoto.png)
+![Sync Background](images/image102.png)
+![Sync Background](images/image104.png)
   
 ## Conclusion
 
