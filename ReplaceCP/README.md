@@ -490,6 +490,7 @@ $ etcdctl member list -w table
 ![Sync Background](images/image084.png)  
 
 Here, we can verify that our new baremetal node is registered as a member of etcd and we have a total of 3 etcd members right now. 
+ 
 Another thing we can verify is that etcd endpoint health when connected to one of the etcd pods:
 ```
 $ etcdctl endpoint health
