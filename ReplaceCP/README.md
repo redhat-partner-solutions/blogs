@@ -6,6 +6,9 @@ This blog captures details to evaluate replacing a supervisor (control plane) no
 
 This will be achieved by deploying a VM-based three-node Compact Cluster, which are cluster nodes that host both control plane functions and user facing workloads. Once the cluster is up, workloads will be created on top of the cluster to demonstrate that workloads remain up and running, even during Supervisor node replacement, one at a time.During this procedure, the Ignition file from the supervisor nodes will be extracted from the running cluster and stored on an accessible HTTP server to be consumed by new baremetal nodes. These bare metal nodes will boot using the RHCOS ISO, and with a few commands, the new baremetal node will be added to the cluster. This document will also cover how to successfully decommission the virtual-machine based nodes that are being relieved from their supervisor duties, how to ensure they no longer have ETCD membership and remove any secrets associated with them. Finally, we will cover steps to perform a minor OpenShift cluster upgrade and all validation steps to ensure a successful replacement.
 
+**Disclaimer**: Please note that this is a commercially UNSUPPORTED (by Red Hat) procedure as of this writing (August 2022). Red Hat would like for mutual customers to work with our Global Support team for any problems that arise with corrupted master nodes, which require reprovisioning.  This is obviously a sensitive procedure that requires care, and is not one that we would like for customers to go through without Support engaged.
+
+
 
 ## OpenShift Container Platform Installation with Crucible
 
