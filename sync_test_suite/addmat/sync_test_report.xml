@@ -1,0 +1,847 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuites tests="33" errors="6" failures="3" skipped="0" timestamp="2023-10-13 11:43:12+00:00" time="2009.9036">
+  <testsuite name="Environment" tests="13" errors="0" failures="0" skipped="0" timestamp="2023-10-13 11:43:12+00:00" time="0.0">
+    <testcase classname="Environment" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/environment/version/RHOCP/" time="0">
+      <system-out>{
+    "analysis": {
+        "expected": "4.14.0-0",
+        "version": "4.14.0-rc.5"
+    },
+    "duration": 0,
+    "reason": "",
+    "result": true,
+    "timestamp": "2023-10-13 11:43:12+00:00"
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/environment/version/RHOCP/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/environment/version/RHOCP/" />
+      </properties>
+    </testcase>
+    <testcase classname="Environment" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/environment/version/openshift/ptp-operator/" time="0">
+      <system-out>{
+    "analysis": {
+        "expected": "4.14.0-0",
+        "version": "4.14.0-202309280149"
+    },
+    "duration": 0,
+    "reason": "",
+    "result": true,
+    "timestamp": "2023-10-13 11:43:12+00:00"
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/environment/version/openshift/ptp-operator/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/environment/version/openshift/ptp-operator/" />
+      </properties>
+    </testcase>
+    <testcase classname="Environment" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/environment/version/gpsd/" time="0">
+      <system-out>{
+    "analysis": {
+        "expected": "3.25",
+        "version": "3.25 (revision 3.25)"
+    },
+    "duration": 0,
+    "reason": "",
+    "result": true,
+    "timestamp": "2023-10-13 11:43:12+00:00"
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/environment/version/gpsd/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/environment/version/gpsd/" />
+      </properties>
+    </testcase>
+    <testcase classname="Environment" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/environment/model/nic/" time="0">
+      <system-out>{
+    "analysis": {
+        "deviceId": "0x1593",
+        "vendorId": "0x8086"
+    },
+    "duration": 0,
+    "reason": "",
+    "result": true,
+    "timestamp": "2023-10-13 11:43:12+00:00"
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/environment/model/nic/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/environment/model/nic/" />
+      </properties>
+    </testcase>
+    <testcase classname="Environment" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/environment/version/ice-driver/" time="0">
+      <system-out>{
+    "analysis": {
+        "expected": "1.11.0",
+        "version": "5.14.0-284.34.1.rt14.319.el9_2."
+    },
+    "duration": 0,
+    "reason": "",
+    "result": true,
+    "timestamp": "2023-10-13 11:43:12+00:00"
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/environment/version/ice-driver/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/environment/version/ice-driver/" />
+      </properties>
+    </testcase>
+    <testcase classname="Environment" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/environment/version/nic-firmware/" time="0">
+      <system-out>{
+    "analysis": {
+        "expected": "4.20",
+        "version": "4.20 0x8001778b 1.3346.0"
+    },
+    "duration": 0,
+    "reason": "",
+    "result": true,
+    "timestamp": "2023-10-13 11:43:12+00:00"
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/environment/version/nic-firmware/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/environment/version/nic-firmware/" />
+      </properties>
+    </testcase>
+    <testcase classname="Environment" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/environment/model/gnss/" time="0">
+      <system-out>{
+    "analysis": {
+        "module": "ZED-F9T"
+    },
+    "duration": 0,
+    "reason": "",
+    "result": true,
+    "timestamp": "2023-10-13 11:43:12+00:00"
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/environment/model/gnss/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/environment/model/gnss/" />
+      </properties>
+    </testcase>
+    <testcase classname="Environment" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/environment/version/gnss-firmware/" time="0">
+      <system-out>{
+    "analysis": {
+        "expected": "2.20",
+        "version": "TIM 2.20"
+    },
+    "duration": 0,
+    "reason": "",
+    "result": true,
+    "timestamp": "2023-10-13 11:43:12+00:00"
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/environment/version/gnss-firmware/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/environment/version/gnss-firmware/" />
+      </properties>
+    </testcase>
+    <testcase classname="Environment" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/environment/version/gnss-protocol/" time="0">
+      <system-out>{
+    "analysis": {
+        "expected": "29.20",
+        "version": "29.20"
+    },
+    "duration": 0,
+    "reason": "",
+    "result": true,
+    "timestamp": "2023-10-13 11:43:12+00:00"
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/environment/version/gnss-protocol/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/environment/version/gnss-protocol/" />
+      </properties>
+    </testcase>
+    <testcase classname="Environment" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/environment/status/gnss/device-detected/wpc/" time="0">
+      <system-out>{
+    "analysis": {
+        "paths": [
+            "/dev/gnss0"
+        ]
+    },
+    "duration": 0,
+    "reason": "",
+    "result": true,
+    "timestamp": "2023-10-13 11:43:12+00:00"
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/environment/status/gnss/device-detected/wpc/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/sync/G.8272/environment/status/gnss/device-detected/wpc/" />
+      </properties>
+    </testcase>
+    <testcase classname="Environment" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/environment/status/gnss/antenna-connected/wpc/" time="0">
+      <system-out>{
+    "analysis": {
+        "blocks": [
+            {
+                "blockId": 0,
+                "power": 1,
+                "status": 2,
+                "timestamp": "2023-10-13T11:43:17.0463Z"
+            },
+            {
+                "blockId": 1,
+                "power": 1,
+                "status": 2,
+                "timestamp": "2023-10-13T11:43:17.0463Z"
+            }
+        ]
+    },
+    "duration": 0,
+    "reason": "",
+    "result": true,
+    "timestamp": "2023-10-13 11:43:12+00:00"
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/environment/status/gnss/antenna-connected/wpc/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/sync/G.8272/environment/status/gnss/antenna-connected/wpc/" />
+      </properties>
+    </testcase>
+    <testcase classname="Environment" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/environment/status/gnss/gpsfix-valid/wpc/" time="0">
+      <system-out>{
+    "analysis": {
+        "status": {
+            "GPSFix": 3,
+            "flags": "0xdd",
+            "timestamp": "2023-10-13T11:43:17.2462Z"
+        }
+    },
+    "duration": 0,
+    "reason": "",
+    "result": true,
+    "timestamp": "2023-10-13 11:43:12+00:00"
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/environment/status/gnss/gpsfix-valid/wpc/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/sync/G.8272/environment/status/gnss/gpsfix-valid/wpc/" />
+      </properties>
+    </testcase>
+    <testcase classname="Environment" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/environment/status/ptp-operator/" time="0">
+      <system-out>{
+    "analysis": {
+        "fetchError": null,
+        "profiles": [
+            {
+                "ts2phcConf": "[nmea]\nts2phc.master 1\n[global]\nuse_syslog  0\nverbose 1\nlogging_level 7\nts2phc.pulsewidth 100000000\n#GNSS module s /dev/ttyGNSS* -al use _0\n#cat /dev/ttyGNSS_1700_0 to find available serial port\n#example value of gnss_serialport is /dev/ttyGNSS_1700_0\nts2phc.nmea_serialport /dev/gnss0\nleapfile  /usr/share/zoneinfo/leap-seconds.list\n[ens1f0]\nts2phc.extts_polarity rising\nts2phc.extts_correction 0\n"
+            }
+        ]
+    },
+    "duration": 0,
+    "reason": "",
+    "result": true,
+    "timestamp": "2023-10-13 11:43:12+00:00"
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/environment/status/ptp-operator/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/sync/G.8272/environment/status/ptp-operator/" />
+      </properties>
+    </testcase>
+  </testsuite>
+  <testsuite name="T-GM Tests" tests="20" errors="6" failures="3" skipped="0" timestamp="2023-10-13T11:43:20+00:00" time="2001.9036">
+    <testcase classname="T-GM Tests" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/time-error-in-locked-mode/DPLL-to-PHC/PRTC-A/" time="1711.0">
+      <system-out>{
+    "analysis": {
+        "terror": {
+            "max": 1,
+            "mean": 0.0,
+            "min": -1,
+            "range": 2,
+            "stddev": 0.227,
+            "units": "ns",
+            "variance": 0.051
+        }
+    },
+    "argv": [
+        "/home/jnunez/e2e/data/collected/linuxptp-daemon-container.log"
+    ],
+    "duration": 1711.0,
+    "plot": [
+        {
+            "path": "/home/jnunez/e2e/data/artefacts/plots/sync_G.8272_time-error-in-locked-mode_DPLL-to-PHC_PRTC-A_testimpl.png",
+            "title": "DPLL-to-PHC Time Error (unfiltered)"
+        }
+    ],
+    "reason": null,
+    "result": true,
+    "timestamp": 18448.589
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/time-error-in-locked-mode/DPLL-to-PHC/PRTC-A/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/sync/G.8272/time-error-in-locked-mode/DPLL-to-PHC/PRTC-A/" />
+      </properties>
+    </testcase>
+    <testcase classname="T-GM Tests" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/time-error-in-locked-mode/DPLL-to-PHC/PRTC-B/" time="1711.0">
+      <system-out>{
+    "analysis": {
+        "terror": {
+            "max": 1,
+            "mean": 0.0,
+            "min": -1,
+            "range": 2,
+            "stddev": 0.227,
+            "units": "ns",
+            "variance": 0.051
+        }
+    },
+    "argv": [
+        "/home/jnunez/e2e/data/collected/linuxptp-daemon-container.log"
+    ],
+    "duration": 1711.0,
+    "plot": [
+        {
+            "path": "/home/jnunez/e2e/data/artefacts/plots/sync_G.8272_time-error-in-locked-mode_DPLL-to-PHC_PRTC-B_testimpl.png",
+            "title": "DPLL-to-PHC Time Error (unfiltered)"
+        }
+    ],
+    "reason": null,
+    "result": true,
+    "timestamp": 18448.589
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/time-error-in-locked-mode/DPLL-to-PHC/PRTC-B/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/sync/G.8272/time-error-in-locked-mode/DPLL-to-PHC/PRTC-B/" />
+      </properties>
+    </testcase>
+    <testcase classname="T-GM Tests" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/wander-TDEV-in-locked-mode/DPLL-to-PHC/PRTC-A/" time="1711.0">
+      <system-out>{
+    "analysis": {
+        "tdev": {
+            "max": 0.042,
+            "mean": 0.016,
+            "min": 0.001,
+            "range": 0.041,
+            "stddev": 0.015,
+            "units": "ns",
+            "variance": 0.0
+        }
+    },
+    "argv": [
+        "/home/jnunez/e2e/data/collected/linuxptp-daemon-container.log"
+    ],
+    "duration": 1711.0,
+    "plot": [
+        {
+            "path": "/home/jnunez/e2e/data/artefacts/plots/sync_G.8272_wander-TDEV-in-locked-mode_DPLL-to-PHC_PRTC-A_testimpl.png",
+            "title": "DPLL-to-PHC TDEV (filtered)"
+        }
+    ],
+    "reason": null,
+    "result": true,
+    "timestamp": 18448.589
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/wander-TDEV-in-locked-mode/DPLL-to-PHC/PRTC-A/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/sync/G.8272/wander-TDEV-in-locked-mode/DPLL-to-PHC/PRTC-A/" />
+      </properties>
+    </testcase>
+    <testcase classname="T-GM Tests" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/wander-TDEV-in-locked-mode/DPLL-to-PHC/PRTC-B/" time="1711.0">
+      <system-out>{
+    "analysis": {
+        "tdev": {
+            "max": 0.042,
+            "mean": 0.016,
+            "min": 0.001,
+            "range": 0.041,
+            "stddev": 0.015,
+            "units": "ns",
+            "variance": 0.0
+        }
+    },
+    "argv": [
+        "/home/jnunez/e2e/data/collected/linuxptp-daemon-container.log"
+    ],
+    "duration": 1711.0,
+    "plot": [
+        {
+            "path": "/home/jnunez/e2e/data/artefacts/plots/sync_G.8272_wander-TDEV-in-locked-mode_DPLL-to-PHC_PRTC-B_testimpl.png",
+            "title": "DPLL-to-PHC TDEV (filtered)"
+        }
+    ],
+    "reason": null,
+    "result": true,
+    "timestamp": 18448.589
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/wander-TDEV-in-locked-mode/DPLL-to-PHC/PRTC-B/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/sync/G.8272/wander-TDEV-in-locked-mode/DPLL-to-PHC/PRTC-B/" />
+      </properties>
+    </testcase>
+    <testcase classname="T-GM Tests" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/wander-MTIE-in-locked-mode/DPLL-to-PHC/PRTC-A/" time="1711.0">
+      <system-out>{
+    "analysis": {
+        "mtie": {
+            "max": 0.302,
+            "mean": 0.296,
+            "min": 0.151,
+            "range": 0.151,
+            "stddev": 0.028,
+            "units": "ns",
+            "variance": 0.001
+        }
+    },
+    "argv": [
+        "/home/jnunez/e2e/data/collected/linuxptp-daemon-container.log"
+    ],
+    "duration": 1711.0,
+    "plot": [
+        {
+            "path": "/home/jnunez/e2e/data/artefacts/plots/sync_G.8272_wander-MTIE-in-locked-mode_DPLL-to-PHC_PRTC-A_testimpl.png",
+            "title": "DPLL-to-PHC MTIE (filtered)"
+        }
+    ],
+    "reason": null,
+    "result": true,
+    "timestamp": 18448.589
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/wander-MTIE-in-locked-mode/DPLL-to-PHC/PRTC-A/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/sync/G.8272/wander-MTIE-in-locked-mode/DPLL-to-PHC/PRTC-A/" />
+      </properties>
+    </testcase>
+    <testcase classname="T-GM Tests" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/wander-MTIE-in-locked-mode/DPLL-to-PHC/PRTC-B/" time="1711.0">
+      <system-out>{
+    "analysis": {
+        "mtie": {
+            "max": 0.302,
+            "mean": 0.296,
+            "min": 0.151,
+            "range": 0.151,
+            "stddev": 0.028,
+            "units": "ns",
+            "variance": 0.001
+        }
+    },
+    "argv": [
+        "/home/jnunez/e2e/data/collected/linuxptp-daemon-container.log"
+    ],
+    "duration": 1711.0,
+    "plot": [
+        {
+            "path": "/home/jnunez/e2e/data/artefacts/plots/sync_G.8272_wander-MTIE-in-locked-mode_DPLL-to-PHC_PRTC-B_testimpl.png",
+            "title": "DPLL-to-PHC MTIE (filtered)"
+        }
+    ],
+    "reason": null,
+    "result": true,
+    "timestamp": 18448.589
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/wander-MTIE-in-locked-mode/DPLL-to-PHC/PRTC-B/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/sync/G.8272/wander-MTIE-in-locked-mode/DPLL-to-PHC/PRTC-B/" />
+      </properties>
+    </testcase>
+    <testcase classname="T-GM Tests" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/time-error-in-locked-mode/PHC-to-SYS/RAN/" time="1712.11">
+      <system-out>{
+    "analysis": {
+        "terror": {
+            "max": 59,
+            "mean": -0.0,
+            "min": -27,
+            "range": 86,
+            "stddev": 8.655,
+            "units": "ns",
+            "variance": 74.912
+        }
+    },
+    "argv": [
+        "/home/jnunez/e2e/data/collected/linuxptp-daemon-container.log"
+    ],
+    "duration": 1712.11,
+    "plot": [
+        {
+            "path": "/home/jnunez/e2e/data/artefacts/plots/sync_G.8272_time-error-in-locked-mode_PHC-to-SYS_RAN_testimpl.png",
+            "title": "PHC-to-SYS Time Error (unfiltered)"
+        }
+    ],
+    "reason": null,
+    "result": true,
+    "timestamp": 18447.774
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/time-error-in-locked-mode/PHC-to-SYS/RAN/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/sync/G.8272/time-error-in-locked-mode/PHC-to-SYS/RAN/" />
+      </properties>
+    </testcase>
+    <testcase classname="T-GM Tests" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/time-error-in-locked-mode/Constellation-to-GNSS-receiver/PRTC-A/" time="1698.9036">
+      <system-out>{
+    "analysis": {
+        "terror": {
+            "max": 5,
+            "mean": 4.331,
+            "min": 3,
+            "range": 2,
+            "stddev": 0.933,
+            "units": "ns",
+            "variance": 0.871
+        }
+    },
+    "argv": [
+        "/home/jnunez/e2e/data/artefacts/gnss-terror.demuxed"
+    ],
+    "duration": 1698.9036,
+    "plot": [
+        {
+            "path": "/home/jnunez/e2e/data/artefacts/plots/sync_G.8272_time-error-in-locked-mode_Constellation-to-GNSS-receiver_PRTC-A_testimpl.png",
+            "title": "Constellation-to-GNSS-receiver Time Error (unfiltered)"
+        }
+    ],
+    "reason": null,
+    "result": true,
+    "timestamp": "2023-10-13T11:48:23+00:00"
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/time-error-in-locked-mode/Constellation-to-GNSS-receiver/PRTC-A/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/sync/G.8272/time-error-in-locked-mode/Constellation-to-GNSS-receiver/PRTC-A/" />
+      </properties>
+    </testcase>
+    <testcase classname="T-GM Tests" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/time-error-in-locked-mode/Constellation-to-GNSS-receiver/PRTC-B/" time="1698.9036">
+      <failure type="Failure" message="unacceptable time error" />
+      <system-out>{
+    "analysis": {
+        "terror": {
+            "max": 5,
+            "mean": 4.331,
+            "min": 3,
+            "range": 2,
+            "stddev": 0.933,
+            "units": "ns",
+            "variance": 0.871
+        }
+    },
+    "argv": [
+        "/home/jnunez/e2e/data/artefacts/gnss-terror.demuxed"
+    ],
+    "duration": 1698.9036,
+    "plot": [
+        {
+            "path": "/home/jnunez/e2e/data/artefacts/plots/sync_G.8272_time-error-in-locked-mode_Constellation-to-GNSS-receiver_PRTC-B_testimpl.png",
+            "title": "Constellation-to-GNSS-receiver Time Error (unfiltered)"
+        }
+    ],
+    "reason": "unacceptable time error",
+    "result": false,
+    "timestamp": "2023-10-13T11:48:23+00:00"
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/time-error-in-locked-mode/Constellation-to-GNSS-receiver/PRTC-B/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/sync/G.8272/time-error-in-locked-mode/Constellation-to-GNSS-receiver/PRTC-B/" />
+      </properties>
+    </testcase>
+    <testcase classname="T-GM Tests" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/wander-TDEV-in-locked-mode/Constellation-to-GNSS-receiver/PRTC-A/" time="1698.9036">
+      <failure type="Failure" message="unacceptable time deviation" />
+      <system-out>{
+    "analysis": {
+        "tdev": {
+            "max": 0.522,
+            "mean": 0.138,
+            "min": 0.003,
+            "range": 0.519,
+            "stddev": 0.134,
+            "units": "ns",
+            "variance": 0.018
+        }
+    },
+    "argv": [
+        "/home/jnunez/e2e/data/artefacts/gnss-terror.demuxed"
+    ],
+    "duration": 1698.9036,
+    "plot": [
+        {
+            "path": "/home/jnunez/e2e/data/artefacts/plots/sync_G.8272_wander-TDEV-in-locked-mode_Constellation-to-GNSS-receiver_PRTC-A_testimpl.png",
+            "title": "Constellation-to-GNSS-receiver TDEV (filtered)"
+        }
+    ],
+    "reason": "unacceptable time deviation",
+    "result": false,
+    "timestamp": "2023-10-13T11:48:23+00:00"
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/wander-TDEV-in-locked-mode/Constellation-to-GNSS-receiver/PRTC-A/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/sync/G.8272/wander-TDEV-in-locked-mode/Constellation-to-GNSS-receiver/PRTC-A/" />
+      </properties>
+    </testcase>
+    <testcase classname="T-GM Tests" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/wander-TDEV-in-locked-mode/Constellation-to-GNSS-receiver/PRTC-B/" time="1698.9036">
+      <failure type="Failure" message="unacceptable time deviation" />
+      <system-out>{
+    "analysis": {
+        "tdev": {
+            "max": 0.522,
+            "mean": 0.138,
+            "min": 0.003,
+            "range": 0.519,
+            "stddev": 0.134,
+            "units": "ns",
+            "variance": 0.018
+        }
+    },
+    "argv": [
+        "/home/jnunez/e2e/data/artefacts/gnss-terror.demuxed"
+    ],
+    "duration": 1698.9036,
+    "plot": [
+        {
+            "path": "/home/jnunez/e2e/data/artefacts/plots/sync_G.8272_wander-TDEV-in-locked-mode_Constellation-to-GNSS-receiver_PRTC-B_testimpl.png",
+            "title": "Constellation-to-GNSS-receiver TDEV (filtered)"
+        }
+    ],
+    "reason": "unacceptable time deviation",
+    "result": false,
+    "timestamp": "2023-10-13T11:48:23+00:00"
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/wander-TDEV-in-locked-mode/Constellation-to-GNSS-receiver/PRTC-B/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/sync/G.8272/wander-TDEV-in-locked-mode/Constellation-to-GNSS-receiver/PRTC-B/" />
+      </properties>
+    </testcase>
+    <testcase classname="T-GM Tests" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/wander-MTIE-in-locked-mode/Constellation-to-GNSS-receiver/PRTC-A/" time="1698.9036">
+      <system-out>{
+    "analysis": {
+        "mtie": {
+            "max": 2.0,
+            "mean": 1.488,
+            "min": 0.245,
+            "range": 1.755,
+            "stddev": 0.621,
+            "units": "ns",
+            "variance": 0.385
+        }
+    },
+    "argv": [
+        "/home/jnunez/e2e/data/artefacts/gnss-terror.demuxed"
+    ],
+    "duration": 1698.9036,
+    "plot": [
+        {
+            "path": "/home/jnunez/e2e/data/artefacts/plots/sync_G.8272_wander-MTIE-in-locked-mode_Constellation-to-GNSS-receiver_PRTC-A_testimpl.png",
+            "title": "Constellation-to-GNSS-receiver MTIE (filtered)"
+        }
+    ],
+    "reason": null,
+    "result": true,
+    "timestamp": "2023-10-13T11:48:23+00:00"
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/wander-MTIE-in-locked-mode/Constellation-to-GNSS-receiver/PRTC-A/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/sync/G.8272/wander-MTIE-in-locked-mode/Constellation-to-GNSS-receiver/PRTC-A/" />
+      </properties>
+    </testcase>
+    <testcase classname="T-GM Tests" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/wander-MTIE-in-locked-mode/Constellation-to-GNSS-receiver/PRTC-B/" time="1698.9036">
+      <system-out>{
+    "analysis": {
+        "mtie": {
+            "max": 2.0,
+            "mean": 1.488,
+            "min": 0.245,
+            "range": 1.755,
+            "stddev": 0.621,
+            "units": "ns",
+            "variance": 0.385
+        }
+    },
+    "argv": [
+        "/home/jnunez/e2e/data/artefacts/gnss-terror.demuxed"
+    ],
+    "duration": 1698.9036,
+    "plot": [
+        {
+            "path": "/home/jnunez/e2e/data/artefacts/plots/sync_G.8272_wander-MTIE-in-locked-mode_Constellation-to-GNSS-receiver_PRTC-B_testimpl.png",
+            "title": "Constellation-to-GNSS-receiver MTIE (filtered)"
+        }
+    ],
+    "reason": null,
+    "result": true,
+    "timestamp": "2023-10-13T11:48:23+00:00"
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/wander-MTIE-in-locked-mode/Constellation-to-GNSS-receiver/PRTC-B/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/sync/G.8272/wander-MTIE-in-locked-mode/Constellation-to-GNSS-receiver/PRTC-B/" />
+      </properties>
+    </testcase>
+    <testcase classname="T-GM Tests" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/time-error-in-locked-mode/1PPS-to-DPLL/PRTC-A/">
+      <error type="Error" message="no data" />
+      <system-out>{
+    "analysis": {},
+    "argv": [
+        "/home/jnunez/e2e/data/artefacts/dpll-terror.demuxed"
+    ],
+    "duration": null,
+    "reason": "no data",
+    "result": "error",
+    "timestamp": null
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/time-error-in-locked-mode/1PPS-to-DPLL/PRTC-A/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/sync/G.8272/time-error-in-locked-mode/1PPS-to-DPLL/PRTC-A/" />
+      </properties>
+    </testcase>
+    <testcase classname="T-GM Tests" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/time-error-in-locked-mode/1PPS-to-DPLL/PRTC-B/">
+      <error type="Error" message="no data" />
+      <system-out>{
+    "analysis": {},
+    "argv": [
+        "/home/jnunez/e2e/data/artefacts/dpll-terror.demuxed"
+    ],
+    "duration": null,
+    "reason": "no data",
+    "result": "error",
+    "timestamp": null
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/time-error-in-locked-mode/1PPS-to-DPLL/PRTC-B/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/sync/G.8272/time-error-in-locked-mode/1PPS-to-DPLL/PRTC-B/" />
+      </properties>
+    </testcase>
+    <testcase classname="T-GM Tests" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/wander-TDEV-in-locked-mode/1PPS-to-DPLL/PRTC-A/">
+      <error type="Error" message="no data" />
+      <system-out>{
+    "analysis": {},
+    "argv": [
+        "/home/jnunez/e2e/data/artefacts/dpll-terror.demuxed"
+    ],
+    "duration": null,
+    "reason": "no data",
+    "result": "error",
+    "timestamp": null
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/wander-TDEV-in-locked-mode/1PPS-to-DPLL/PRTC-A/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/sync/G.8272/wander-TDEV-in-locked-mode/1PPS-to-DPLL/PRTC-A/" />
+      </properties>
+    </testcase>
+    <testcase classname="T-GM Tests" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/wander-TDEV-in-locked-mode/1PPS-to-DPLL/PRTC-B/">
+      <error type="Error" message="no data" />
+      <system-out>{
+    "analysis": {},
+    "argv": [
+        "/home/jnunez/e2e/data/artefacts/dpll-terror.demuxed"
+    ],
+    "duration": null,
+    "reason": "no data",
+    "result": "error",
+    "timestamp": null
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/wander-TDEV-in-locked-mode/1PPS-to-DPLL/PRTC-B/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/sync/G.8272/wander-TDEV-in-locked-mode/1PPS-to-DPLL/PRTC-B/" />
+      </properties>
+    </testcase>
+    <testcase classname="T-GM Tests" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/wander-MTIE-in-locked-mode/1PPS-to-DPLL/PRTC-A/">
+      <error type="Error" message="no data" />
+      <system-out>{
+    "analysis": {},
+    "argv": [
+        "/home/jnunez/e2e/data/artefacts/dpll-terror.demuxed"
+    ],
+    "duration": null,
+    "reason": "no data",
+    "result": "error",
+    "timestamp": null
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/wander-MTIE-in-locked-mode/1PPS-to-DPLL/PRTC-A/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/sync/G.8272/wander-MTIE-in-locked-mode/1PPS-to-DPLL/PRTC-A/" />
+      </properties>
+    </testcase>
+    <testcase classname="T-GM Tests" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/wander-MTIE-in-locked-mode/1PPS-to-DPLL/PRTC-B/">
+      <error type="Error" message="no data" />
+      <system-out>{
+    "analysis": {},
+    "argv": [
+        "/home/jnunez/e2e/data/artefacts/dpll-terror.demuxed"
+    ],
+    "duration": null,
+    "reason": "no data",
+    "result": "error",
+    "timestamp": null
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/wander-MTIE-in-locked-mode/1PPS-to-DPLL/PRTC-B/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/sync/G.8272/wander-MTIE-in-locked-mode/1PPS-to-DPLL/PRTC-B/" />
+      </properties>
+    </testcase>
+    <testcase classname="T-GM Tests" name="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/phc/state-transitions/" time="1998.9858308">
+      <system-out>{
+    "analysis": {
+        "clock_class_count": {
+            "FREERUN": {
+                "count": 0,
+                "transitions": {
+                    "FREERUN": 0,
+                    "HOLDOVER_IN_SPEC": 0,
+                    "HOLDOVER_OUT_SPEC1": 0,
+                    "HOLDOVER_OUT_SPEC2": 0,
+                    "HOLDOVER_OUT_SPEC3": 0,
+                    "LOCKED": 0
+                }
+            },
+            "HOLDOVER_IN_SPEC": {
+                "count": 0,
+                "transitions": {
+                    "FREERUN": 0,
+                    "HOLDOVER_IN_SPEC": 0,
+                    "HOLDOVER_OUT_SPEC1": 0,
+                    "HOLDOVER_OUT_SPEC2": 0,
+                    "HOLDOVER_OUT_SPEC3": 0,
+                    "LOCKED": 0
+                }
+            },
+            "HOLDOVER_OUT_SPEC1": {
+                "count": 0,
+                "transitions": {
+                    "FREERUN": 0,
+                    "HOLDOVER_IN_SPEC": 0,
+                    "HOLDOVER_OUT_SPEC1": 0,
+                    "HOLDOVER_OUT_SPEC2": 0,
+                    "HOLDOVER_OUT_SPEC3": 0,
+                    "LOCKED": 0
+                }
+            },
+            "HOLDOVER_OUT_SPEC2": {
+                "count": 0,
+                "transitions": {
+                    "FREERUN": 0,
+                    "HOLDOVER_IN_SPEC": 0,
+                    "HOLDOVER_OUT_SPEC1": 0,
+                    "HOLDOVER_OUT_SPEC2": 0,
+                    "HOLDOVER_OUT_SPEC3": 0,
+                    "LOCKED": 0
+                }
+            },
+            "HOLDOVER_OUT_SPEC3": {
+                "count": 0,
+                "transitions": {
+                    "FREERUN": 0,
+                    "HOLDOVER_IN_SPEC": 0,
+                    "HOLDOVER_OUT_SPEC1": 0,
+                    "HOLDOVER_OUT_SPEC2": 0,
+                    "HOLDOVER_OUT_SPEC3": 0,
+                    "LOCKED": 0
+                }
+            },
+            "LOCKED": {
+                "count": 1995,
+                "transitions": {
+                    "FREERUN": 0,
+                    "HOLDOVER_IN_SPEC": 0,
+                    "HOLDOVER_OUT_SPEC1": 0,
+                    "HOLDOVER_OUT_SPEC2": 0,
+                    "HOLDOVER_OUT_SPEC3": 0,
+                    "LOCKED": 1995
+                }
+            }
+        },
+        "total_transitions": 0
+    },
+    "argv": [
+        "/home/jnunez/e2e/data/artefacts/phc-class.demuxed"
+    ],
+    "duration": 1998.9858308,
+    "plot": [
+        {
+            "path": "/home/jnunez/e2e/data/artefacts/plots/sync_G.8272_phc_state-transitions_testimpl.png",
+            "title": "PHC State Transitions"
+        }
+    ],
+    "reason": null,
+    "result": true,
+    "timestamp": "2023-10-13T11:43:20+00:00"
+}</system-out>
+      <properties>
+        <property name="test_id" value="https://github.com/redhat-partner-solutions/vse-sync-test/tree/main/tests/sync/G.8272/phc/state-transitions/" />
+        <property name="test_specification" value="https://github.com/redhat-partner-solutions/vse-sync-test/blob/aa8c4370b03399a770bd25edcbb694863dd781f5/sync/G.8272/phc/state-transitions/" />
+      </properties>
+    </testcase>
+  </testsuite>
+</testsuites>
