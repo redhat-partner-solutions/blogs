@@ -1,24 +1,14 @@
-# A guide to understand Telecom GrandMaster on OpenShift Test Reports
+# A guide to understand Telecom GrandMaster Key Performance Metrics
+Red Hat OpenShift Container Platform 4.14 released the [Technology Preview](https://docs.openshift.com/container-platform/4.14/release_notes/ocp-4-14-release-notes.html#ocp-4-14-technology-preview) of the Telecom GrandMaster (T-GM) feature for Intel Timing Synchronization cards. Characterizing the performance of the T-GM functionality is key to accommodate the demand of our O-RAN partners and customers. To this aim, we released a [freely available](https://github.com/redhat-partner-solutions/vse-sync-test) T-GM test suite that delivers [T-GM test reports](addmat/test_report_fiesta_20231103T110635Z_84adb821.pdf) including specific T-GM key performance metrics.
 
-Are you trying to understand the results obtained by your [Telecom GrandMaster (T-GM) test report](addmat/test_report_fiesta_20231103T110635Z_84adb821.pdf)? Analysing test reports is another activity of the test process and in this case usually requires of specific expertise. The data included in the T-GM test report helps you to 1) validate if the system under test is capable of functionally behaving as a T-GM, and 2) figure out what individual components are making the integrated T-GM comply with the required performance T-GM class. T-GM performance characterization in particular is more complex than Pass/Fail acceptance criteria, and require for the user to inspect the data revealed in the test report in the form of graphs. This guide helps with understanding and intepreting those graphs revealing T-GM performance results in a [test report](addmat/test_report_fiesta_20231103T110635Z_84adb821.pdf) for a non synchronization expert.
+## Unlocking the value of the T-GM Test Suite with the test reports
+As a user of the T-GM test suite, are you trying to understand the results obtained by your [Telecom GrandMaster (T-GM) test report](addmat/test_report_fiesta_20231103T110635Z_84adb821.pdf)? Analysing test reports is another activity of the test process and in this case usually requires of specific expertise. The data included in the T-GM test report helps you to validate if the OpenShift Container Platform under test is capable of functionally behaving as a T-GM, i.e., **Independent Validation Environment**. And the data in the test report includes specific T-GM key performance indicators to ensure the T-GM complies with the required performance T-GM class, i.e., **T-GM Performance Tests**. T-GM performance characterization in particular is more complex than Pass/Fail acceptance criteria, and require for the user to inspect the data revealed in the test report in the form of graphs. This guide helps with understanding and intepreting those graphs revealing T-GM performance results in a for a non synchronization expert.
 
-## Table of Contents
-
-1. [Independent Validation Environment](#validation)
-2. [T-GM Tests](#performance)
-
-
-## Independent Validation Environment <a name="validation"></a>
+## Understanding Independent Validation Environment <a name="validation"></a>
 
 The first category of tests that you can find in our T-GM test reports aim at providing the validation of the environment where the T-GM performance tests need to be executed. The results can confirm or rule out the environment where you plan to run the T-GM performance evaluation. In other words, the results of the validation environment section in our[T-GM test report](addmat/test_report_fiesta_20231103T110635Z_84adb821.pdf) will tell you whether it is worth or not to take a look at the performance T-GM tests that follow in the test report.
 
-Thus, this section in the [T-GM test report](addmat/test_report_fiesta_20231103T110635Z_84adb821.pdf) will answer questions about the environment regarding the status and validity of the HW and SW versions of the system under test to conduct the performance characterization of the T-GM under test. You can sort of think of the validation tests as a HW and SW audit of your environment under test. See in the Figure below an example of what is needed in terms of HW to run the T-GM performance tests. It is important to highlight:
-
-* A fresh [Single Node OpenShift Container Platform 4.14](https://docs.openshift.com/container-platform/4.14/release_notes/ocp-4-14-release-notes.html) with the [PTP operator](https://catalog.redhat.com/software/containers/openshift4/ose-ptp-operator-bundle/5f5ba412bed8bd77416201e7) installed.
-
-* A certified Intel card capable of acting as a T-GM. One is the [E810-XXVDA4T with GNSS](https://catalog.redhat.com/hardware/components/detail/236227) card (WestPort Channel). Another Intel physical card candidate is [E810-CQDA2T with GNSS](https://catalog.redhat.com/hardware/components/detail/236237) card (Logan Beach).
-
-* A GNSS antenna with clear sight of the sky connected to the GNSS receiver of the Intel card.
+Thus, this section in the [T-GM test report](addmat/test_report_fiesta_20231103T110635Z_84adb821.pdf) will answer questions about the environment regarding the status and validity of the HW and SW versions of the system under test to conduct the performance characterization of the T-GM under test. You can sort of think of the validation tests as a HW and SW audit of your environment under test. See in the Figure below an example of what is needed in terms of HW to run the T-GM performance tests. 
 
 ![System Under Test](images/sut.png)
 
@@ -27,6 +17,14 @@ Thus, this section in the [T-GM test report](addmat/test_report_fiesta_20231103T
 **Figure 1**  A representation of a system under test with the required HW capabilities to run the test suite.
 
 </figcaption>
+
+It is important to highlight the need of:
+
+* A fresh [Single Node OpenShift Container Platform 4.14](https://docs.openshift.com/container-platform/4.14/release_notes/ocp-4-14-release-notes.html) with the [PTP operator](https://catalog.redhat.com/software/containers/openshift4/ose-ptp-operator-bundle/5f5ba412bed8bd77416201e7) installed.
+
+* A certified Intel card capable of acting as a T-GM. One is the [E810-XXVDA4T with GNSS](https://catalog.redhat.com/hardware/components/detail/236227) card (WestPort Channel). Another Intel physical card candidate is [E810-CQDA2T with GNSS](https://catalog.redhat.com/hardware/components/detail/236237) card (Logan Beach).
+
+* A GNSS antenna with clear sight of the sky connected to the GNSS receiver of the Intel card capable of acting as T-GM clock.
 
 See below an example showing a summary of the environment validation indicating a `good` state. The results indicate that the performance T-GM tests are conducted in an environment considered valid for testing a T-GM. This means that the data and post-processing stages used to calculate the KPIs of interest to measure the performance of the T-GM are considered good and worth of further analisys.
 
@@ -58,7 +56,7 @@ In particular, the T-GM test suite expects device driver version belonging to up
 
 </figcaption>
 
-## Understanding T-GM Tests <a name="performance"></a>
+## Understanding T-GM Performance Tests <a name="performance"></a>
 
 ### Why is this more complex than Pass/Fail?
 
