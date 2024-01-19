@@ -1,8 +1,8 @@
 # A guide to understand Telecom GrandMaster Key Performance Metrics
-Red Hat OpenShift Container Platform 4.14 released the [Technology Preview](https://docs.openshift.com/container-platform/4.14/release_notes/ocp-4-14-release-notes.html#ocp-4-14-technology-preview) of the Telecom GrandMaster (T-GM) feature for Intel Timing Synchronization cards. Characterizing the performance of the T-GM functionality is key to accommodate the demand of our O-RAN partners and customers. To this aim, we released a [freely available](https://github.com/redhat-partner-solutions/vse-sync-test) T-GM test suite that delivers [T-GM test reports](addmat/test_report_fiesta_20231103T110635Z_84adb821.pdf) including specific T-GM key performance metrics.
+Red Hat OpenShift Container Platform 4.14.6 released the [Technology Preview](https://docs.openshift.com/container-platform/4.14/release_notes/ocp-4-14-release-notes.html#ocp-4-14-technology-preview) of the Telecom GrandMaster (T-GM) feature for Intel Timing Synchronization cards. Characterizing the performance of the T-GM functionality is key to accommodate the demand of Red Hat's O-RAN partners and customers. To help support this milestone, we recently published a [freely available](https://github.com/redhat-partner-solutions/vse-sync-test) T-GM test suite that delivers [T-GM test reports](addmat/test_report_fiesta_20231103T110635Z_84adb821.pdf) including specific T-GM key performance metrics according to [ITU-T G.8272](https://www.itu.int/rec/T-REC-G.8272/en) specifications.
 
 ## Unlocking the value of the T-GM Test Suite with the test reports
-As a user of the T-GM test suite, are you trying to understand the results obtained by your [Telecom GrandMaster (T-GM) test report](addmat/test_report_fiesta_20231103T110635Z_84adb821.pdf)? Analysing test reports is another activity of the test process and in this case usually requires of specific expertise. The data included in the T-GM test report helps you to validate if the OpenShift Container Platform under test is capable of functionally behaving as a T-GM, i.e., **Independent Validation Environment**. And the data in the test report includes specific T-GM key performance indicators to ensure the T-GM complies with the required performance T-GM class, i.e., **T-GM Performance Tests**. T-GM performance characterization in particular is more complex than Pass/Fail acceptance criteria, and require for the user to inspect the data revealed in the test report in the form of graphs. This guide helps with understanding and intepreting those graphs revealing T-GM performance results in a for a non synchronization expert.
+Are you trying to validate the performance of your T-GM clock in OpenShift? As a user of the T-GM test suite, are you trying to understand the results obtained by Red Hat's [Telecom GrandMaster (T-GM) test reports](addmat/test_report_fiesta_20231103T110635Z_84adb821.pdf)? Analysing test reports is another activity of the test process and in this case usually requires of specific expertise. The data points included in the T-GM test report helps you to validate if the OpenShift Container Platform under test is capable of functionally behaving as a T-GM, i.e., **Independent Validation Environment**. And the data in the test report includes specific T-GM Key Performance Indicators to ensure the T-GM complies with the required performance T-GM class, i.e., **T-GM Performance Tests**. T-GM performance characterization in particular is more complex than Pass/Fail acceptance criteria, and require for the user to inspect the data revealed in the test report in the form of graphs. This guide helps with understanding and intepreting those graphs revealing T-GM performance results in a for a non synchronization expert.
 
 ## Understanding Independent Validation Environment <a name="validation"></a>
 
@@ -20,11 +20,11 @@ Thus, this section in the [T-GM test report](addmat/test_report_fiesta_20231103T
 
 It is important to highlight the need of:
 
-* A fresh [Single Node OpenShift Container Platform 4.14](https://docs.openshift.com/container-platform/4.14/release_notes/ocp-4-14-release-notes.html) with the [PTP operator](https://catalog.redhat.com/software/containers/openshift4/ose-ptp-operator-bundle/5f5ba412bed8bd77416201e7) installed.
+* A fresh installation of Single Node OpenShift Container Platform (SNO) with at least [release 4.14.6](https://docs.openshift.com/container-platform/4.14/release_notes/ocp-4-14-release-notes.html) and the [PTP operator](https://catalog.redhat.com/software/containers/openshift4/ose-ptp-operator-bundle/5f5ba412bed8bd77416201e7) installed.
 
-* A certified Intel card capable of acting as a T-GM. One is the [E810-XXVDA4T with GNSS](https://catalog.redhat.com/hardware/components/detail/236227) card (WestPort Channel). Another Intel physical card candidate is [E810-CQDA2T with GNSS](https://catalog.redhat.com/hardware/components/detail/236237) card (Logan Beach).
+* A Red Hat certified Intel timing card capable of acting as a T-GM. One is the [E810-XXVDA4T with GNSS](https://catalog.redhat.com/hardware/components/detail/236227) card (WestPort Channel). Another Intel T-GM candidate is the [E810-CQDA2T with GNSS](https://catalog.redhat.com/hardware/components/detail/236237) card (Logan Beach).
 
-* A GNSS antenna with clear sight of the sky connected to the GNSS receiver of the Intel card capable of acting as T-GM clock.
+* A GNSS antenna with clear sight of the sky connected to the  [u-Blox ZED-F9T](https://www.u-blox.com/en/product/zed-f9t-module?legacy=Current#Documentation-&-resources) GNSS receiver of the Intel timing card capable of acting as T-GM clock (WestPort Channel or Logan Beach).
 
 See below an example showing a summary of the environment validation indicating a `good` state. The results indicate that the performance T-GM tests are conducted in an environment considered valid for testing a T-GM. This means that the data and post-processing stages used to calculate the KPIs of interest to measure the performance of the T-GM are considered good and worth of further analisys.
 
@@ -87,7 +87,7 @@ Let's explain the TE metric with an example. First an example where TE is well a
 
 <figcaption class="figure-caption text-center">
 
-**Figure 5** Time Error Results above any PRTC mask. This indicates the TE is experiencing high fluctuations revealing very low accuracy.
+**Figure 5** Time Error T-GM KPI results above any PRTC mask. This indicates the TE is experiencing high fluctuations revealing very low accuracy.
 
 </figcaption>
 
@@ -104,7 +104,7 @@ Now let's illustrate a case where the T-GM is reporting TE result within ITU-T r
 
 <figcaption class="figure-caption text-center">
 
-**Figure 6** Time Error Results below PRTC-A (`100ns`) and PRTC-B (`40ns`) limits.
+**Figure 6** Time Error T-GM KPI results below PRTC-A (`100ns`) and PRTC-B (`40ns`) limits.
 
 </figcaption>
 
