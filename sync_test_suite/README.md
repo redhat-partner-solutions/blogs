@@ -75,7 +75,7 @@ In what follows, we provide an overview of each of the metrics under test: [Time
 
 Time Error (TE) quantifies the difference between two clocks: a clock under measurement and a reference clock. The measurement represents the relative difference between two time signals. Even when the clock under measurement is considered to be synchronized to the reference clock, there are always errors that can be observed in the final synchronized clock signal.
 
-Let's explain the TE metric with an example. First an example where TE is well above ITU-T recommendations for both PRTC-A and PRTC-B. Looking at the graph we can provide the following observations:
+Let's explain the TE metric with an example. The graph below shows the distribution of the TE introduced between the [Digital Phase Locked Loop (DPLL)](https://docs.kernel.org/driver-api/dpll.html) and E810 PTP Hardware clock in a [E810-XXVDA4T with GNSS](https://catalog.redhat.com/hardware/components/detail/236227). First an example where TE is well above ITU-T recommendations for both PRTC-A and PRTC-B. Looking at the graph we can provide the following observations:
 
 - The measured TE could vary over time. Because of this reason it is important to note that TE is measured over a sufficiently long time period. A minimum duration of `1000s` under normal, locked operating conditions is recommended by [ITU G.8272](https://www.itu.int/rec/T-REC-G.8272/en). And this is one of the reasons why we let the user specify the duration of the measurement.
 
